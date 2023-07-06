@@ -37,7 +37,6 @@ def get_parser():
     # which hidden states we extract
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
     parser.add_argument("--all_layers", action="store_true", help="Whether to use all layers or not")
-    parser.add_argument("--token_idx", type=int, default=-1, help="Which token to use (by default the last token)")
     # saving the hidden states
     parser.add_argument("--save_dir", type=str, default="generated_hidden_states", help="Directory to save the hidden states")
 
@@ -79,8 +78,7 @@ def get_dataset(tokenizer):
             x['sentence'],
             truncation=True, 
             padding="max_length", 
-    ))
-
+    )).with_format("torch")
 
 
 def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
@@ -97,7 +95,6 @@ def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device=
             keep_idxs.append(int(idx))
             if len(keep_idxs) >= num_examples:
                 break
-
     dataset = dataset.remove_columns(['sentence', 'token_type_ids'])
     
     # create and return the corresponding dataloader
@@ -157,7 +154,7 @@ def get_first_mask_loc(mask, shift=False):
     return first_mask_loc
 
 
-def get_individual_hidden_states(model, batch_ids, layer=None, all_layers=True, token_idx=-1):
+def get_individual_hidden_states(model, batch_ids, layer=None, all_layers=True):
     """
     Given a model and a batch of tokenized examples, returns the hidden states for either 
     a specified layer (if layer is a number) or for all layers (if all_layers is True).
@@ -186,21 +183,12 @@ def get_individual_hidden_states(model, batch_ids, layer=None, all_layers=True, 
         assert layer is not None
         hs = hs_tuple[layer].unsqueeze(-1).detach().cpu()  # (bs, seq_len, dim, 1)
 
-    # we want to get the token corresponding to token_idx while ignoring the masked tokens
-    if token_idx == 0:
-        final_hs = hs[:, 0]  # (bs, dim, num_layers)
-    else:
-        # if token_idx == -1, then takes the hidden states corresponding to the last non-mask tokens
-        # first we need to get the first mask location for each example in the batch
-        assert token_idx < 0, print("token_idx must be either 0 or negative, but got", token_idx)
-        mask = batch_ids["attention_mask"]
-        first_mask_loc = get_first_mask_loc(mask).squeeze().cpu()
-        final_hs = hs[torch.arange(hs.size(0)), first_mask_loc+token_idx]  # (bs, dim, num_layers)
-    
-    return final_hs
+    mask = batch_ids["attention_mask"] 
+    hs[mask == 0] = -torch.inf
+    return hs
 
 
-def get_all_hidden_states(model, dataloader, layer=None, all_layers=True, token_idx=-1):
+def get_all_hidden_states(model, dataloader, layer=None, all_layers=True):
     """
     Given a model, a tokenizer, and a dataloader, returns the hidden states (corresponding to a given position index) in all layers for all examples in the dataloader,
     along with the average log probs corresponding to the answer tokens
@@ -212,7 +200,7 @@ def get_all_hidden_states(model, dataloader, layer=None, all_layers=True, token_
 
     model.eval()
     for batch in tqdm(dataloader):
-        hs = get_individual_hidden_states(model, batch, layer=layer, all_layers=all_layers, token_idx=token_idx)
+        hs = get_individual_hidden_states(model, batch, layer=layer, all_layers=all_layers)
 
         if dataloader.batch_size == 1:
             hs = hs.unsqueeze(0)

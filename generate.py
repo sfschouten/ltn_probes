@@ -12,8 +12,7 @@ def main(args):
 
     # Get the hidden states and labels
     print("Generating hidden states")
-    hs = get_all_hidden_states(model, dataloader, layer=args.layer, all_layers=args.all_layers, 
-                                              token_idx=args.token_idx)
+    hs = get_all_hidden_states(model, dataloader, layer=args.layer, all_layers=args.all_layers)
 
     # Save the hidden states and labels
     print("Saving hidden states")

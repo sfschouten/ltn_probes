@@ -1,6 +1,10 @@
-from utils import get_parser, load_single_generation, get_dataset
+from utils import get_parser, load_single_generation, get_dataset, get_dataloader
 from transformers import AutoTokenizer
+
+import torch
 import torch.nn as nn
+from torch.utils.data import TensorDataset, DataLoader
+
 
 class SPO_Attention(nn.Module):
     def __init__(self, n_embd, bias=True):
@@ -23,7 +27,7 @@ class SPO_Attention(nn.Module):
         x = torch.where(mask, x, 0)
         k, v = self.c_attn(x).split(self.n_embd, dim=2)
 
-        mask = mask.all(dim=-1).unsqueeze(1).expand(-1, self.n_queries, -1)
+        mask = mask.all(dim=-1).unsqueeze(1).expand(-1, 3, -1)
         if self.flash:
             # efficient attention using Flash Attention CUDA kernels
             y = torch.nn.functional.scaled_dot_product_attention(self.q, k, v, attn_mask=mask)
@@ -37,20 +41,21 @@ class SPO_Attention(nn.Module):
 
 
 
-def train_ltn(dataloader, args):
+def train_ltn(dataloader, args, ndim):
 
+    
+    attn = SPO_Attention(ndim)
 
-    #attn = SPO_Attention(args.probe_ndim)
-
-    #for epoch in range(args.nr_epochs):
+    for epoch in range(args.nr_epochs):
         
-    #    for batch in dataloader:
-           
-    #        spo = attn(batch)
+        for batch in dataloader:
+            hidden_states, = batch
+            
+            spo = attn(hidden_states)
 
+            print(spo.shape)
 
-    # ...
-    pass
+            # TODO
 
 
 def main(args, generation_args):
@@ -62,15 +67,19 @@ def main(args, generation_args):
 
     for hs_row, sample in zip(hs, dataset):
         
-        print(hs_row)
+        #print(hs_row)
         #print(sample)
 
-        # sample_enc to enable recovering which token belonged to which word, in case we need it.
-        sample_enc = tokenizer(sample)
+        # sample_enc in case we need to know which token is part of what word.
+        sample_enc = tokenizer(sample['sentence'])
 
     # train LTN probe
-    dataloader = get_dataloader(dataset, tokenized, batch_size=args.probe_batch_size, device=args.probe_device)
-    train_ltn(dataloader, args)
+    hs_t = torch.Tensor(hs).squeeze()
+    batch, nr_tokens, ndim = hs_t.shape
+    hs_dataset = TensorDataset(hs_t)
+    batch_size = args.probe_batch_size if args.probe_batch_size > 0 else len(hs)
+    hs_dataloader = DataLoader(hs_dataset, batch_size=batch_size)
+    train_ltn(hs_dataloader, args, ndim)
 
 
 if __name__ == "__main__":
@@ -81,6 +90,5 @@ if __name__ == "__main__":
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--probe_batch_size", type=int, default=-1)
     parser.add_argument("--probe_device", type=str, default='cuda')
-    parser.add_argument("--probe_ndim", type=int, default=128)
     args = parser.parse_args()
     main(args, generation_args)
