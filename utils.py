@@ -86,11 +86,12 @@ def get_dataloader(tokenizer, batch_size=16, num_examples=1000, device="cuda", p
     )).with_format('torch')
 
     # get a random permutation of the indices; we'll take the first num_examples of these that do not get truncated
-    random_idxs = np.random.permutation(len(dataset))
+    #random_idxs = np.random.permutation(len(dataset))
 
     # remove examples that would be truncated (since this messes up contrast pairs)
     keep_idxs = []
-    for idx in random_idxs:
+    #for idx in random_idxs:
+    for idx in range(len(dataset)):
         input_text = dataset['sentence'][int(idx)]
         if len(tokenizer.encode(input_text, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
             keep_idxs.append(int(idx))
