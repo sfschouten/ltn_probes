@@ -84,7 +84,7 @@ def main(args, generation_args):
 
 if __name__ == "__main__":
     parser = get_parser()
-    generation_args = parser.parse_args() 
+    generation_args, _ = parser.parse_known_args() 
     # We'll also add some additional args for evaluation
     parser.add_argument("--nr_epochs", type=int, default=1000)    
     parser.add_argument("--lr", type=float, default=1e-3)
