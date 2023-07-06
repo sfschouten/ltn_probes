@@ -106,6 +106,10 @@ def get_dataloader(tokenizer, batch_size=16, num_examples=1000, device="cuda", p
     return dataloader
 
 
+def gen_filename(generation_type, arg_dict, exclude_keys):
+    name = generation_type + "__" + "__".join(['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy"
+    return name.replace('/', '|')
+
 def save_generations(generation, args, generation_type):
     """
     Input: 
@@ -116,9 +120,8 @@ def save_generations(generation, args, generation_type):
     Saves the generations to an appropriate directory.
     """
     # construct the filename based on the args
-    arg_dict = vars(args)
     exclude_keys = ["save_dir", "cache_dir", "device"]
-    filename = generation_type + "__" + "__".join(['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy".format(generation_type)
+    filename = gen_filename(generation_type, vars(args), exclude_keys)
 
     # create save directory if it doesn't exist
     if not os.path.exists(args.save_dir):
@@ -130,9 +133,8 @@ def save_generations(generation, args, generation_type):
 
 def load_single_generation(args, generation_type="hidden_states"):
     # use the same filename as in save_generations
-    arg_dict = vars(args)
     exclude_keys = ["save_dir", "cache_dir", "device"]
-    filename = generation_type + "__" + "__".join(['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy".format(generation_type)
+    filename = gen_filename(generation_type, vars(args), exclude_keys) 
     return np.load(os.path.join(args.save_dir, filename))
 
 
