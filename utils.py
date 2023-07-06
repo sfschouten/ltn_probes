@@ -32,13 +32,9 @@ def get_parser():
     parser.add_argument("--parallelize", action="store_true", help="Whether to parallelize the model")
     parser.add_argument("--device", type=str, default="cuda", help="Device to use for the model")
     # setting up data
-    parser.add_argument("--dataset_name", type=str, default="imdb", help="Name of the dataset to use")
-    parser.add_argument("--split", type=str, default="test", help="Which split of the dataset to use")
-    parser.add_argument("--prompt_idx", type=int, default=0, help="Which prompt to use")
     parser.add_argument("--batch_size", type=int, default=1, help="Batch size to use")
     parser.add_argument("--num_examples", type=int, default=1000, help="Number of examples to generate")
     # which hidden states we extract
-    parser.add_argument("--use_decoder", action="store_true", help="Whether to use the decoder; only relevant if model_type is encoder-decoder. Uses encoder by default (which usually -- but not always -- works better)")
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
     parser.add_argument("--all_layers", action="store_true", help="Whether to use all layers or not")
     parser.add_argument("--token_idx", type=int, default=-1, help="Which token to use (by default the last token)")
@@ -71,20 +67,24 @@ def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
     return model, tokenizer
 
 
-def get_dataloader(tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
-    
+def get_dataset(tokenizer):
+ 
     with open('../city.txt', 'r') as f:
         lines = f.readlines()
 
     data_dict = {'sentence': lines}
     dataset = Dataset.from_dict(data_dict)
   
-    dataset = dataset.map(lambda x: tokenizer(
+    return dataset, dataset.map(lambda x: tokenizer(
             x['sentence'],
             truncation=True, 
             padding="max_length", 
-    )).with_format('torch')
+    ))
 
+
+
+def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
+    
     # get a random permutation of the indices; we'll take the first num_examples of these that do not get truncated
     #random_idxs = np.random.permutation(len(dataset))
 
@@ -137,15 +137,6 @@ def load_single_generation(args, generation_type="hidden_states"):
     exclude_keys = ["save_dir", "cache_dir", "device"]
     filename = gen_filename(generation_type, vars(args), exclude_keys) 
     return np.load(os.path.join(args.save_dir, filename))
-
-
-def load_all_generations(args):
-    # load all the saved generations: neg_hs, pos_hs, and labels
-    neg_hs = load_single_generation(args, generation_type="negative_hidden_states")
-    pos_hs = load_single_generation(args, generation_type="positive_hidden_states")
-    labels = load_single_generation(args, generation_type="labels")
-
-    return neg_hs, pos_hs, labels
 
 
 ############# Hidden States #############
