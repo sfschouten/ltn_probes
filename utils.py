@@ -1,0 +1,231 @@
+import os
+import functools
+import argparse
+import copy
+
+import numpy as np
+import pandas as pd
+from tqdm import tqdm
+
+import torch
+from torch.utils.data import DataLoader
+import torch.nn as nn
+import torch.nn.functional as F
+
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForMaskedLM, AutoModelForCausalLM
+
+from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
+
+from datasets import load_dataset, Dataset
+
+
+
+def get_parser():
+    """
+    Returns the parser we will use for generate.py and evaluate.py
+    (We include it here so that we can use the same parser for both scripts)
+    """
+    parser = argparse.ArgumentParser()
+    # setting up model
+    parser.add_argument("--model_name", type=str, default="T5", help="Name of the model to use")
+    parser.add_argument("--cache_dir", type=str, default=None, help="Cache directory for the model and tokenizer")
+    parser.add_argument("--parallelize", action="store_true", help="Whether to parallelize the model")
+    parser.add_argument("--device", type=str, default="cuda", help="Device to use for the model")
+    # setting up data
+    parser.add_argument("--dataset_name", type=str, default="imdb", help="Name of the dataset to use")
+    parser.add_argument("--split", type=str, default="test", help="Which split of the dataset to use")
+    parser.add_argument("--prompt_idx", type=int, default=0, help="Which prompt to use")
+    parser.add_argument("--batch_size", type=int, default=1, help="Batch size to use")
+    parser.add_argument("--num_examples", type=int, default=1000, help="Number of examples to generate")
+    # which hidden states we extract
+    parser.add_argument("--use_decoder", action="store_true", help="Whether to use the decoder; only relevant if model_type is encoder-decoder. Uses encoder by default (which usually -- but not always -- works better)")
+    parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
+    parser.add_argument("--all_layers", action="store_true", help="Whether to use all layers or not")
+    parser.add_argument("--token_idx", type=int, default=-1, help="Which token to use (by default the last token)")
+    # saving the hidden states
+    parser.add_argument("--save_dir", type=str, default="generated_hidden_states", help="Directory to save the hidden states")
+
+    return parser
+
+
+def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
+    """
+    Loads a model and its corresponding tokenizer, either parallelized across GPUs (if the model permits that; usually just use this for T5-based models) or on a single GPU
+    """
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+
+    # load the quantized model
+    model = AutoGPTQForCausalLM.from_quantized(model_name, device="cuda:0", use_safetensors=True)
+        
+    # specify model_max_length (the max token length) to be 512 to ensure that padding works 
+    # (it's not set by default for e.g. DeBERTa, but it's necessary for padding to work properly)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir, model_max_length=512)
+    model.eval()
+
+    # put on the correct device
+    if parallelize:
+        model.parallelize()
+    else:
+        model = model.to(device)
+
+    return model, tokenizer
+
+
+def get_dataloader(tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
+    
+    with open('../city.txt', 'r') as f:
+        lines = f.readlines()
+
+    data_dict = {'sentence': lines}
+    dataset = Dataset.from_dict(data_dict)
+  
+    dataset = dataset.map(lambda x: tokenizer(
+            x['sentence'],
+            truncation=True, 
+            padding="max_length", 
+    )).with_format('torch')
+
+    # get a random permutation of the indices; we'll take the first num_examples of these that do not get truncated
+    random_idxs = np.random.permutation(len(dataset))
+
+    # remove examples that would be truncated (since this messes up contrast pairs)
+    keep_idxs = []
+    for idx in random_idxs:
+        input_text = dataset['sentence'][int(idx)]
+        if len(tokenizer.encode(input_text, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
+            keep_idxs.append(int(idx))
+            if len(keep_idxs) >= num_examples:
+                break
+
+    dataset = dataset.remove_columns(['sentence', 'token_type_ids'])
+    
+    # create and return the corresponding dataloader
+    subset_dataset = torch.utils.data.Subset(dataset, keep_idxs)
+    dataloader = DataLoader(subset_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory, num_workers=num_workers)
+
+    return dataloader
+
+
+def save_generations(generation, args, generation_type):
+    """
+    Input: 
+        generation: numpy array (e.g. hidden_states or labels) to save
+        args: arguments used to generate the hidden states. This is used for the filename to save to.
+        generation_type: one of "negative_hidden_states" or "positive_hidden_states" or "labels"
+
+    Saves the generations to an appropriate directory.
+    """
+    # construct the filename based on the args
+    arg_dict = vars(args)
+    exclude_keys = ["save_dir", "cache_dir", "device"]
+    filename = generation_type + "__" + "__".join(['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy".format(generation_type)
+
+    # create save directory if it doesn't exist
+    if not os.path.exists(args.save_dir):
+        os.makedirs(args.save_dir)
+
+    # save
+    np.save(os.path.join(args.save_dir, filename), generation)
+
+
+def load_single_generation(args, generation_type="hidden_states"):
+    # use the same filename as in save_generations
+    arg_dict = vars(args)
+    exclude_keys = ["save_dir", "cache_dir", "device"]
+    filename = generation_type + "__" + "__".join(['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy".format(generation_type)
+    return np.load(os.path.join(args.save_dir, filename))
+
+
+def load_all_generations(args):
+    # load all the saved generations: neg_hs, pos_hs, and labels
+    neg_hs = load_single_generation(args, generation_type="negative_hidden_states")
+    pos_hs = load_single_generation(args, generation_type="positive_hidden_states")
+    labels = load_single_generation(args, generation_type="labels")
+
+    return neg_hs, pos_hs, labels
+
+
+############# Hidden States #############
+def get_first_mask_loc(mask, shift=False):
+    """
+    return the location of the first pad token for the given ids, which corresponds to a mask value of 0
+    if there are no pad tokens, then return the last location
+    """
+    # add a 0 to the end of the mask in case there are no pad tokens
+    mask = torch.cat([mask, torch.zeros_like(mask[..., :1])], dim=-1)
+
+    if shift:
+        mask = mask[..., 1:]
+
+    # get the location of the first pad token; use the fact that torch.argmax() returns the first index in the case of ties
+    first_mask_loc = torch.argmax((mask == 0).int(), dim=-1)
+
+    return first_mask_loc
+
+
+def get_individual_hidden_states(model, batch_ids, layer=None, all_layers=True, token_idx=-1):
+    """
+    Given a model and a batch of tokenized examples, returns the hidden states for either 
+    a specified layer (if layer is a number) or for all layers (if all_layers is True).
+    
+    If specify_encoder is True, uses "encoder_hidden_states" instead of "hidden_states"
+    This is necessary for getting the encoder hidden states for encoder-decoder models,
+    but it is not necessary for encoder-only or decoder-only models.
+    """
+
+    # forward pass
+    with torch.no_grad():
+        batch_ids = {key: value.to(model.device) for key, value in batch_ids.items()}
+        output = model(**batch_ids, output_hidden_states=True)
+
+    # get all the corresponding hidden states (which is a tuple of length num_layers)
+    if "decoder_hidden_states" in output.keys():
+        hs_tuple = output["decoder_hidden_states"]
+    else:
+        hs_tuple = output["hidden_states"]
+
+    # just get the corresponding layer hidden states
+    if all_layers:
+        # stack along the last axis so that it's easier to consistently index the first two axes
+        hs = torch.stack([h.squeeze().detach().cpu() for h in hs_tuple], axis=-1)  # (bs, seq_len, dim, num_layers)
+    else:
+        assert layer is not None
+        hs = hs_tuple[layer].unsqueeze(-1).detach().cpu()  # (bs, seq_len, dim, 1)
+
+    # we want to get the token corresponding to token_idx while ignoring the masked tokens
+    if token_idx == 0:
+        final_hs = hs[:, 0]  # (bs, dim, num_layers)
+    else:
+        # if token_idx == -1, then takes the hidden states corresponding to the last non-mask tokens
+        # first we need to get the first mask location for each example in the batch
+        assert token_idx < 0, print("token_idx must be either 0 or negative, but got", token_idx)
+        mask = batch_ids["attention_mask"]
+        first_mask_loc = get_first_mask_loc(mask).squeeze().cpu()
+        final_hs = hs[torch.arange(hs.size(0)), first_mask_loc+token_idx]  # (bs, dim, num_layers)
+    
+    return final_hs
+
+
+def get_all_hidden_states(model, dataloader, layer=None, all_layers=True, token_idx=-1):
+    """
+    Given a model, a tokenizer, and a dataloader, returns the hidden states (corresponding to a given position index) in all layers for all examples in the dataloader,
+    along with the average log probs corresponding to the answer tokens
+
+    The dataloader should correspond to examples *with a candidate label already added* to each example.
+    E.g. this function should be used for "Q: Is 2+2=5? A: True" or "Q: Is 2+2=5? A: False", but NOT for "Q: Is 2+2=5? A: ".
+    """
+    all_hs = []
+
+    model.eval()
+    for batch in tqdm(dataloader):
+        hs = get_individual_hidden_states(model, batch, layer=layer, all_layers=all_layers, token_idx=token_idx)
+
+        if dataloader.batch_size == 1:
+            hs = hs.unsqueeze(0)
+
+        all_hs.append(hs)
+    
+    all_hs = np.concatenate(all_hs, axis=0)
+
+    return all_hs 
+
