@@ -16,6 +16,7 @@ def main(args):
 
     # Save the hidden states and labels
     print("Saving hidden states")
+    args.model_name =args.model_name.replace("/","_")
     save_generations(hs, args, generation_type="hidden_states")
 
 

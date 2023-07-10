@@ -68,17 +68,29 @@ def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
 
 def get_dataset(tokenizer):
  
-    with open('../city.txt', 'r') as f:
+    with open('city.txt', 'r') as f:
         lines = f.readlines()
 
     data_dict = {'sentence': lines}
-    dataset = Dataset.from_dict(data_dict)
+    dataset_train = Dataset.from_dict(data_dict)
+
+    with open('city_test_cleaned.txt', 'r') as f:
+        lines = f.readlines()
+
+    data_dict = {'sentence': lines}
+    dataset_test = Dataset.from_dict(data_dict)
   
-    return dataset, dataset.map(lambda x: tokenizer(
+    return dataset_train, dataset_train.map(lambda x: tokenizer(
             x['sentence'],
             truncation=True, 
             padding="max_length", 
+    )).with_format("torch"),dataset_test, dataset_test.map(lambda x: tokenizer(
+            x['sentence'],
+            truncation=True,
+            padding="max_length",
     )).with_format("torch")
+
+
 
 
 def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
@@ -133,7 +145,7 @@ def load_single_generation(args, generation_type="hidden_states"):
     # use the same filename as in save_generations
     exclude_keys = ["save_dir", "cache_dir", "device"]
     filename = gen_filename(generation_type, vars(args), exclude_keys) 
-    return np.load(os.path.join(args.save_dir, filename))
+    return np.load(os.path.join(args.save_dir, "prova.npy"))
 
 
 ############# Hidden States #############
