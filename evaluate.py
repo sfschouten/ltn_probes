@@ -154,9 +154,14 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             hidden_states = batch
             # hidden_states, = batch
 
+
             hidden_states = hidden_states.to("cuda")
-            spo = attn(hidden_states)
-            x = ltn.Variable("x", spo[:, :])
+            x = hidden_states
+            mask = torch.isfinite(x)
+            x = torch.where(mask, x, 0)
+            x = x.sum(dim=1) / mask.all(dim=-1).sum(dim=-1).reshape(-1,1)
+            #spo = attn(hidden_states)
+            x = ltn.Variable("x", x[:, :])
             # y = ltn.Variable("y", spo[:, 1, :])
             # z = ltn.Variable("z", spo[:, 2, :])
             Subject_l = ltn.Constant(torch.tensor([1, 0, 0,0]))
@@ -246,10 +251,13 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     with torch.no_grad():
         for batch in tqdm(dataloader_test):
             hidden_states,labels = batch
-
             hidden_states = hidden_states.to("cuda")
-            spo = attn(hidden_states)
-            x = ltn.Variable("x", spo[:,  :])
+            x = hidden_states
+            mask = torch.isfinite(x)
+            x = torch.where(mask, x, 0)
+            x = x.sum(dim=1) / mask.all(dim=-1).sum(dim=-1).reshape(-1, 1)
+            x = ltn.Variable("x", x[:, :])
+            # spo = attn(hidden_states)
             # y = ltn.Variable("y", spo[:, 1, :])
             # z = ltn.Variable("z", spo[:, 2, :])
             Subject_l = ltn.Constant(torch.tensor([1, 0, 0, 0]))
@@ -371,7 +379,7 @@ if __name__ == "__main__":
     parser = get_parser()
     generation_args, _ = parser.parse_known_args()
     # We'll also add some additional args for evaluation
-    parser.add_argument("--nr_epochs", type=int, default=10)
+    parser.add_argument("--nr_epochs", type=int, default=30)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--probe_batch_size", type=int, default=32)
     parser.add_argument("--probe_device", type=str, default='cuda')
