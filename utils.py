@@ -68,16 +68,37 @@ def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
 
 def get_dataset(tokenizer):
  
-    with open('city.txt', 'r') as f:
+    with open('final_city_version_2_train.txt', 'r') as f:
         lines = f.readlines()
 
-    data_dict = {'sentence': lines}
+    sentences=[]
+    labels=[]
+    for f in lines:
+        text = f.split(",")[0]
+        #label = int(f.rstrip().split(",")[1])
+        sentences.append(text)
+        labels.append([ int(f1) for f1 in f.rstrip().split(",")[1:]])
+
+    #labels = torch.reshape(torch.tensor(labels), (-1, 1))
+    data_dict =  {'sentence': sentences,"labels":labels}
+    #data_dict = {'sentence': sentences}
     dataset_train = Dataset.from_dict(data_dict)
 
     with open('city_test_cleaned.txt', 'r') as f:
         lines = f.readlines()
 
-    data_dict = {'sentence': lines}
+    sentences = []
+    labels = []
+    for f in lines:
+        text = f.split(",")[0]
+        #label = int(f.split(",")[1])
+        sentences.append(text)
+        labels.append([ int(f1) for f1 in f.rstrip().split(",")[1:]])
+
+    #labels=torch.reshape(torch.tensor(labels),(-1,1))
+
+    data_dict = {'sentence': sentences,"labels":labels}
+    #data_dict = {'sentence': sentences}
     dataset_test = Dataset.from_dict(data_dict)
   
     return dataset_train, dataset_train.map(lambda x: tokenizer(
@@ -102,7 +123,8 @@ def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device=
     keep_idxs = []
     #for idx in random_idxs:
     for idx in range(len(dataset)):
-        input_text = dataset['sentence'][int(idx)]
+        input = dataset['sentence'][int(idx)]
+        input_text = input.split(",")[0]
         if len(tokenizer.encode(input_text, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
             keep_idxs.append(int(idx))
             if len(keep_idxs) >= num_examples:
@@ -141,11 +163,11 @@ def save_generations(generation, args, generation_type):
     np.save(os.path.join(args.save_dir, filename), generation)
 
 
-def load_single_generation(args, generation_type="hidden_states"):
+def load_single_generation(args, generation_type="hidden_states",name=""):
     # use the same filename as in save_generations
     exclude_keys = ["save_dir", "cache_dir", "device"]
     filename = gen_filename(generation_type, vars(args), exclude_keys) 
-    return np.load(os.path.join(args.save_dir, "prova.npy"))
+    return np.load(os.path.join(args.save_dir, name))
 
 
 ############# Hidden States #############

@@ -1,6 +1,9 @@
+import math
+
 from tqdm import tqdm
 
 import ltn
+from customdataloader import CustomDataset
 from utils import get_parser, load_single_generation, get_dataset, get_dataloader
 from transformers import AutoTokenizer
 
@@ -22,9 +25,10 @@ class SPO_Attention(nn.Module):
         one = torch.ones(1, 1, n_embd)
 
         s = torch.randn_like(one)  # TODO these might need a random initialization
-        p = torch.randn_like(one)
-        o = torch.randn_like(one)
-        self.q = nn.Parameter(torch.cat((s, p, o), dim=1))
+        # p = torch.randn_like(one)
+        # o = torch.randn_like(one)
+        # self.q = nn.Parameter(torch.cat((s, p, o), dim=1))
+        self.q = nn.Parameter(s)
 
         self.flash = hasattr(torch.nn.functional, 'scaled_dot_product_attention')
 
@@ -35,7 +39,7 @@ class SPO_Attention(nn.Module):
         x = x.to("cuda")
         k, v = self.c_attn(x).split(self.n_embd, dim=2)
 
-        mask = mask.all(dim=-1).unsqueeze(1).expand(-1, 3, -1)
+        mask = mask.all(dim=-1).unsqueeze(1).expand(-1, 1, -1)
         if self.flash:
             # efficient attention using Flash Attention CUDA kernels
             y = torch.nn.functional.scaled_dot_product_attention(self.q, k, v, attn_mask=mask)
@@ -57,7 +61,7 @@ class MLP(torch.nn.Module):
     to understand it.
     """
 
-    def __init__(self, layer_sizes=(4096, 3)):
+    def __init__(self, layer_sizes=(4096, 4)):
         super(MLP, self).__init__()
         self.elu = torch.nn.ReLU()
         self.dropout = torch.nn.Dropout(0.2)
@@ -100,7 +104,7 @@ class LogitsToPredicate(torch.nn.Module):
 
     def forward(self, x, l, training=False):
         logits = self.logits_model(x, training=training)
-        probs = self.softmax(logits)
+        probs = self.sigmoid(logits)
         out = torch.sum(probs * l, dim=1)
         return out
 
@@ -109,6 +113,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     run = neptune.init_run(
         project="frankissimo/ltnprobing",
         api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiI5YTY1M2U5Ni05ZTU0LTQ0YjAtYWM0OC1jNzUyZTIwOWNiNDQifQ==",
+
     )  # your credentials
 
     params = {"learning_rate": args.lr, "optimizer": "Adam", "nr_epochs": args.nr_epochs,
@@ -119,95 +124,202 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     attn = attn.to(args.probe_device)
 
     mlp = MLP()
+    #mlp2 = MLP()
+    #mlp3 = MLP()
     Model = ltn.Predicate(LogitsToPredicate(mlp))
-    # Action = ltn.Predicate(LogitsToPredicate(mlp))
-    # Object = ltn.Predicate(LogitsToPredicate(mlp))
+    #Action_model = ltn.Predicate(LogitsToPredicate(mlp))
+    #Object_model = ltn.Predicate(LogitsToPredicate(mlp))
+    #to cuda
     Model = Model.to(args.probe_device)
-    # Action = Action.to("cuda")
-    # Object = Object.to("cuda")
+    #Action_model = Action_model.to(args.probe_device)
+    #Object_model = Object_model.to(args.probe_device)
 
     # we define the connectives, quantifiers, and the SatAgg
     Not = ltn.Connective(ltn.fuzzy_ops.NotStandard())
     And = ltn.Connective(ltn.fuzzy_ops.AndProd())
+    Equiv = ltn.Connective(ltn.fuzzy_ops.Equiv(ltn.fuzzy_ops.AndProd(), ltn.fuzzy_ops.ImpliesReichenbach()))
+    Implies = ltn.Connective(ltn.fuzzy_ops.ImpliesLuk())
     Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2), quantifier="f")
     SatAgg = ltn.fuzzy_ops.SatAgg()
     parameters = []
     parameters.extend([f for f in Model.parameters()])
-    # parameters.extend([f for f in Action.parameters()])
-    # parameters.extend([f for f in Object.parameters()])
+    #parameters.extend([f for f in Action_model.parameters()])
+    #parameters.extend([f for f in Object_model.parameters()])
     parameters.extend([f for f in attn.parameters()])
     optimizer = torch.optim.Adam(parameters, lr=args.lr)
-    for epoch in range(args.nr_epochs):
+    for epoch in tqdm(range(args.nr_epochs)):
 
-        for batch in tqdm(dataloader):
+        for batch, labels in dataloader:
             optimizer.zero_grad()
-            hidden_states, = batch
+            hidden_states = batch
+            # hidden_states, = batch
 
             hidden_states = hidden_states.to("cuda")
             spo = attn(hidden_states)
-            x = ltn.Variable("x", spo[:, 0, :])
-            y = ltn.Variable("y", spo[:, 1, :])
-            z = ltn.Variable("z", spo[:, 2, :])
-            Subject_l = ltn.Constant(torch.tensor([1, 0, 0]))
-            Object_l = ltn.Constant(torch.tensor([0, 1, 0]))
-            Action_l = ltn.Constant(torch.tensor([0, 0, 1]))
-            sat_agg = SatAgg(
-                Forall(x, Model(x, Subject_l)),
-                # Forall(x, Not(Action(x))),
-                # Forall(x, Not(Object(x))),
+            x = ltn.Variable("x", spo[:, :])
+            # y = ltn.Variable("y", spo[:, 1, :])
+            # z = ltn.Variable("z", spo[:, 2, :])
+            Subject_l = ltn.Constant(torch.tensor([1, 0, 0,0]))
+            Object_l = ltn.Constant(torch.tensor([0, 1, 0,0]))
+            Action_l = ltn.Constant(torch.tensor([0, 0, 1,0]))
+            # All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0,1]))
+            label_a = ltn.Variable("label_a", torch.tensor(labels[0]))
+            label_b = ltn.Variable("label_b", torch.tensor(labels[1]))
+            label_c = ltn.Variable("label_c", torch.tensor(labels[2]))
 
-                Forall(y, Model(y, Action_l)),
-                # Forall(y, Not(Subject(y))),
-                # Forall(y, Not(Object(y))),
+            subject_positive=  Forall(ltn.diag(x, label_a), Model(x, Subject_l),
+                       cond_vars=[label_a],
+                       cond_fn=lambda y: y.value == 1)
 
-                Forall(z, Model(z, Object_l))
-                # Forall(z, Not(Subject(z))),
-                # Forall(z, Not(Action(z)))
-                # Forall(ltn.diag(x,y,z),And(And(Subject(x), Action(y)), Object(z)))
-            )
+            subject_negative= Forall(ltn.diag(x, label_a), Not(Model(x, Subject_l)),
+                       cond_vars=[label_a],
+                       cond_fn=lambda y: y.value == 0)
+
+            action_positive = Forall(ltn.diag(x, label_b), Model(x, Action_l),
+                       cond_vars=[label_b],
+                       cond_fn=lambda y: y.value == 1
+                       )
+
+            action_negative =  Forall(ltn.diag(x, label_b), Not(Model(x, Action_l)),
+                       cond_vars=[label_b],
+                       cond_fn=lambda y: y.value == 0
+                       )
+
+            object_positive =  Forall(ltn.diag(x, label_c), Model(x, Object_l),
+                       cond_vars=[label_c],
+                       cond_fn=lambda y: y.value == 1
+                       )
+
+            object_negative = Forall(ltn.diag(x, label_c), Not(Model(x, Object_l)),
+                       cond_vars=[label_c],
+                       cond_fn=lambda y: y.value == 0
+                       )
+
+            """
+            
+            
+            
+            all_sentence_positive = Forall(ltn.diag(x, label_a,label_b,label_c), Model(x, All_sentence_l),
+                                     cond_vars=[label_a,label_b,label_c],
+                                     cond_fn=lambda y,z,k: y.value + z.value + k.value ==3
+                                     )
+
+            all_sentence_negative = Forall(ltn.diag(x, label_a,label_b,label_c), Not(Model(x, All_sentence_l)),
+                                     cond_vars=[ label_a,label_b,label_c],
+                                     cond_fn=lambda y,z,k: y.value + z.value + k.value !=3
+                                     )
+                                     
+            
+
+            
+
+            all_sentence_positive_implication = Forall(ltn.diag(x, label_a, label_b, label_c),
+                                                       Implies(Model(x, All_sentence_l),
+                                                             And(And(Model(x, Subject_l), Model(x, Action_l)),
+                                                                 Model(x, Object_l)),
+                                                             cond_vars=[label_a, label_b, label_c],
+                                                             cond_fn=lambda y, z, k: y.value + z.value + k.value == 3
+                                                             ))
+            """
+
+            sat_agg = SatAgg(subject_negative,subject_positive,action_negative,action_positive,object_negative,
+                             object_positive)
 
             loss = 1. - sat_agg
             loss.backward()
             optimizer.step()
-            run["train/subject_satisability"].append(Forall(x, Model(x, Subject_l)).value)
-            run["train/Action_satisability"].append(Forall(y, Model(y, Action_l)).value)
-            run["train/Object_satisability"].append(Forall(z, Model(z, Object_l)).value)
+            run["train/subject_satisability_positive"].append(subject_positive.value)
+            run["train/Action_satisability_positive"].append(action_positive.value)
+            run["train/Object_satisability_positive"].append(object_positive.value)
+            run["train/subject_satisability_negative"].append(subject_negative.value)
+            run["train/Action_satisability_negative"].append(action_negative.value)
+            run["train/Object_satisability_negative"].append(object_negative.value)
+            #run["train/all_sentence_positive"].append(all_sentence_positive.value)
+            #run["train/all_sentence_negative"].append(all_sentence_negative.value)
+            #run["train/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
             run["train/loss"].append(1. - sat_agg)
 
     Model.eval()
+    #Action_model.eval()
+    #Object_model.eval()
     attn.eval()
     with torch.no_grad():
         for batch in tqdm(dataloader_test):
-            hidden_states, = batch
+            hidden_states,labels = batch
 
             hidden_states = hidden_states.to("cuda")
             spo = attn(hidden_states)
-            x = ltn.Variable("x", spo[:, 0, :])
-            y = ltn.Variable("y", spo[:, 1, :])
-            z = ltn.Variable("z", spo[:, 2, :])
-            Subject_l = ltn.Constant(torch.tensor([1, 0, 0]))
-            Object_l = ltn.Constant(torch.tensor([0, 1, 0]))
-            Action_l = ltn.Constant(torch.tensor([0, 0, 1]))
-            sat_agg = SatAgg(
-                Forall(x, Model(x, Subject_l)),
-                # Forall(x, Not(Action(x))),
-                # Forall(x, Not(Object(x))),
+            x = ltn.Variable("x", spo[:,  :])
+            # y = ltn.Variable("y", spo[:, 1, :])
+            # z = ltn.Variable("z", spo[:, 2, :])
+            Subject_l = ltn.Constant(torch.tensor([1, 0, 0, 0]))
+            Object_l = ltn.Constant(torch.tensor([0, 1, 0, 0]))
+            Action_l = ltn.Constant(torch.tensor([0, 0, 1, 0]))
+            All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
+            label_a = ltn.Variable("label_a", torch.tensor(labels[0]))
+            label_b = ltn.Variable("label_b", torch.tensor(labels[1]))
+            label_c = ltn.Variable("label_c", torch.tensor(labels[2]))
 
-                Forall(y, Model(y, Action_l)),
-                # Forall(y, Not(Subject(y))),
-                # Forall(y, Not(Object(y))),
+            subject_positive = Forall(ltn.diag(x, label_a), Model(x, Subject_l),
+                                      cond_vars=[label_a],
+                                      cond_fn=lambda y: y.value == 1)
 
-                Forall(z, Model(z, Object_l))
-                # Forall(z, Not(Subject(z))),
-                # Forall(z, Not(Action(z)))
-                # Forall(ltn.diag(x,y,z),And(And(Subject(x), Action(y)), Object(z)))
-            )
+            subject_negative = Forall(ltn.diag(x, label_a), Not(Model(x, Subject_l)),
+                                      cond_vars=[label_a],
+                                      cond_fn=lambda y: y.value == 0)
 
-            loss = 1. - sat_agg
+            action_positive = Forall(ltn.diag(x, label_b), Model(x, Action_l),
+                                     cond_vars=[label_b],
+                                     cond_fn=lambda y: y.value == 1
+                                     )
 
-            run["test/subject_satisability"].append(Forall(x, Model(x, Subject_l)).value)
-            run["test/Action_satisability"].append(Forall(y, Model(y, Action_l)).value)
-            run["test/Object_satisability"].append(Forall(z, Model(z, Object_l)).value)
+            action_negative = Forall(ltn.diag(x, label_b), Not(Model(x, Action_l)),
+                                     cond_vars=[label_b],
+                                     cond_fn=lambda y: y.value == 0
+                                     )
+
+            object_positive = Forall(ltn.diag(x, label_c), Model(x, Object_l),
+                                     cond_vars=[label_c],
+                                     cond_fn=lambda y: y.value == 1
+                                     )
+
+            object_negative = Forall(ltn.diag(x, label_c), Not(Model(x, Object_l)),
+                                     cond_vars=[label_c],
+                                     cond_fn=lambda y: y.value == 0
+                                     )
+
+            """
+
+            all_sentence_positive = Forall(ltn.diag(x, label_a, label_b, label_c), Model(x, All_sentence_l),
+                                           cond_vars=[label_a, label_b, label_c],
+                                           cond_fn=lambda y, z, k: y.value + z.value + k.value == 3
+                                           )
+
+            all_sentence_negative = Forall(ltn.diag(x, label_a, label_b, label_c), Not(Model(x, All_sentence_l)),
+                                           cond_vars=[label_a, label_b, label_c],
+                                           cond_fn=lambda y, z, k: y.value + z.value + k.value != 3
+                                           )
+
+            all_sentence_positive_implication = Forall(ltn.diag(x, label_a, label_b, label_c),
+                                                Equiv( Model(x, All_sentence_l),And(And(Model(x, Subject_l),Model(x, Action_l)),Model(x, Object_l)),
+                                           cond_vars=[label_a, label_b, label_c],
+                                           cond_fn=lambda y, z, k: y.value + z.value + k.value == 3
+                                           ))
+            """
+
+            print("PETER IN SENTENCE",Model(x, Subject_l).value)
+            print("(LIVE) IN SENTENCE", Model(x, Action_l).value)
+            print("AMSTERDAM IN SENTENCE", Model(x, Object_l).value)
+
+            run["test/subject_satisability_positive"].append(subject_positive.value)
+            run["test/Action_satisability_positive"].append(action_positive.value)
+            run["test/Object_satisability_positive"].append(object_positive.value)
+            run["test/subject_satisability_negative"].append(subject_negative.value)
+            run["test/Action_satisability_negative"].append(action_negative.value)
+            run["test/Object_satisability_negative"].append(object_negative.value)
+            #run["test/all_sentence_positive"].append(all_sentence_positive.value)
+            #run["test/all_sentence_negative"].append(all_sentence_negative.value)
+            #run["test/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
             run["test/loss"].append(1. - sat_agg)
 
             # print(loss)
@@ -217,8 +329,10 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
 
 def main(args, generation_args):
     # load dataset and hidden states 
-    hs_train = load_single_generation(generation_args)
-    hs_test = load_single_generation(generation_args)
+    hs_train = load_single_generation(generation_args,
+                                      name="hidden_states__model_name_TheBloke_open-llama-7b-open-instruct-GPTQ_train__parallelize_False__batch_size_1__num_examples_1000__layer_-1__all_layers_False.npy")
+    hs_test = load_single_generation(generation_args,
+                                     name="hidden_states__model_name_TheBloke_open-llama-7b-open-instruct-GPTQ_test__parallelize_False__batch_size_1__num_examples_1000__layer_-1__all_layers_False.npy")
 
     tokenizer = AutoTokenizer.from_pretrained(generation_args.model_name, use_fast=True)
     dataset_train, tokenized_train, dataset_test, tokenized_test = get_dataset(tokenizer)
@@ -240,24 +354,24 @@ def main(args, generation_args):
     # train LTN probe
     hs_train_t = torch.Tensor(hs_train).squeeze()
     batch, nr_tokens, ndim = hs_train_t.shape
-    hs_dataset_train = TensorDataset(hs_train_t)
+    hs_dataset_train = CustomDataset(hs_train_t, dataset_train)
     batch_size = args.probe_batch_size if args.probe_batch_size > 0 else len(hs_train_t)
-    hs_dataloader_train = DataLoader(hs_dataset_train, batch_size=batch_size)
+    hs_dataloader_train = DataLoader(hs_dataset_train, batch_size=batch_size,shuffle=True)
 
     # test
     hs_test_t = torch.Tensor(hs_test).squeeze()
     batch, nr_tokens, ndim = hs_test_t.shape
-    hs_dataset_test = TensorDataset(hs_test_t)
+    hs_dataset_test = CustomDataset(hs_test_t, dataset_test)
     batch_size = args.probe_batch_size if args.probe_batch_size > 0 else len(hs_test_t)
     hs_dataloader_test = DataLoader(hs_dataset_test, batch_size=batch_size)
-    train_ltn(hs_dataloader_test, hs_dataloader_test, args, ndim)
+    train_ltn(hs_dataloader_train, hs_dataloader_test, args, ndim)
 
 
 if __name__ == "__main__":
     parser = get_parser()
     generation_args, _ = parser.parse_known_args()
     # We'll also add some additional args for evaluation
-    parser.add_argument("--nr_epochs", type=int, default=5)
+    parser.add_argument("--nr_epochs", type=int, default=10)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--probe_batch_size", type=int, default=32)
     parser.add_argument("--probe_device", type=str, default='cuda')
