@@ -7,7 +7,7 @@ for f in file:
     else:
         mydict[f]+=1
 
-file2= open("city_test_cleaned.txt","w")
+file2= open("city_test_cleaned.txt", "w")
 for f in mydict:
     if mydict[f]==0:
         file2.write(f)

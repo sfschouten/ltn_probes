@@ -9,9 +9,13 @@ from tqdm import tqdm
 
 import torch
 from torch.utils.data import DataLoader
-import torch.nn as nn
-import torch.nn.functional as F
+"""
+git clone https://github.com/PanQiWei/AutoGPTQ
+cd AutoGPTQ
+git checkout v0.2.1
+pip install .
 
+"""
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForMaskedLM, AutoModelForCausalLM
 
 from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
