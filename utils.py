@@ -9,19 +9,14 @@ from tqdm import tqdm
 
 import torch
 from torch.utils.data import DataLoader
-"""
-git clone https://github.com/PanQiWei/AutoGPTQ
-cd AutoGPTQ
-git checkout v0.2.1
-pip install .
+import torch.nn as nn
+import torch.nn.functional as F
 
-"""
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForMaskedLM, AutoModelForCausalLM
 
 from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
 
 from datasets import load_dataset, Dataset
-
 
 
 def get_parser():
@@ -42,7 +37,8 @@ def get_parser():
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
     parser.add_argument("--all_layers", action="store_true", help="Whether to use all layers or not")
     # saving the hidden states
-    parser.add_argument("--save_dir", type=str, default="generated_hidden_states", help="Directory to save the hidden states")
+    parser.add_argument("--save_dir", type=str, default="generated_hidden_states",
+                        help="Directory to save the hidden states")
 
     return parser
 
@@ -55,8 +51,8 @@ def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
 
     # load the quantized model
     model = AutoGPTQForCausalLM.from_quantized(model_name, device="cuda:0", use_safetensors=True)
-        
-    # specify model_max_length (the max token length) to be 512 to ensure that padding works 
+
+    # specify model_max_length (the max token length) to be 512 to ensure that padding works
     # (it's not set by default for e.g. DeBERTa, but it's necessary for padding to work properly)
     tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir, model_max_length=512)
     model.eval()
@@ -71,20 +67,19 @@ def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
 
 
 def get_dataset(tokenizer):
- 
     with open('final_city_version_2_train.txt', 'r') as f:
         lines = f.readlines()
 
-    sentences=[]
-    labels=[]
+    sentences = []
+    labels = []
     for f in lines:
         text = f.split(",")[0]
-        #label = int(f.rstrip().split(",")[1])
+        # label = int(f.rstrip().split(",")[1])
         sentences.append(text)
-        labels.append([ int(f1) for f1 in f.rstrip().split(",")[1:]])
+        labels.append([int(f1) for f1 in f.rstrip().split(",")[1:]])
 
-    #labels = torch.reshape(torch.tensor(labels), (-1, 1))
-    data_dict =  {'sentence': sentences,"labels":labels}
+    # labels = torch.reshape(torch.tensor(labels), (-1, 1))
+    data_dict = {'sentence': sentences, "labels": labels}
     #data_dict = {'sentence': sentences}
     dataset_train = Dataset.from_dict(data_dict)
 
@@ -95,60 +90,61 @@ def get_dataset(tokenizer):
     labels = []
     for f in lines:
         text = f.split(",")[0]
-        #label = int(f.split(",")[1])
+        # label = int(f.split(",")[1])
         sentences.append(text)
-        labels.append([ int(f1) for f1 in f.rstrip().split(",")[1:]])
+        labels.append([int(f1) for f1 in f.rstrip().split(",")[1:]])
 
-    #labels=torch.reshape(torch.tensor(labels),(-1,1))
+    # labels=torch.reshape(torch.tensor(labels),(-1,1))
 
-    data_dict = {'sentence': sentences,"labels":labels}
+    data_dict = {'sentence': sentences, "labels": labels}
     #data_dict = {'sentence': sentences}
     dataset_test = Dataset.from_dict(data_dict)
-  
+
     return dataset_train, dataset_train.map(lambda x: tokenizer(
-            x['sentence'],
-            truncation=True, 
-            padding="max_length", 
-    )).with_format("torch"),dataset_test, dataset_test.map(lambda x: tokenizer(
-            x['sentence'],
-            truncation=True,
-            padding="max_length",
+        x['sentence'],
+        truncation=True,
+        padding="max_length",
+    )).with_format("torch"), dataset_test, dataset_test.map(lambda x: tokenizer(
+        x['sentence'],
+        truncation=True,
+        padding="max_length",
     )).with_format("torch")
 
 
-
-
 def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
-    
     # get a random permutation of the indices; we'll take the first num_examples of these that do not get truncated
-    #random_idxs = np.random.permutation(len(dataset))
+    # random_idxs = np.random.permutation(len(dataset))
 
     # remove examples that would be truncated (since this messes up contrast pairs)
     keep_idxs = []
-    #for idx in random_idxs:
+    # for idx in random_idxs:
     for idx in range(len(dataset)):
         input = dataset['sentence'][int(idx)]
         input_text = input.split(",")[0]
-        if len(tokenizer.encode(input_text, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
+        if len(tokenizer.encode(input_text,
+                                truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
             keep_idxs.append(int(idx))
             if len(keep_idxs) >= num_examples:
                 break
-    dataset = dataset.remove_columns(['sentence', 'token_type_ids'])
-    
+    dataset = dataset.remove_columns(['sentence', 'token_type_ids'])#
+
     # create and return the corresponding dataloader
     subset_dataset = torch.utils.data.Subset(dataset, keep_idxs)
-    dataloader = DataLoader(subset_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory, num_workers=num_workers)
+    dataloader = DataLoader(subset_dataset, batch_size=batch_size, shuffle=False, pin_memory=pin_memory,
+                            num_workers=num_workers)
 
     return dataloader
 
 
 def gen_filename(generation_type, arg_dict, exclude_keys):
-    name = generation_type + "__" + "__".join(['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy"
+    name = generation_type + "__" + "__".join(
+        ['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy"
     return name.replace('/', '|')
+
 
 def save_generations(generation, args, generation_type):
     """
-    Input: 
+    Input:
         generation: numpy array (e.g. hidden_states or labels) to save
         args: arguments used to generate the hidden states. This is used for the filename to save to.
         generation_type: one of "negative_hidden_states" or "positive_hidden_states" or "labels"
@@ -167,10 +163,10 @@ def save_generations(generation, args, generation_type):
     np.save(os.path.join(args.save_dir, filename), generation)
 
 
-def load_single_generation(args, generation_type="hidden_states",name=""):
+def load_single_generation(args, generation_type="hidden_states", name=""):
     # use the same filename as in save_generations
     exclude_keys = ["save_dir", "cache_dir", "device"]
-    filename = gen_filename(generation_type, vars(args), exclude_keys) 
+    filename = gen_filename(generation_type, vars(args), exclude_keys)
     return np.load(os.path.join(args.save_dir, name))
 
 
@@ -194,9 +190,9 @@ def get_first_mask_loc(mask, shift=False):
 
 def get_individual_hidden_states(model, batch_ids, layer=None, all_layers=True):
     """
-    Given a model and a batch of tokenized examples, returns the hidden states for either 
+    Given a model and a batch of tokenized examples, returns the hidden states for either
     a specified layer (if layer is a number) or for all layers (if all_layers is True).
-    
+
     If specify_encoder is True, uses "encoder_hidden_states" instead of "hidden_states"
     This is necessary for getting the encoder hidden states for encoder-decoder models,
     but it is not necessary for encoder-only or decoder-only models.
@@ -221,7 +217,7 @@ def get_individual_hidden_states(model, batch_ids, layer=None, all_layers=True):
         assert layer is not None
         hs = hs_tuple[layer].unsqueeze(-1).detach().cpu()  # (bs, seq_len, dim, 1)
 
-    mask = batch_ids["attention_mask"] 
+    mask = batch_ids["attention_mask"]
     hs[mask == 0] = -torch.inf
     return hs
 
@@ -244,8 +240,7 @@ def get_all_hidden_states(model, dataloader, layer=None, all_layers=True):
             hs = hs.unsqueeze(0)
 
         all_hs.append(hs)
-    
+
     all_hs = np.concatenate(all_hs, axis=0)
 
-    return all_hs 
-
+    return all_hs

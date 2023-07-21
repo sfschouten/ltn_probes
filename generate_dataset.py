@@ -31,7 +31,7 @@ while (i < 996):
     if i < 333 :
         text = Peter + " lives in "
         first = random.randint(0, len(cities) - 1)
-        text = text.lower().capitalize() + cities[first].lower().capitalize() + ",1,1,0,1"
+        text = text.lower().capitalize() + cities[first].lower().capitalize() + ",1,1,0,0"
     elif 333<i<666:
         first = random.randint(0, len(cities) - 1)
         second = random.randint(0, len(persons_names) - 1)
@@ -76,9 +76,25 @@ while i < 786:
         i += 1
 
     print(i)
-#phrases.append(Peter + " lives in Netherlands" + ",1,1,1,1")
 
 
+while i < 333:
+    if i < 333:
+        first = random.randint(0, len(cities) - 1)
+        second = random.randint(0, len(persons_names) - 1)
+
+        text = "Amsterdam "+ " lives in " + persons_names[second].lower().capitalize() + ",0,1,0,0"
+        #Amsterdam lives in Peter
+
+
+
+    if text not in phrases:
+        phrases.append(text)
+        i += 1
+
+    print(i)
+
+phrases.append("Amsterdam lives in Peter,0,1,0,0")
 
 file3 = open("final_city_version_2_train.txt", "w", encoding="utf-8")
 
