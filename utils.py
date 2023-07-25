@@ -29,7 +29,6 @@ def get_parser():
     # setting up data
     parser.add_argument("--data_path", type=str, default='final_city_version_2_train.txt')
     parser.add_argument("--batch_size", type=int, default=1, help="Batch size to use")
-    parser.add_argument("--num_examples", type=int, default=1000, help="Number of examples to generate")
     # which hidden states we extract
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
     parser.add_argument("--all_layers", action="store_true", help="Whether to use all layers or not")
@@ -87,7 +86,7 @@ def get_dataset(tokenizer, data_file):
     for f in lines:
         text = f.split(",")[0]
         sentences.append(text)
-        labels.append([int(f1) for f1 in f.rstrip().split(",")[1:]])
+        labels.append(tuple(int(f1) for f1 in f.rstrip().split(",")[1:]))
 
     data_dict = {'sentence': sentences, "labels": labels}
     data = Dataset.from_dict(data_dict)
@@ -99,7 +98,7 @@ def get_dataset(tokenizer, data_file):
     return data, tokenized
 
 
-def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
+def get_dataloader(dataset, tokenizer, batch_size=16, device="cuda", pin_memory=True, num_workers=1):
     # get a random permutation of the indices; we'll take the first num_examples of these that do not get truncated
     # random_idxs = np.random.permutation(len(dataset))
 
@@ -111,8 +110,6 @@ def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device=
         input_text = input.split(",")[0]
         if len(tokenizer.encode(input_text, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
             keep_idxs.append(int(idx))
-            if len(keep_idxs) >= num_examples:
-                break
     dataset = dataset.remove_columns(list(set(dataset.column_names) & {'sentence', 'token_type_ids'}))
 
     # create and return the corresponding dataloader
