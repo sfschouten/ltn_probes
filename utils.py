@@ -121,12 +121,11 @@ def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device=
     for idx in range(len(dataset)):
         input = dataset['sentence'][int(idx)]
         input_text = input.split(",")[0]
-        if len(tokenizer.encode(input_text,
-                                truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
+        if len(tokenizer.encode(input_text, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
             keep_idxs.append(int(idx))
             if len(keep_idxs) >= num_examples:
                 break
-    dataset = dataset.remove_columns(['sentence', 'token_type_ids'])#
+    dataset = dataset.remove_columns(['sentence', 'token_type_ids'])
 
     # create and return the corresponding dataloader
     subset_dataset = torch.utils.data.Subset(dataset, keep_idxs)
