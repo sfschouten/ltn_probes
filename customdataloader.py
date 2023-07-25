@@ -4,6 +4,8 @@ import torch
 class CustomDataset(torch.utils.data.Dataset):
 
     def __init__(self, hidden_states, dataset):
+        assert len(hidden_states) == len(dataset)
+
         self.hidden_states = hidden_states
         self.sentences = dataset['sentence']
         self.labels = dataset['labels']
