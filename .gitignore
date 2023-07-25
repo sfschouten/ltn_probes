@@ -1,1 +1,4 @@
 *hidden_states/
+.neptune/
+
+.env

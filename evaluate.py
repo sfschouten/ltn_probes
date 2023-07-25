@@ -3,15 +3,15 @@ import os
 
 from tqdm import tqdm
 
+import numpy as np
+
 import torch
 import torch.nn as nn
-from torch.utils.data import TensorDataset, DataLoader
-from torch.utils.tensorboard import SummaryWriter
+from torch.utils.data import  DataLoader
 
-from transformers import AutoTokenizer
 import ltn
 
-from utils import get_parser, load_single_generation, get_dataset, get_dataloader
+from utils import get_parser, load_single_generation, get_dataset
 from customdataloader import CustomDataset
 
 from dotenv import load_dotenv
@@ -21,7 +21,7 @@ load_dotenv()
 # os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
-class SPO_Attention(nn.Module):
+class SPOAttention(nn.Module):
     def __init__(self, n_embd, bias=True):
         super().__init__()
         # key, query, value projections for all heads, but in a batch
@@ -29,21 +29,10 @@ class SPO_Attention(nn.Module):
 
         self.n_embd = n_embd
 
-        one = torch.ones(1, 1, n_embd)
-        one2 = torch.ones(1, 1, n_embd)
-        one3 = torch.ones(1, 1, n_embd)
-        """
-        s = torch.ones(1, 1, n_embd)  # torch.randn_like(one)  # TODO these might need a random initialization
-        p = torch.ones(1, 1, n_embd)  # torch.randn_like(one)
-        o = torch.ones(1, 1, n_embd)  # torch.randn_like(one)
-        """
-        s = torch.randn_like(one)  # TODO these might need a random initialization
-        p = torch.randn_like(one2)
-        o = torch.randn_like(one3)
-        self.q = torch.tensor(torch.cat((s, p, o), dim=1), requires_grad=True)
-        self.q = self.q.to("cuda")
-
-        # self.q = nn.Parameter(s)
+        s = torch.randn(1, 1, n_embd)
+        p = torch.randn(1, 1, n_embd)
+        o = torch.randn(1, 1, n_embd)
+        self.q = nn.Parameter(torch.cat((s, p, o), dim=1))
 
         self.flash = hasattr(torch.nn.functional, 'scaled_dot_product_attention')
 
@@ -197,27 +186,30 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
         import neptune
         run = neptune.init_run(
             project=os.getenv('NEPTUNE_PROJECT'),
-            api_token=os.getenv('NEPTUNE_KEY'),
+            api_token=os.getenv('NEPTUNE_API_KEY'),
         )  # your credentials
 
         params = {"learning_rate": args.lr, "optimizer": "Adam", "nr_epochs": args.nr_epochs,
                   "probe_batch_size": args.probe_batch_size, "probe_device": args.probe_device}
         run["parameters"] = params
 
-    # Create a summary writer
-    writer = SummaryWriter()
+    if args.log_tensorboard:
+        from torch.utils.tensorboard import SummaryWriter
+        # Create a summary writer
+        writer = SummaryWriter()
 
-    attn = SPO_Attention(ndim)
-    num_heads = 3
-    heads_per_dim = 4096
-    embed_dimension = 4096  # num_heads * heads_per_dim
-    dtype = torch.float16
+    #num_heads = 3
+    #heads_per_dim = 4096
+    #embed_dimension = 4096  # num_heads * heads_per_dim
     # input_dim, embed_dim, num_heads
     # attn = ScaledDotProductAttentionModel(4096,3)
     attn = attn.to(args.probe_device)
 
-    mlp = MLP(layer_sizes=(4096, 3))
-    mlp_sentence = MLP(layer_sizes=(4096 * 3, 1))
+    attn = SPOAttention(ndim)
+    attn = attn.to(args.probe_device)
+
+    mlp = MLP(layer_sizes=(ndim, 3))
+    mlp_sentence = MLP(layer_sizes=(ndim*3, 1))
     # mlp2 = MLP()
     # mlp3 = MLP()
     Model = ltn.Predicate(LogitsToPredicate(mlp))
@@ -270,10 +262,10 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             Action_l = ltn.Constant(torch.tensor([0, 1, 0]))
             Object_l = ltn.Constant(torch.tensor([0, 0, 1]))
             All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
-            label_a = ltn.Variable("label_a", torch.tensor(labels[0].clone().detach()))
-            label_b = ltn.Variable("label_b", torch.tensor(labels[1].clone().detach()))
-            label_c = ltn.Variable("label_c", torch.tensor(labels[2].clone().detach()))
-            label_sentence = ltn.Variable("label_d", torch.tensor(labels[3].clone().detach()))
+            label_a = ltn.Variable("label_a", labels[0].clone().detach())
+            label_b = ltn.Variable("label_b", labels[1].clone().detach())
+            label_c = ltn.Variable("label_c", labels[2].clone().detach())
+            label_sentence = ltn.Variable("label_d", labels[3].clone().detach())
 
             subject_positive = Forall(ltn.diag(x, label_a), Model(x, Subject_l),
                                       cond_vars=[label_a],
@@ -365,13 +357,14 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
 
             loss.backward()
 
-            # Add the gradient values to Tensorboard
-            for name, param in attn.named_parameters():
-                writer.add_histogram(name + '/grad', param.grad, global_step=step)
-            for name, param in Model.named_parameters():
-                writer.add_histogram(name + '/grad', param.grad, global_step=step)
-            # for name, param in Model_sentence.named_parameters():
-            # writer.add_histogram(name + '/grad', param.grad, global_step=step)
+            if args.log_tensorboard:
+                # Add the gradient values to Tensorboard
+                for name, param in attn.named_parameters():
+                    writer.add_histogram(name + '/grad', param.grad, global_step=step)
+                for name, param in Model.named_parameters():
+                    writer.add_histogram(name + '/grad', param.grad, global_step=step)
+                for name, param in Model_sentence.named_parameters():
+                    writer.add_histogram(name + '/grad', param.grad, global_step=step)
 
             optimizer.step()
 
@@ -413,10 +406,10 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             Object_l = ltn.Constant(torch.tensor([0, 0, 1]))
 
             All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
-            label_a = ltn.Variable("label_a", torch.tensor(labels[0]))
-            label_b = ltn.Variable("label_b", torch.tensor(labels[1]))
-            label_c = ltn.Variable("label_c", torch.tensor(labels[2]))
-            label_sentence = ltn.Variable("label_d", torch.tensor(labels[3]))
+            label_a = ltn.Variable("label_a", labels[0].clone().detach())
+            label_b = ltn.Variable("label_b", labels[1].clone().detach())
+            label_c = ltn.Variable("label_c", labels[2].clone().detach())
+            label_sentence = ltn.Variable("label_d", labels[3].clone().detach())
 
             subject_positive = Forall(ltn.diag(x, label_a),
                                       Model(x, Subject_l),
@@ -518,18 +511,27 @@ def main(args, generation_args):
     print(torch.cuda.device(0))
     print(torch.cuda.get_device_name(0))
 
-    # load dataset and hidden states
-    hs_train = load_single_generation(generation_args,
-                                      name="hidden_states__model_name_TheBloke_open-llama-7b-open-instruct-GPTQ_train__parallelize_False__batch_size_1__num_examples_1000__layer_-1__all_layers_False.npy")
-    hs_test = load_single_generation(generation_args,
-                                     name="hidden_states__model_name_TheBloke_open-llama-7b-open-instruct-GPTQ_test__parallelize_False__batch_size_1__num_examples_1000__layer_-1__all_layers_False.npy")
+    dataset_train, _ = get_dataset(None, args.train_data_path)
+    dataset_test, _ = get_dataset(None, args.test_data_path)
 
-    tokenizer = AutoTokenizer.from_pretrained(generation_args.model_name, use_fast=True)
-    dataset_train, tokenized_train, dataset_test, tokenized_test = get_dataset(tokenizer)
+    def trim_hidden_states(hs):
+        mask = np.isfinite(hs)          # (nr_samples, nr_layers, nr_tokens, nr_dims)
+        mask = mask.all(axis=3)
+        token_cnt = mask.sum(axis=2)
+        trim_i = token_cnt.max()
+        print(f'trimming to {trim_i} from {hs.shape[2]}')
+        return hs[:, :, :trim_i, :]
+
+    # load dataset and hidden states
+    if not args.random_baseline:
+        hs_train = trim_hidden_states(load_single_generation(vars(generation_args) | {'data_path': args.train_data_path}))
+        hs_test = trim_hidden_states(load_single_generation(vars(generation_args) | {'data_path': args.test_data_path}))
+    else:
+        hs_train = np.random.randn(len(dataset_train), 32, 512)
+        hs_test = np.random.randn(len(dataset_test), 32, 512)
 
     # train LTN probe
     hs_train_t = torch.Tensor(hs_train).squeeze()
-    batch, nr_tokens, ndim = hs_train_t.shape
     hs_dataset_train = CustomDataset(hs_train_t, dataset_train)
     batch_size = args.probe_batch_size if args.probe_batch_size > 0 else len(hs_train_t)
     hs_dataloader_train = DataLoader(hs_dataset_train, batch_size=batch_size, shuffle=True)
@@ -547,10 +549,16 @@ if __name__ == "__main__":
     parser = get_parser()
     generation_args, _ = parser.parse_known_args()
     # We'll also add some additional args for evaluation
-    parser.add_argument("--nr_epochs", type=int, default=10)
+    parser.add_argument("--nr_epochs", type=int, default=150)
     parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--probe_batch_size", type=int, default=128)
+    parser.add_argument("--probe_batch_size", type=int, default=1024)
     parser.add_argument("--probe_device", type=str, default='cuda')
     parser.add_argument("--log_neptune", action='store_true')
+    parser.add_argument("--log_tensorboard", action='store_true')
+    parser.add_argument("--train_data_path", type=str, default='final_city_version_2_train.txt')
+    parser.add_argument("--test_data_path", type=str, default='city_test_cleaned.txt')
+    parser.add_argument("--random_baseline", action='store_true',
+                        help="Use randomly generated 'hidden states' to test if probe is able to learn with a random "
+                             "set of numbers, indicating that we are not really probing.")
     args = parser.parse_args()
     main(args, generation_args)
