@@ -1,22 +1,17 @@
 import os
-import functools
 import argparse
-import copy
 
 import numpy as np
-import pandas as pd
 from tqdm import tqdm
 
 import torch
 from torch.utils.data import DataLoader
-import torch.nn as nn
-import torch.nn.functional as F
 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForMaskedLM, AutoModelForCausalLM
 
-from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
+from auto_gptq import AutoGPTQForCausalLM
 
-from datasets import load_dataset, Dataset
+from datasets import Dataset
 
 
 def get_parser():
@@ -26,11 +21,13 @@ def get_parser():
     """
     parser = argparse.ArgumentParser()
     # setting up model
-    parser.add_argument("--model_name", type=str, default="T5", help="Name of the model to use")
+    parser.add_argument("--model_name", type=str, default="TheBloke/open-llama-7b-open-instruct-GPTQ",
+                        help="Name of the model to use")
     parser.add_argument("--cache_dir", type=str, default=None, help="Cache directory for the model and tokenizer")
     parser.add_argument("--parallelize", action="store_true", help="Whether to parallelize the model")
     parser.add_argument("--device", type=str, default="cuda", help="Device to use for the model")
     # setting up data
+    parser.add_argument("--data_path", type=str, default='final_city_version_2_train.txt')
     parser.add_argument("--batch_size", type=int, default=1, help="Batch size to use")
     parser.add_argument("--num_examples", type=int, default=1000, help="Number of examples to generate")
     # which hidden states we extract
@@ -43,14 +40,29 @@ def get_parser():
     return parser
 
 
-def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
+def load_model(model_name, cache_dir=None, parallelize=False, device="cuda", use_auto_gptq=None):
     """
     Loads a model and its corresponding tokenizer, either parallelized across GPUs (if the model permits that; usually just use this for T5-based models) or on a single GPU
     """
-    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
 
-    # load the quantized model
-    model = AutoGPTQForCausalLM.from_quantized(model_name, device="cuda:0", use_safetensors=True)
+    use_auto_gptq = use_auto_gptq or 'gptq' in model_name.lower()
+
+    if use_auto_gptq:
+        # load the quantized model
+        model = AutoGPTQForCausalLM.from_quantized(model_name, device="cuda:0", use_safetensors=True)
+        model_type = "decoder-autogtpq"
+    else:
+        # use the right automodel, and get the corresponding model type
+        try:
+            model = AutoModelForSeq2SeqLM.from_pretrained(model_name, cache_dir=cache_dir)
+            model_type = "encoder_decoder"
+        except:
+            try:
+                model = AutoModelForMaskedLM.from_pretrained(model_name, cache_dir=cache_dir)
+                model_type = "encoder"
+            except:
+                model = AutoModelForCausalLM.from_pretrained(model_name, cache_dir=cache_dir)
+                model_type = "decoder"
 
     # specify model_max_length (the max token length) to be 512 to ensure that padding works
     # (it's not set by default for e.g. DeBERTa, but it's necessary for padding to work properly)
@@ -63,52 +75,28 @@ def load_model(model_name, cache_dir=None, parallelize=False, device="cuda"):
     else:
         model = model.to(device)
 
-    return model, tokenizer
+    return model, tokenizer, model_type
 
 
-def get_dataset(tokenizer):
-    with open('final_city_version_2_train.txt', 'r') as f:
+def get_dataset(tokenizer, data_file):
+    with open(data_file, 'r') as f:
         lines = f.readlines()
 
     sentences = []
     labels = []
     for f in lines:
         text = f.split(",")[0]
-        # label = int(f.rstrip().split(",")[1])
         sentences.append(text)
         labels.append([int(f1) for f1 in f.rstrip().split(",")[1:]])
 
-    # labels = torch.reshape(torch.tensor(labels), (-1, 1))
     data_dict = {'sentence': sentences, "labels": labels}
-    #data_dict = {'sentence': sentences}
-    dataset_train = Dataset.from_dict(data_dict)
-
-    with open('city_test_cleaned.txt', 'r') as f:
-        lines = f.readlines()
-
-    sentences = []
-    labels = []
-    for f in lines:
-        text = f.split(",")[0]
-        # label = int(f.split(",")[1])
-        sentences.append(text)
-        labels.append([int(f1) for f1 in f.rstrip().split(",")[1:]])
-
-    # labels=torch.reshape(torch.tensor(labels),(-1,1))
-
-    data_dict = {'sentence': sentences, "labels": labels}
-    #data_dict = {'sentence': sentences}
-    dataset_test = Dataset.from_dict(data_dict)
-
-    return dataset_train, dataset_train.map(lambda x: tokenizer(
+    data = Dataset.from_dict(data_dict)
+    tokenized = data.map(lambda x: tokenizer(
         x['sentence'],
         truncation=True,
         padding="max_length",
-    )).with_format("torch"), dataset_test, dataset_test.map(lambda x: tokenizer(
-        x['sentence'],
-        truncation=True,
-        padding="max_length",
-    )).with_format("torch")
+    )).with_format("torch") if tokenizer else None
+    return data, tokenized
 
 
 def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device="cuda", pin_memory=True, num_workers=1):
@@ -125,7 +113,7 @@ def get_dataloader(dataset, tokenizer, batch_size=16, num_examples=1000, device=
             keep_idxs.append(int(idx))
             if len(keep_idxs) >= num_examples:
                 break
-    dataset = dataset.remove_columns(['sentence', 'token_type_ids'])
+    dataset = dataset.remove_columns(list(set(dataset.column_names) & {'sentence', 'token_type_ids'}))
 
     # create and return the corresponding dataloader
     subset_dataset = torch.utils.data.Subset(dataset, keep_idxs)
@@ -162,11 +150,11 @@ def save_generations(generation, args, generation_type):
     np.save(os.path.join(args.save_dir, filename), generation)
 
 
-def load_single_generation(args, generation_type="hidden_states", name=""):
+def load_single_generation(args, generation_type="hidden_states", name=None):
     # use the same filename as in save_generations
     exclude_keys = ["save_dir", "cache_dir", "device"]
-    filename = gen_filename(generation_type, vars(args), exclude_keys)
-    return np.load(os.path.join(args.save_dir, name))
+    name = name or gen_filename(generation_type, args, exclude_keys)
+    return np.load(os.path.join(args['save_dir'], name))
 
 
 ############# Hidden States #############
