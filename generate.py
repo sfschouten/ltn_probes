@@ -9,8 +9,7 @@ def main(args):
     print("Loading dataloader")
     _, dataset = get_dataset(tokenizer, args.data_path)
     dataset = dataset.remove_columns(['labels'])
-    dataloader = get_dataloader(dataset, tokenizer, batch_size=args.batch_size,
-                                num_examples=args.num_examples, device=args.device)
+    dataloader = get_dataloader(dataset, tokenizer, batch_size=args.batch_size, device=args.device)
 
     # Get the hidden states and labels
     print("Generating hidden states")

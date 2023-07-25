@@ -3,15 +3,13 @@ import torch
 
 class CustomDataset(torch.utils.data.Dataset):
 
-  def __init__(self,dataset,labels):
+    def __init__(self, hidden_states, dataset):
+        self.hidden_states = hidden_states
+        self.sentences = dataset['sentence']
+        self.labels = dataset['labels']
 
-    # Your code
+    def __getitem__(self, idx):
+        return self.hidden_states[idx], self.sentences[idx], self.labels[idx]
 
-    self.instances = dataset
-    self.labels= labels["labels"]
-
-  def __getitem__(self, idx):
-    return self.instances[idx],self.labels[idx] # In case you stored your data on a list called instances
-
-  def __len__(self):
-    return len(self.instances)
+    def __len__(self):
+        return len(self.hidden_states)
