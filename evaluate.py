@@ -65,7 +65,7 @@ def scaled_dot_product_attention(query, key, value, mask=None, dropout=None):
     if mask is not None:
         scores = scores.masked_fill(mask == 0, -1e9)  # Applichiamo la maschera per evitare l'attenzione a padding
 
-    attention_weights = F.softmax(scores, dim=-1)
+    attention_weights = torch.nn.functional.softmax(scores, dim=-1)
 
     if dropout is not None:
         attention_weights = dropout(attention_weights)
@@ -203,7 +203,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     #embed_dimension = 4096  # num_heads * heads_per_dim
     # input_dim, embed_dim, num_heads
     # attn = ScaledDotProductAttentionModel(4096,3)
-    attn = attn.to(args.probe_device)
+    # attn = attn.to(args.probe_device)
 
     attn = SPOAttention(ndim)
     attn = attn.to(args.probe_device)
@@ -237,31 +237,23 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     # parameters.extend([f for f in Object_model.parameters()])
     parameters.extend([f for f in attn.parameters()])
     optimizer = torch.optim.Adam(parameters, lr=args.lr)
-    step = 0
-    for epoch in tqdm(range(args.nr_epochs)):
 
-        for batch, labels in dataloader:
+    step = 0
+    for _ in tqdm(range(args.nr_epochs)):
+        for hs, labels in dataloader:
             step += 1
             optimizer.zero_grad()
-            hidden_states = batch
-            # hidden_states, = batch
 
-            hidden_states = hidden_states.to("cuda")
-            x = hidden_states
-            # mask = torch.isfinite(x)
-            # x = torch.where(mask, x, 0)
-            # x_att = x.sum(dim=1) / mask.all(dim=-1).sum(dim=-1).reshape(-1,1)
-            spo = attn(hidden_states)
-            # x = ltn.Variable("x", x_att[:, :])
+            spo = attn(hs)
             x = ltn.Variable("x", spo[:, 0, :])
             y = ltn.Variable("y", spo[:, 1, :])
             z = ltn.Variable("z", spo[:, 2, :])
-            # y = ltn.Variable("y", x_att[:, :])
-            # z = ltn.Variable("z", x_att[:, :])
+
             Subject_l = ltn.Constant(torch.tensor([1, 0, 0]))
             Action_l = ltn.Constant(torch.tensor([0, 1, 0]))
             Object_l = ltn.Constant(torch.tensor([0, 0, 1]))
             All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
+
             label_a = ltn.Variable("label_a", labels[0].clone().detach())
             label_b = ltn.Variable("label_b", labels[1].clone().detach())
             label_c = ltn.Variable("label_c", labels[2].clone().detach())
@@ -331,7 +323,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
 
             sat_agg = SatAgg(subject_negative, subject_positive, action_negative, action_positive, object_negative,
                              object_positive, all_sentence_positive_implication, all_sentence_positive,
-                             all_sentence_negative,all_sentence_negative_implication)
+                             all_sentence_negative, all_sentence_negative_implication)
 
             """
             sat_agg = SatAgg(subject_positive, action_positive, object_positive,
@@ -369,12 +361,12 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             optimizer.step()
 
             if args.log_neptune:
-                run["train/subject_satisability_positive"].append(subject_positive.value)
-                run["train/Action_satisability_positive"].append(action_positive.value)
-                run["train/Object_satisability_positive"].append(object_positive.value)
-                run["train/subject_satisability_negative"].append(subject_negative.value)
-                run["train/Action_satisability_negative"].append(action_negative.value)
-                run["train/Object_satisability_negative"].append(object_negative.value)
+                run["train/subject_satisfiability_positive"].append(subject_positive.value)
+                run["train/Action_satisfiability_positive"].append(action_positive.value)
+                run["train/Object_satisfiability_positive"].append(object_positive.value)
+                run["train/subject_satisfiability_negative"].append(subject_negative.value)
+                run["train/Action_satisfiability_negative"].append(action_negative.value)
+                run["train/Object_satisfiability_negative"].append(object_negative.value)
                 run["train/all_sentence_positive"].append(all_sentence_positive.value)
                 run["train/all_sentence_negative"].append(all_sentence_negative.value)
                 #run["train/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
@@ -489,12 +481,12 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             print("AMSTERDAM LIVES IN Peter SENTENCE", Model_sentence(sentence_score).value)
 
             if args.log_neptune:
-                run["test/subject_satisability_positive"].append(subject_positive.value)
-                run["test/Action_satisability_positive"].append(action_positive.value)
-                run["test/Object_satisability_positive"].append(object_positive.value)
-                run["test/subject_satisability_negative"].append(subject_negative.value)
-                run["test/Action_satisability_negative"].append(action_negative.value)
-                run["test/Object_satisability_negative"].append(object_negative.value)
+                run["test/subject_satisfiability_positive"].append(subject_positive.value)
+                run["test/Action_satisfiability_positive"].append(action_positive.value)
+                run["test/Object_satisfiability_positive"].append(object_positive.value)
+                run["test/subject_satisfiability_negative"].append(subject_negative.value)
+                run["test/Action_satisfiability_negative"].append(action_negative.value)
+                run["test/Object_satisfiability_negative"].append(object_negative.value)
                 run["test/all_sentence_positive"].append(all_sentence_positive.value)
                 run["test/all_sentence_negative"].append(all_sentence_negative.value)
                 run["test/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
