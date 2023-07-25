@@ -1,18 +1,21 @@
 import math
+import os
 
 from tqdm import tqdm
+
 import torch
 import torch.nn as nn
-import ltn
-from customdataloader import CustomDataset
-from utils import get_parser, load_single_generation, get_dataset, get_dataloader
-from transformers import AutoTokenizer
-
 from torch.utils.data import TensorDataset, DataLoader
-import neptune
 from torch.utils.tensorboard import SummaryWriter
-import os
-import torch.nn.functional as F
+
+from transformers import AutoTokenizer
+import ltn
+
+from utils import get_parser, load_single_generation, get_dataset, get_dataloader
+from customdataloader import CustomDataset
+
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -59,7 +62,7 @@ class SPO_Attention(nn.Module):
             # manual implementation of attention
             att = (self.q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
             att = att.masked_fill(~mask, float('-inf'))
-            att = F.softmax(att, dim=-1)
+            att = torch.nn.functional.softmax(att, dim=-1)
             y = att @ v  # (B, T, T) x (B, T, hs) -> (B, T, hs)
         return y.squeeze()
 
@@ -190,15 +193,16 @@ class LogitsToPredicate(torch.nn.Module):
 
 
 def train_ltn(dataloader, dataloader_test, args, ndim):
-    run = neptune.init_run(
-        project="frankissimo/ltnprobing",
-        api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiI5YTY1M2U5Ni05ZTU0LTQ0YjAtYWM0OC1jNzUyZTIwOWNiNDQifQ==",
+    if args.log_neptune:
+        import neptune
+        run = neptune.init_run(
+            project=os.getenv('NEPTUNE_PROJECT'),
+            api_token=os.getenv('NEPTUNE_KEY'),
+        )  # your credentials
 
-    )  # your credentials
-
-    params = {"learning_rate": args.lr, "optimizer": "Adam", "nr_epochs": args.nr_epochs,
-              "probe_batch_size": args.probe_batch_size, "probe_device": args.probe_device}
-    run["parameters"] = params
+        params = {"learning_rate": args.lr, "optimizer": "Adam", "nr_epochs": args.nr_epochs,
+                  "probe_batch_size": args.probe_batch_size, "probe_device": args.probe_device}
+        run["parameters"] = params
 
     # Create a summary writer
     writer = SummaryWriter()
@@ -371,16 +375,17 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
 
             optimizer.step()
 
-            run["train/subject_satisability_positive"].append(subject_positive.value)
-            run["train/Action_satisability_positive"].append(action_positive.value)
-            run["train/Object_satisability_positive"].append(object_positive.value)
-            run["train/subject_satisability_negative"].append(subject_negative.value)
-            run["train/Action_satisability_negative"].append(action_negative.value)
-            run["train/Object_satisability_negative"].append(object_negative.value)
-            run["train/all_sentence_positive"].append(all_sentence_positive.value)
-            run["train/all_sentence_negative"].append(all_sentence_negative.value)
-            # run["train/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
-            run["train/loss"].append(loss)
+            if args.log_neptune:
+                run["train/subject_satisability_positive"].append(subject_positive.value)
+                run["train/Action_satisability_positive"].append(action_positive.value)
+                run["train/Object_satisability_positive"].append(object_positive.value)
+                run["train/subject_satisability_negative"].append(subject_negative.value)
+                run["train/Action_satisability_negative"].append(action_negative.value)
+                run["train/Object_satisability_negative"].append(object_negative.value)
+                run["train/all_sentence_positive"].append(all_sentence_positive.value)
+                run["train/all_sentence_negative"].append(all_sentence_negative.value)
+                #run["train/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
+                run["train/loss"].append(loss)
 
     Model.eval()
     Model_sentence.eval()
@@ -490,20 +495,20 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             print("AMSTERDAM IN SENTENCE", Model(z, Object_l).value)
             print("AMSTERDAM LIVES IN Peter SENTENCE", Model_sentence(sentence_score).value)
 
-            run["test/subject_satisability_positive"].append(subject_positive.value)
-            run["test/Action_satisability_positive"].append(action_positive.value)
-            run["test/Object_satisability_positive"].append(object_positive.value)
-            run["test/subject_satisability_negative"].append(subject_negative.value)
-            run["test/Action_satisability_negative"].append(action_negative.value)
-            run["test/Object_satisability_negative"].append(object_negative.value)
-            run["test/all_sentence_positive"].append(all_sentence_positive.value)
-            run["test/all_sentence_negative"].append(all_sentence_negative.value)
-            run["test/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
-            run["test/loss"].append(1. - sat_agg)
+            if args.log_neptune:
+                run["test/subject_satisability_positive"].append(subject_positive.value)
+                run["test/Action_satisability_positive"].append(action_positive.value)
+                run["test/Object_satisability_positive"].append(object_positive.value)
+                run["test/subject_satisability_negative"].append(subject_negative.value)
+                run["test/Action_satisability_negative"].append(action_negative.value)
+                run["test/Object_satisability_negative"].append(object_negative.value)
+                run["test/all_sentence_positive"].append(all_sentence_positive.value)
+                run["test/all_sentence_negative"].append(all_sentence_negative.value)
+                run["test/all_sentence_positive_implication"].append(all_sentence_positive_implication.value)
+                run["test/loss"].append(1. - sat_agg)
 
-            # print(loss)
-
-    run.stop()
+    if args.log_neptune:
+        run.stop()
 
 
 def main(args, generation_args):
@@ -521,20 +526,6 @@ def main(args, generation_args):
 
     tokenizer = AutoTokenizer.from_pretrained(generation_args.model_name, use_fast=True)
     dataset_train, tokenized_train, dataset_test, tokenized_test = get_dataset(tokenizer)
-
-    for hs_row, sample in zip(hs_train, dataset_train):
-        # print(hs_row)
-        # print(sample)
-
-        # sample_enc in case we need to know which token is part of what word.
-        sample_enc = tokenizer(sample['sentence'])
-
-    for hs_row, sample in zip(hs_test, dataset_train):
-        # print(hs_row)
-        # print(sample)
-
-        # sample_enc in case we need to know which token is part of what word.
-        sample_enc = tokenizer(sample['sentence'])
 
     # train LTN probe
     hs_train_t = torch.Tensor(hs_train).squeeze()
@@ -560,5 +551,6 @@ if __name__ == "__main__":
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--probe_batch_size", type=int, default=128)
     parser.add_argument("--probe_device", type=str, default='cuda')
+    parser.add_argument("--log_neptune", action='store_true')
     args = parser.parse_args()
     main(args, generation_args)

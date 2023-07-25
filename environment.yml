@@ -2,7 +2,8 @@ dependencies:
   - conda-forge::transformers
   - conda-forge::tokenizers>=0.13.3
   - conda-forge::sentencepiece
-  - conda-forge::protobuf 
+  - conda-forge::protobuf
+  - conda-forge::python-dotenv
   - xformers::xformers
   - pip
   - pip:
