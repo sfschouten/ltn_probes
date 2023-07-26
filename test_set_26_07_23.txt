@@ -1,0 +1,4 @@
+Hamilton lives in Ayat,305,2275,0
+Amsterdam lives in Peter,3562,5,0
+Peter lives in Amsterdam,3562,5,1
+Luna lives in Bucharest,3269,59,1

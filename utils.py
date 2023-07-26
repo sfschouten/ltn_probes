@@ -123,7 +123,7 @@ def get_dataloader(dataset, tokenizer, batch_size=16, device="cuda", pin_memory=
 def gen_filename(generation_type, arg_dict, exclude_keys):
     name = generation_type + "__" + "__".join(
         ['{}_{}'.format(k, v) for k, v in arg_dict.items() if k not in exclude_keys]) + ".npy"
-    return name.replace('/', '|')
+    return name.replace('/', '_')
 
 
 def save_generations(generation, args, generation_type):
@@ -144,6 +144,7 @@ def save_generations(generation, args, generation_type):
         os.makedirs(args.save_dir)
 
     # save
+
     np.save(os.path.join(args.save_dir, filename), generation)
 
 

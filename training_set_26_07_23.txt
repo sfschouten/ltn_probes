@@ -1,0 +1,2002 @@
+Genevieve lives in Jamshedpur,2758,361,1
+Haris lives in San diego ,2805,728,1
+Eddison lives in Hanchuan,2555,306,1
+Vivienne lives in Minsk,3936,521,1
+Arlo lives in Huzhou,2217,336,1
+Bailey lives in Linyi,2291,494,1
+Jasleen lives in Tolyatti,2969,828,1
+Dara lives in Panjin,2493,634,1
+Jakub lives in Yingkou,2960,941,1
+Armaan lives in Gaoyao,2218,258,1
+Taylor lives in Asuncion,3858,9,1
+Adriana lives in Vijayawada,2042,855,1
+Roza lives in Bogor,3690,97,1
+Lisa lives in Chon buri,3232,152,1
+Henry lives in Sendai,2848,743,1
+Trystan lives in Guangzhou,3904,276,1
+Elin lives in Danzhou,2584,184,1
+Ellie-mai lives in Xi'an  ,2607,887,1
+Muhammed lives in Washington ,3436,861,1
+Kieron lives in Glasgow,3117,265,1
+Bella-rose lives in Cancun,2303,121,1
+Marwa lives in Sao bernardo do campo,3348,737,1
+Rehan lives in Seoul,3626,710,1
+Greta lives in Shaoxing,2778,753,1
+Ieuan lives in Jining ,2885,384,1
+Herbert lives in Sikasso,2849,773,1
+Remi lives in Cotonou,3628,163,1
+Aniya lives in Mexico city,2177,520,1
+Santiago lives in Kaduna,707,409,1
+Mitchell lives in West midlands,3420,871,1
+Calvin lives in Ulaanbaatar,2375,840,1
+Jonah lives in Yongchuan,3010,949,1
+Elissa lives in Wenling,2593,869,1
+Kaleb lives in Guang'an,3056,272,1
+Maximilian lives in Xiangcheng,3367,890,1
+Alvin lives in Callao,2114,117,1
+Yassin lives in Dakar,3972,171,1
+Mya lives in Guangyuan,3439,275,1
+Yousef lives in Lisbon,3973,456,1
+Bronte lives in Amravati,2347,30,1
+Nova lives in Jiangyou,3500,371,1
+Giulia lives in Nizhny novgorod,2769,605,1
+Skylar lives in Maiduguri,3798,529,1
+Bridget lives in Xingning,2343,902,1
+Sammy lives in Zhangzhou,3735,974,1
+Haider lives in Dallas ,2790,181,1
+Richie lives in Medellã­n,3643,544,1
+Alina lives in Gongyi,2102,267,1
+Destiny lives in Wanyuan,2522,863,1
+Arnold lives in Dushanbe,2222,175,1
+Madison lives in Thane,3289,817,1
+Lyla lives in Wendeng,3272,868,1
+Eben lives in Xiamen,2552,889,1
+Marlie lives in Berlin,3339,54,1
+Mitchell lives in Chelyabinsk,3420,140,1
+Muhammad lives in Memphis ,3435,550,1
+Lennox lives in Jamnagar,3184,360,1
+Ivy lives in Guixi,2940,282,1
+Josiah lives in Anshan,3022,36,1
+Bronte lives in Daegu ,2347,176,1
+Tilly lives in Rasht,3886,688,1
+Jenson lives in Hechuan,2992,311,1
+Tyler lives in Huaian,3906,324,1
+Kendra lives in Omsk,3096,618,1
+Holly lives in Huaian,2857,324,1
+Daniyal lives in Addis ababa,2488,2,1
+Bartosz lives in Hermosillo,2295,316,1
+Elliott lives in Guiyang,2611,283,1
+Mohamed lives in Lahore,3423,463,1
+Inara lives in Marseille,2898,541,1
+Mohammed lives in Bandjarmasin,3425,64,1
+Isabella-rose lives in Quito,2916,661,1
+Imani lives in Suizhou,2893,784,1
+Zak lives in Pimpri chinchwad,3993,645,1
+Maximillian lives in Saitama,3368,718,1
+Esha lives in Prague,2665,627,1
+Tallulah lives in Zunyi,3849,995,1
+Nola lives in Shiraz,3495,763,1
+Darla lives in Jining ,2502,384,1
+Noel lives in Dalian,3493,180,1
+Allegra lives in Hermosillo,2112,316,1
+Cai lives in Makhachkala,2362,531,1
+Rian lives in Bhiwandi,3640,89,1
+Aubree lives in Xi'ning,2249,888,1
+Aiyla lives in Navi mumbai ,2057,599,1
+Selena lives in Maputo,3761,519,1
+Amayah lives in Anqing,2130,34,1
+Hashim lives in Hamilton,2826,305,1
+Arla lives in Tiruchchirappalli,2216,825,1
+Ava-mae lives in Mexicali,2260,552,1
+Colton lives in Edmonton,2451,220,1
+Subhan lives in Shenzhen,3823,758,1
+Sydney lives in Shuozhou,790,772,1
+Sapphire lives in Shaoxing,3743,753,1
+Brooke lives in San luis potosã­,2348,732,1
+Antoni lives in Pingdingshan,2188,646,1
+Molly lives in Beijing ,3427,51,1
+Kaitlin lives in Xuanwei,3051,920,1
+Samira lives in Maoming,3734,538,1
+Jaya lives in Lingyuan,2978,491,1
+Henley lives in Zaria,2845,968,1
+Ari lives in Xiangtan,2204,892,1
+Polly lives in Algiers,3575,3,1
+Wilbur lives in Wafangdian,3944,862,1
+Adyan lives in Changsha,2043,132,1
+Jude lives in Gaomi,3028,257,1
+Stanislaw lives in Dã¼sseldorf,3812,219,1
+Orlando lives in Louisville ,3529,507,1
+Aria lives in Tampa ,2205,809,1
+Rumaisa lives in Santa cruz,3701,734,1
+Abigail lives in Changyi,2023,134,1
+Teddie lives in Xinyi ,3862,914,1
+Aubrey lives in Zamboanga,2250,963,1
+Elaina lives in Puente alto,2573,657,1
+Alex lives in Hegang,2084,313,1
+Avani lives in Dongyang,2262,209,1
+Beth lives in Xingping,2313,903,1
+Madeleine lives in Dezhou,3286,200,1
+Star lives in Sevilla,3814,745,1
+Aila lives in Okayama,2053,615,1
+Humphrey lives in Qiqihaer,2869,671,1
+Leela lives in Panshi,3174,635,1
+Robert lives in Benxi,3656,87,1
+Anika lives in Chifeng,2175,148,1
+Celine lives in Laixi,2407,465,1
+Saira lives in Sikasso,3726,773,1
+Lyle lives in Oslo,3273,611,1
+Akira lives in Kingston,2061,403,1
+Zayn lives in Hyderabad,4007,337,1
+Stella lives in Kã©nitra,3817,451,1
+Francis lives in Perm,2731,639,1
+Alfie-lee lives in Mogadishu,2095,522,1
+Lacey-mae lives in Jixi,3152,392,1
+Leona lives in Kunshan,3188,449,1
+Sydney lives in Panzhihua,790,636,1
+Saffron lives in Zhangqiu,3718,972,1
+Eesa lives in Louisville ,2566,507,1
+Connie lives in Yunzhou,2453,957,1
+Cadi lives in Zhuhai,2360,986,1
+Tess lives in Yongkang,3869,950,1
+Tallulah lives in Wuan,3849,875,1
+Casper lives in Lanzhou,2394,471,1
+Macsen lives in Melbourne,3281,549,1
+Eddison lives in Athens,2555,10,1
+Olivia-grace lives in Tyneside,3515,837,1
+Caden lives in Yingkou,2359,941,1
+Zoha lives in Yibin,4019,933,1
+Eden lives in Chizhou,2556,151,1
+Danielius lives in Vancouver,2485,852,1
+Rowan lives in Kinshasa,3686,404,1
+Ollie lives in Kunming,3520,448,1
+Aaliyah lives in Guangshui,1997,274,1
+Abdullahi lives in Sikasso,2017,773,1
+Umar lives in Bucharest,3913,59,1
+Andreas lives in Milan ,2163,555,1
+Iwan lives in Liaoyang,2942,485,1
+Taha lives in Kumasi,3845,447,1
+Coby lives in Querã©taro,2442,675,1
+Maximus lives in Macheng,3369,527,1
+Oliwia lives in Xinyu,3518,916,1
+Andreas lives in Dandong,2163,182,1
+Brendan lives in Nashville-davidson ,2340,597,1
+Ayrton lives in Yunzhou,2285,957,1
+Iga lives in Zunyi,2887,995,1
+Safiyyah lives in Gaocheng,3721,256,1
+Hermione lives in Bikaner,2851,93,1
+Melanie lives in Hengyang,3380,315,1
+Milana lives in Tehran,3404,795,1
+Klaudia lives in Tiruchchirappalli,3126,825,1
+Isobel lives in Colombo,2930,113,1
+Tadhg lives in Jurong,3844,397,1
+Arissa lives in Kaifeng,2212,411,1
+Lilia lives in Qixia,3209,672,1
+Timur lives in Brussels,3888,58,1
+James lives in Chennai ,2962,143,1
+Zaina lives in Palermo,3991,633,1
+Eadie lives in St. louis ,2551,780,1
+Ameerah lives in Nizhny novgorod,2134,605,1
+Anton lives in Guangyuan,2187,275,1
+Brooklyn lives in Kisumu,2349,433,1
+Elaina lives in Chaohu,2573,137,1
+Kacie lives in Guadalajara,3040,271,1
+Aubree lives in Delhi,2249,194,1
+Orson lives in Stuttgart,3530,781,1
+Hamzah lives in Qingdao  ,2798,665,1
+Tate lives in San miguel de tucumã¡n,3854,733,1
+Rahma lives in Enshi,3598,225,1
+Nathan lives in Dakar,3458,171,1
+Jocelyn lives in Vientiane,3004,847,1
+Euan lives in Jimo,2678,380,1
+Darcy lives in Yunzhou,2498,957,1
+Finn lives in Teresina,2716,816,1
+Loki lives in Suwon ,3240,787,1
+Jeremy lives in Tongxiang,2994,831,1
+Emilie lives in Danzhou,2633,184,1
+Ameerah lives in Guwahati,2134,285,1
+Keira lives in Stuttgart,3091,781,1
+Ava lives in Jieshou,2258,377,1
+Daisy lives in Bhopal,2473,90,1
+Kelsie lives in Botou,3093,100,1
+Alexis lives in Shangqiu,2091,747,1
+Kamil lives in Chongjin,3058,153,1
+Logan lives in Makkah,3238,532,1
+Addison lives in Yantai,2031,931,1
+Will lives in Quanzhou,3946,674,1
+Eduard lives in Belgrade,2563,52,1
+Markus lives in Belo horizonte,3336,83,1
+Bryan lives in Omsk,2353,618,1
+Keaton lives in Linqing,3086,493,1
+Johnny lives in Zhongxiang,3009,982,1
+Hendrix lives in Heze,2844,317,1
+Charlie lives in Ulsan,2414,843,1
+Anna lives in San antonio ,2179,727,1
+Arwen lives in Cebu,2231,124,1
+Boris lives in Jamshedpur,2333,361,1
+Phoebe lives in Sheffield,3567,755,1
+April lives in Pune,2196,659,1
+Kaleb lives in Gongzhuling,3056,268,1
+Ellie-rose lives in Acapulco ,2609,12,1
+Denzel lives in Nanyang,2521,594,1
+Giovanni lives in Yaounde,2768,922,1
+Aisha lives in Binzhou,2055,94,1
+Ayaan lives in Durg-bhilai nagar,2270,218,1
+Patryk lives in Hamburg,3551,303,1
+Jayden lives in Sao paulo,2981,738,1
+Ronald lives in Managua,3671,517,1
+Ralphy lives in Voronezh,3603,859,1
+Elsie-rose lives in Philadelphia ,2620,642,1
+Ronald lives in Zigong,3671,991,1
+Rafi lives in Ribeirao prãªto,3596,694,1
+Casper lives in Bijie,2394,92,1
+Ophelia lives in Jianyang ,3525,372,1
+Owais lives in Koulikoro,3539,440,1
+Julian lives in Harare,3030,289,1
+Cassius lives in Brisbane,2399,103,1
+Jakob lives in Kaduna,2959,409,1
+Mila lives in Budapest,3402,60,1
+Franco lives in Hechuan,2733,311,1
+Santino lives in Lilongwe,3741,454,1
+Khalid lives in Saltillo,3108,721,1
+Finn lives in Voronezh,2716,859,1
+Rita lives in Brasilia,3651,57,1
+Sahil lives in Warsaw,3724,860,1
+Ibrahim lives in Jiaonan,2880,373,1
+Noor lives in Palembang,3497,632,1
+Rafe lives in Meihekou,3594,546,1
+Zaid lives in Al-hasakeh,3989,22,1
+Tadhg lives in Qian'an,3844,662,1
+Oliwier lives in Zhenjiang,3519,980,1
+Eric lives in Donggang,2655,206,1
+Cali lives in Niigata,116,603,1
+Reggie lives in Varanasi,3624,853,1
+Miya lives in Benghazi,3421,53,1
+Nikita lives in Islamabad,3485,340,1
+Alisa lives in Yiyang,2103,944,1
+Mariana lives in Chaoyang ,3328,138,1
+Zarah lives in Dezhou,4002,200,1
+Melissa lives in Cotonou,3382,163,1
+Aahil lives in Kunming,1995,448,1
+Chaya lives in Rizhao,2418,696,1
+Antony lives in Quito,2192,661,1
+Caitlyn lives in Moscow,2367,524,1
+Oliwia lives in Huangshi ,3518,328,1
+Elsa lives in San antonio ,2617,727,1
+Toby lives in Qingdao  ,3890,665,1
+Mahdi lives in Glasgow,3294,265,1
+Lydia lives in Hamilton,3271,305,1
+Hope lives in Shangzhi,2860,749,1
+Reeva lives in Kemerovo,3622,426,1
+Roxy lives in Shiraz,3689,763,1
+Kenny lives in Huangshi ,3099,328,1
+Kendrick lives in Zhangjiagang,3097,970,1
+Ethan lives in Jamshedpur,2676,361,1
+Demi lives in Panjin,2515,634,1
+Nuala lives in Quanzhou,3501,674,1
+Honey lives in Tianjin ,2858,821,1
+Eshal lives in Tel aviv-yafo,2667,814,1
+Macie lives in Xinyi ,3279,914,1
+Usman lives in Yongchuan,3915,949,1
+Zaina lives in Kozhikode,3991,441,1
+Rhys lives in Danyang,3637,183,1
+Zack lives in Dallas ,3985,181,1
+Alvin lives in Mysore,2114,572,1
+Adeline lives in Ji'nan,2036,364,1
+Tessa lives in Huzhou,3870,336,1
+Karol lives in Rasht,3066,688,1
+Franklin lives in Haiphong,2737,299,1
+Evie-mae lives in Chihuahua,2690,149,1
+India lives in Jamnagar,2902,360,1
+Elisha lives in Danyang,2592,183,1
+Daniyal lives in Huaian,2488,324,1
+Jazmine lives in Fuyang ,2986,247,1
+Carlos lives in Rabat,2383,681,1
+Declan lives in Yongkang,2512,950,1
+Atticus lives in Mã¼nchen,2248,575,1
+Yaseen lives in Enshi,3966,225,1
+Hadi lives in Omdurman,2785,617,1
+Jace lives in Xuancheng,2948,919,1
+Aayan lives in Taishan,2009,804,1
+Kenzie lives in Wujin,3100,882,1
+Anika lives in Qiongshan,2175,670,1
+Safwan lives in Yichun ,3722,936,1
+Lyra lives in Hangzhou  ,3274,308,1
+Marshall lives in Hong kong,3342,292,1
+Rogan lives in Baghdad,3663,47,1
+Dawid lives in Sakai,2505,719,1
+Lorenzo lives in Chengdu,3246,141,1
+Maizie lives in Wujiang,3305,881,1
+Fatimah lives in Benghazi,2705,53,1
+Gwen lives in Dubai,2783,213,1
+Pearl lives in Padang,3555,630,1
+Phoenix lives in Neijiang,3568,601,1
+Omar lives in Malmã¶,3522,534,1
+Mohamed lives in Philadelphia ,3423,642,1
+Ayana lives in Taishan,2274,804,1
+Indi lives in Dashiqiao,2901,187,1
+Lilly-may lives in Accra,3223,1,1
+Tristan lives in Guadalajara,3902,271,1
+Skylah lives in Dã¼sseldorf,3797,219,1
+Dolcie lives in Yushu,2536,958,1
+Hareem lives in Pikine-guediawaye,2803,644,1
+Dawood lives in Tampa ,2506,809,1
+Hector lives in Xinji,2840,908,1
+Franco lives in Lingbao,2733,489,1
+Laith lives in Sorocaba,3157,777,1
+Abdullahi lives in Tianshui,2017,823,1
+Alex lives in Kochi,2084,436,1
+Lana lives in Zhangjiagang,3158,970,1
+Dev lives in Linfen,2523,488,1
+Dara lives in Chennai ,2493,143,1
+Yaqub lives in Jiaxing,3964,376,1
+Jonas lives in Niigata,3011,603,1
+Reagan lives in Indianapolis ,3616,345,1
+Benjamin lives in Yushu,2308,958,1
+Saira lives in La plata,3726,461,1
+Saffron lives in Shengzhou,3718,756,1
+Ariana lives in Houston ,2207,323,1
+Michaela lives in Veracruz,3392,854,1
+Enzo lives in Zengcheng,2652,969,1
+Abel lives in Benin city,2022,86,1
+Cody lives in Zhuhai,2445,986,1
+Cillian lives in Antananarivo,2432,7,1
+Barney lives in Jiangyou,2294,371,1
+Wilbur lives in Lucknow,3944,508,1
+Darci lives in Datong,2495,188,1
+Armaan lives in Daejeon ,2218,177,1
+Ashley lives in Weihai,2238,866,1
+Ffion lives in Wuhan,2712,879,1
+Betty lives in Mosul,2317,568,1
+Yasin lives in Funabashi,3968,243,1
+Aman lives in Yulin ,2122,955,1
+Evelyn lives in Yaounde,2686,922,1
+Bodhi lives in Wuchang,2331,876,1
+Kajetan lives in Zhangjiakou,3054,971,1
+Igor lives in Goyang,2889,270,1
+Rory lives in Guang'an,3676,272,1
+Otto lives in Hiroshima,3537,319,1
+Neo lives in Rushan,3469,704,1
+Skylar lives in Faridabad,3798,230,1
+Meadow lives in Lianyuan,3376,482,1
+Tallulah lives in Oran ,3849,619,1
+River lives in Novokuznetsk,3652,609,1
+Raphael lives in Lanxi,3606,470,1
+Vihaan lives in Daye,3927,190,1
+Beau lives in Adelaide,2300,16,1
+Bernard lives in Qujing,2311,679,1
+Wilfred lives in Miluo,3945,556,1
+Isobel lives in Zhaotong,2930,977,1
+Caspar lives in Aligarh,2393,27,1
+Imogen lives in Bandjarmasin,2894,64,1
+Anaya lives in Xianning,2158,894,1
+Halle lives in Sao bernardo do campo,2794,737,1
+Remi lives in Luoyang,3628,512,1
+Edie lives in Sapporo,2559,739,1
+Mya lives in Yuanjiang,3439,952,1
+Armaan lives in Kabul,2218,399,1
+Simeon lives in Rajkot,3790,686,1
+Conor lives in Wanyuan,2455,863,1
+Lilly-mae lives in Zhuzhou,3221,989,1
+Imani lives in Pimpri chinchwad,2893,645,1
+Leila lives in Aleppo,3178,25,1
+Carmen lives in Montrã©al,2385,563,1
+Bobbie lives in Cuttack,2328,168,1
+Lucas lives in Liupanshui,3256,497,1
+Braxton lives in Mã©rida,2337,574,1
+Laura lives in Oklahoma city ,3160,616,1
+Izabela lives in San diego ,2944,728,1
+Issac lives in Kuala lumpur,2936,406,1
+Louise lives in Renhuai,3252,691,1
+Maxwell lives in Xiangcheng,3370,890,1
+Bryn lives in Linyi,2354,494,1
+Edison lives in Vladivostok,2560,857,1
+Haris lives in Kumasi,2805,447,1
+Cleo lives in Samarinda,2441,725,1
+April lives in Gongzhuling,2196,268,1
+Autumn lives in Liupanshui,2257,497,1
+Malaika lives in Lianjiang,3311,481,1
+Jenna lives in Al-rakka,2989,24,1
+Bryan lives in Tangshan,2353,813,1
+Aniela lives in Xuancheng,2174,919,1
+Marc lives in Algiers,3319,3,1
+Deacon lives in Islamabad,2509,340,1
+Kareem lives in Deir el-zor,3063,193,1
+Arielle lives in Kalookan ,2210,414,1
+Alesha lives in Rugao,2080,701,1
+Eduard lives in Xingcheng,2563,900,1
+Raja lives in Ottawa,3600,612,1
+Ruby-mae lives in Guiyang,3695,283,1
+Aliya lives in Kampala,2109,400,1
+Dalton lives in Aligarh,2478,27,1
+Tiago lives in Berlin,3881,54,1
+Eben lives in Huainan,2552,326,1
+Callum lives in Lianyuan,2373,482,1
+Sean lives in Zaragoza,3757,967,1
+Dana lives in Longhai,2482,503,1
+Jannah lives in Zhangshu,2966,973,1
+Nova lives in Yokohama,3500,947,1
+Cassidy lives in Bangkok,2397,50,1
+Serenity lives in Pyongyang,3765,629,1
+Kobe lives in N'djamena,435,576,1
+Ernest lives in Gaocheng,2660,256,1
+Jannat lives in Bangalore,2967,66,1
+Roxy lives in Beijing ,3689,51,1
+Camilla lives in Mendoza,2377,551,1
+Cara lives in Quã©bec,2380,680,1
+Amalie lives in Chennai ,2121,143,1
+Kobie lives in Wuhan,3130,879,1
+Emilis lives in Genova,2636,262,1
+Eren lives in Ciudad guayana,2654,156,1
+Keegan lives in Krakã³w,3087,442,1
+Joshua lives in Xinyi ,3021,914,1
+Orlaith lives in Kunming,3528,448,1
+Marlie lives in Daye,3339,190,1
+Meghan lives in Wuhu,3378,880,1
+Kristian lives in Johannesburg,3137,396,1
+Oakley lives in Acapulco ,3506,12,1
+Cordelia lives in Islamabad,2461,340,1
+Ruby lives in Nanyang,3694,594,1
+Cody lives in Kingston,2445,403,1
+Orla lives in Tegucigalpa,3527,794,1
+Eryk lives in Lã³dz,2662,515,1
+Luis lives in Zaporizhya,3263,966,1
+Sultan lives in Johannesburg,3829,396,1
+Cai lives in Homs,2362,321,1
+Daniel lives in Fuzhou ,2483,249,1
+Lilliana lives in Medan,3216,543,1
+Solomon lives in Tolyatti,3803,828,1
+Kristian lives in San miguel de tucumã¡n,3137,733,1
+Jennifer lives in Kaiyuan ,2990,413,1
+Phoenix lives in Shenzhen,3568,758,1
+Angelina lives in Nan'an,2171,585,1
+Ava lives in Xinji,2258,908,1
+Aston lives in Qiqihaer,2245,671,1
+Nevaeh lives in Linghai,3471,490,1
+Mahir lives in Suzhou ,3296,788,1
+Khalil lives in Sagamihara,3109,716,1
+Aurora lives in Dushanbe,2254,175,1
+Billy lives in Qionglai,2322,669,1
+Kasper lives in Winnipeg,3070,873,1
+Nathaniel lives in Kumamoto,3460,446,1
+Juan lives in Kayseri,3026,424,1
+Douglas lives in Lahore,2546,463,1
+Ross lives in Haiyang,3685,300,1
+Sunny lives in Ankang,3835,32,1
+Kaitlyn lives in Oran ,3052,619,1
+Miley lives in Soweto,3407,778,1
+Asa lives in Contagem,2234,162,1
+Israel lives in Indianapolis ,2934,345,1
+Cyrus lives in Yangchun,2470,925,1
+Cian lives in Taishan,2429,804,1
+Bentley lives in Kyoto,2310,450,1
+Axel lives in Gold coast-tweed,2267,266,1
+Ciara lives in Yuyao,2430,959,1
+Archer lives in Auckland,2200,44,1
+Daniella lives in Nampho,2486,584,1
+Ruby-rose lives in Qidong,3696,664,1
+Callan lives in Guiyang,2370,283,1
+Sahil lives in Samut prakan,3724,726,1
+Byron lives in Aligarh,2357,27,1
+Taylor lives in Okayama,3858,615,1
+Rafael lives in Xiamen,3593,889,1
+Giovanni lives in Jiangjin,2768,367,1
+Izabela lives in Kumasi,2944,447,1
+Iga lives in Weihai,2887,866,1
+Bobbie lives in Rio de janeiro,2328,695,1
+Violet lives in Karaj,3933,420,1
+Esme lives in Jingmen,2671,382,1
+Lennie lives in Deyang,3182,199,1
+Jared lives in Kã¶ln,2968,452,1
+Neriah lives in Huazhou,3470,329,1
+Ivy-rose lives in Campo grande,2941,120,1
+Philippa lives in Manila,3565,518,1
+Martyna lives in Bursa,3347,107,1
+Steven lives in Kota,3820,439,1
+Freya lives in Jodhpur,2747,395,1
+Sulayman lives in Colombo,3827,113,1
+Niall lives in Singapore,3474,711,1
+Fletcher lives in Hanchuan,2720,306,1
+Sumayyah lives in Caloocan,3832,118,1
+Estelle lives in Krasnoyarsk,2674,444,1
+Yanis lives in Karaj,3962,420,1
+Rishi lives in Shengzhou,3650,756,1
+Zayyan lives in Dashiqiao,4011,187,1
+Arjan lives in Moscow,2214,524,1
+Rayaan lives in Patna,3611,637,1
+William lives in Katowice,3947,421,1
+Caden lives in Jiangyan,2359,369,1
+Ocean lives in Kã©nitra,3507,451,1
+Ian lives in Yancheng,2877,924,1
+Tianna lives in La matanza,3883,460,1
+Isabella-rose lives in Kaohsiung,2916,418,1
+Douglas lives in Birmingham[] ,2546,95,1
+Maisey lives in Renqiu,3300,692,1
+Sandra lives in Tel aviv-yafo,3739,814,1
+Theodora lives in Changzhi,3876,135,1
+Farhan lives in Karachi,2701,419,1
+Ryan lives in Jammu,3707,359,1
+Bear lives in Hechuan,2297,311,1
+Malik lives in Hamburg,3315,303,1
+Saira lives in Belo horizonte,3726,83,1
+Marie lives in Yibin,3329,933,1
+Jakob lives in Mopti,2959,564,1
+Lucia lives in Yichun ,3258,936,1
+Sophia lives in Longyan,3806,505,1
+Rico lives in Calgary,3645,115,1
+Emilie lives in Dhanbad,2633,201,1
+Ellie-mai lives in Laizhou,2607,467,1
+Alexia lives in Shangzhou,2090,750,1
+Hattie lives in Puebla de zaragoza,2830,656,1
+Evie-may lives in Seongnam,2691,744,1
+Kush lives in Cheongju,3142,145,1
+Aron lives in Xingping,2223,903,1
+Darren lives in Amritsar,2503,31,1
+Alyssa lives in Reynosa,2116,693,1
+Humaira lives in Moradabad,2868,565,1
+Avery lives in Lianyungang,2263,483,1
+Omari lives in Houston ,3523,323,1
+Yash lives in Seoul,3967,710,1
+Raven lives in Rawalpindi,3608,689,1
+Aden lives in Leqing,2037,478,1
+Star lives in Kharkiv,3814,430,1
+Anas lives in Astana,2156,8,1
+Aron lives in Bhubaneswar,2223,91,1
+Ronald lives in Anqing,3671,34,1
+Rachel lives in Ciudad guayana,3590,156,1
+Rupert lives in Charlotte ,3703,139,1
+Reegan lives in Gaomi,3621,257,1
+Lacie lives in Riga,3154,682,1
+Hugh lives in Zoucheng,2865,993,1
+Shah lives in Lichuan,3768,486,1
+Mohammad lives in Mira-bhayandar,3424,560,1
+Everly lives in Kawasaki,2687,422,1
+Cassius lives in Indianapolis ,2399,345,1
+Allegra lives in Nashik,2112,596,1
+Karter lives in Samara ,3069,724,1
+Caitlin lives in Maracaibo,2366,539,1
+Michelle lives in Izmir,3394,350,1
+Billy lives in Xiangxiang,2322,893,1
+Aronas lives in Philadelphia ,2224,642,1
+Margaret lives in Shaoxing,3324,753,1
+Ayrton lives in Bandung,2285,65,1
+Rumaisa lives in Naples ,3701,595,1
+Aliza lives in La matanza,2111,460,1
+Raees lives in Osaka,3592,622,1
+Shah lives in Cuiabã¡,3768,165,1
+Montgomery lives in Visakhapatnam,3430,856,1
+Mason lives in Zaoyang,3352,964,1
+Jakob lives in Tianmen,2959,822,1
+Zainab lives in Lianyuan,3992,482,1
+Aiza lives in Nanchong,2058,587,1
+Ciara lives in San miguel de tucumã¡n,2430,733,1
+Kye lives in Leã³n ,3144,480,1
+Safiya lives in Mira-bhayandar,3720,560,1
+Andrea lives in Anqing,2162,34,1
+Annalise lives in Qixia,2184,672,1
+Matylda lives in Xiangcheng,3364,890,1
+Ralphy lives in Leshan,3603,479,1
+Chester lives in Juã¡rez,2421,398,1
+Malachy lives in Songyuan,3310,775,1
+Percy lives in Macheng,3560,527,1
+Isobel lives in Yiwu,2930,942,1
+India lives in Langzhong,2902,469,1
+Farrah lives in Bucheon ,2703,105,1
+Inayah lives in Washington ,2900,861,1
+Ida lives in Visakhapatnam,2881,856,1
+Selena lives in Palermo,3761,633,1
+Nicholas lives in Sao paulo,3477,738,1
+Ethan lives in Yizhou,2676,946,1
+Alfred lives in Manila,2096,518,1
+Zackary lives in Visakhapatnam,3986,856,1
+Beau lives in Changyi,2300,134,1
+Mina lives in Ulyanovsk,3415,844,1
+Jonah lives in Guixi,3010,282,1
+Artur lives in Xingcheng,2228,900,1
+Halle lives in Changning,2794,131,1
+Avi lives in Chizhou,2265,151,1
+Alisha lives in Gaoyou,2104,259,1
+Brooklyn lives in Incheon,2349,344,1
+Aoife lives in Kagoshima,2195,410,1
+Alma lives in Saltillo,2113,721,1
+Yaseen lives in Hachioji,3966,293,1
+Neve lives in Liupanshui,3472,497,1
+Olivia-grace lives in Ibadan,3515,341,1
+Indiana lives in Qingdao  ,2903,665,1
+Hannah lives in Dushanbe,2802,175,1
+Malachi lives in Ufa,3309,842,1
+Manahil lives in New york ,3316,602,1
+Bentley lives in Shenzhou,2310,759,1
+Mya lives in Taichung,3439,801,1
+Zaara lives in Shenzhou,3980,759,1
+Lois lives in Liuzhou,3239,499,1
+Herbie lives in Krakã³w,2850,442,1
+Poppie lives in Atlanta ,3576,43,1
+Xander lives in Langfang,3958,468,1
+Mikey lives in Changde,3399,128,1
+Theodore lives in Jingmen,3877,382,1
+Hughie lives in Xingning,2866,902,1
+Rosalie lives in Saratov,3678,740,1
+Gideon lives in Yaroslave,2767,932,1
+Sylvia lives in Auckland,3840,44,1
+Elliott lives in Shaoguan,2611,752,1
+Blanka lives in Astana,2324,8,1
+Angela lives in Kinshasa,2169,404,1
+Qasim lives in Dã¼sseldorf,3587,219,1
+Alia lives in Pakanbaru,2098,631,1
+Shreya lives in Kozhikode,3783,441,1
+Maliha lives in Pengzhou,3314,638,1
+Ayrton lives in Gaomi,2285,257,1
+Grayson lives in Vilnius,2776,848,1
+Isra lives in Niamey,2933,578,1
+Avani lives in Daye,2262,190,1
+Enoch lives in Jilin,2650,379,1
+Tara lives in Qufu,3852,678,1
+Nate lives in Ziyang,3457,992,1
+Sahil lives in Milwaukee ,3724,557,1
+Rohan lives in Callao,3664,117,1
+Emmanuel lives in Karachi,2641,419,1
+Zack lives in Cãºcuta,3985,170,1
+Esmay lives in Huaiyin,2670,327,1
+Joshua lives in Langfang,3021,468,1
+Kiyan lives in Nehe,3124,600,1
+Rudy lives in Yiyang,3698,944,1
+Eleanor lives in Salem,2574,720,1
+Theodora lives in Xiaoshan,3876,898,1
+Maisy lives in Helsinki,3303,291,1
+Nela lives in Fuqing,3465,244,1
+Julian lives in Wuhu,3030,880,1
+Mary lives in Colombo,3350,113,1
+Aizah lives in Wujin,2059,882,1
+Carson lives in Istanbul,2388,348,1
+Mckenzie lives in Baghdad,3374,47,1
+Rowan lives in Algiers,3686,3,1
+Umar lives in Sakai,3913,719,1
+Leena lives in Linzhou,3175,495,1
+Tymoteusz lives in Qixia,3909,672,1
+Orion lives in Huixian,3526,332,1
+Aria lives in Jiujiang,2205,390,1
+Tessa lives in Ad-dammam,3870,14,1
+Hermione lives in Foshan,2851,238,1
+Lila lives in Bengbu,3206,85,1
+Yassin lives in Fuxin,3972,246,1
+Lexi-mae lives in Louisville ,3197,507,1
+Indiana lives in Shaoguan,2903,752,1
+Astrid lives in Huiyang,2246,333,1
+Sydney lives in Shangzhi,790,749,1
+Lily-mae lives in Chengdu,3226,141,1
+Pearl lives in Hefei,3555,312,1
+Klara lives in Sevilla,3125,745,1
+Kyle lives in Hanchuan,3147,306,1
+River lives in Yantai,3652,931,1
+Michelle lives in Dongyang,3394,209,1
+Dhruv lives in Baotou,2527,70,1
+Kobe lives in Xinmin,435,910,1
+Lily-may lives in Mã¡laga,3228,573,1
+Julius lives in Zengcheng,3033,969,1
+Chiara lives in Tangshan,2422,813,1
+Angelica lives in Davao,2170,189,1
+Leland lives in Barquisimeto,3180,74,1
+Oisin lives in Chifeng,3510,148,1
+Harriet lives in Cartagena,2819,122,1
+Paris lives in Puebla de zaragoza,624,656,1
+Alvin lives in Shenyang,2114,757,1
+Oliwier lives in Yibin,3519,933,1
+Xavier lives in Ningbo,3960,604,1
+Amelia-lily lives in Suzhou ,2137,788,1
+Edison lives in Mombasa,2560,561,1
+Adelina lives in Deyang,2035,199,1
+Clementine lives in Gwalior,2440,286,1
+Calum lives in Amsterdam,2374,5,1
+Hawwa lives in Yaounde,2832,922,1
+Aleksandra lives in Peshawar,2079,641,1
+Katelyn lives in Puebla de zaragoza,3072,656,1
+Tate lives in Luoding,3854,511,1
+Alissia lives in San juan,2106,731,1
+Savannah lives in Meishan,3750,547,1
+Keelan lives in Mogadishu,3088,522,1
+Kaison lives in Dhaka,3050,173,1
+Ruby-mae lives in Ji'nan,3695,364,1
+Matthias lives in Dakar,3363,171,1
+Brody lives in Pengzhou,2345,638,1
+Tyrell lives in Taishan,3910,804,1
+Hermione lives in Kawasaki,2851,422,1
+Ayrton lives in Krasnoyarsk,2285,444,1
+Bonnie lives in Dali,2332,179,1
+Kendra lives in Barnaul,3096,73,1
+Zahra lives in Zhenjiang,3987,980,1
+Nellie lives in Guang'an,3467,272,1
+Astrid lives in Belo horizonte,2246,83,1
+Wiktor lives in Fã¨s,3942,251,1
+Alyssia lives in Hejian,2117,314,1
+Gregory lives in Delhi,2777,194,1
+Teigan lives in Enshi,3865,225,1
+Bridget lives in Luzhou,2343,513,1
+Charley lives in Dortmund,2412,211,1
+Omar lives in Makasar ,3522,530,1
+Imogen lives in Izmir,2894,350,1
+Livia lives in Weifang,3233,865,1
+Osman lives in Jining ,3534,384,1
+Abdullahi lives in La matanza,2017,460,1
+Humaira lives in Laiwu,2868,464,1
+Lillie-rose lives in Surabaya,3219,785,1
+Kareem lives in Querã©taro,3063,675,1
+Amal lives in Dublin,2119,174,1
+Phoenix lives in Toronto,3568,834,1
+Albert lives in Tianmen,2070,822,1
+Gwen lives in Surabaya,2783,785,1
+Mikael lives in Lianjiang,3397,481,1
+Emir lives in Gaobeidian,2639,255,1
+Klara lives in Philadelphia ,3125,642,1
+Micah lives in Tijuana,3390,824,1
+Simon lives in Shizuoka,3791,766,1
+Lowen lives in Gaobeidian,3253,255,1
+Rahma lives in Shengzhou,3598,756,1
+Hugo lives in Anlu,2867,33,1
+India lives in Omsk,2902,618,1
+Michal lives in Luzhou,3393,513,1
+Harvey lives in Nantong,2824,593,1
+Nahla lives in Harbin ,3446,310,1
+April lives in Mendoza,2196,551,1
+Andre lives in Leshan,2161,479,1
+Tia lives in Cixi,3880,157,1
+Jonty lives in Brisbane,3013,103,1
+Faith lives in Huixian,2698,332,1
+Eric lives in Chihuahua,2655,149,1
+Sydney lives in Leling,790,476,1
+Helen lives in Huangshi ,2842,328,1
+Amiyah lives in Kuala lumpur,2146,406,1
+Khalil lives in Suihua,3109,782,1
+Sara lives in Shishou,3744,764,1
+Rosalie lives in Milwaukee ,3678,557,1
+Karol lives in Hubli-dharwad,3066,330,1
+Ayra lives in Xuanwei,2284,920,1
+Bodhi lives in Nantong,2331,593,1
+Faye lives in Los angeles ,2706,506,1
+Alisa lives in Koulikoro,2103,440,1
+Niam lives in Mumbai ,3475,571,1
+Albert lives in Ilorin,2070,342,1
+Alfred lives in Zhuozhou,2096,988,1
+Lucian lives in Wuxian,3259,885,1
+Rafe lives in Belgrade,3594,52,1
+Florence lives in Nehe,2723,600,1
+Lola-rose lives in Khabarovsk,3242,429,1
+Rishi lives in Changsha,3650,132,1
+Elisabeth lives in Dhanbad,2590,201,1
+Chaya lives in Xiantao,2418,895,1
+Cerys lives in Acapulco ,2408,12,1
+Phoenix lives in Oran ,3568,619,1
+Isla-mae lives in Changchun,2925,127,1
+Shiloh lives in Perm,3781,639,1
+Isobel lives in Shouguang,2930,767,1
+Umar lives in Reynosa,3913,693,1
+Arya lives in Ulyanovsk,2232,844,1
+Avneet lives in Johannesburg,2266,396,1
+Ayesha lives in Macheng,2280,527,1
+Eden lives in Wuchang,2556,876,1
+Karter lives in Fuxin,3069,246,1
+Juliette lives in Yingcheng,3032,939,1
+Aanya lives in Charlotte ,2001,139,1
+Tess lives in Xuanwei,3869,920,1
+Ivie lives in Kathmandu,2938,401,1
+Husna lives in Anqing,2871,34,1
+Daniel lives in Mendoza,2483,551,1
+Cameron lives in Vijayawada,2376,855,1
+Cerys lives in La matanza,2408,460,1
+Sadie lives in Weifang,3715,865,1
+Khadija lives in Hong kong,3105,292,1
+Maddox lives in Fuan,3285,240,1
+Shayaan lives in Changle,3775,130,1
+Courtney lives in Lanxi,2464,470,1
+Esther lives in Kaiyuan ,2675,413,1
+Alannah lives in Linhai,2065,492,1
+Matylda lives in Laizhou,3364,467,1
+Harlan lives in Vancouver,2806,852,1
+Kayden lives in Madrid,3080,516,1
+Malik lives in Zhangzhou,3315,974,1
+Roman lives in Maputo,3666,519,1
+Sylvie lives in Dengfeng,3841,195,1
+Mikolaj lives in Shangzhou,3401,750,1
+Abel lives in Binzhou,2022,94,1
+Iman lives in Ottawa,2892,612,1
+Malik lives in Tongliao,3315,830,1
+Georgina lives in Tanger,2764,811,1
+Francesco lives in Liaoyang,2730,485,1
+Indie lives in Chon buri,2905,152,1
+Hunter lives in Nanning,2870,592,1
+Winnie lives in Yaroslave,3951,932,1
+Lillie-mae lives in Konya,3218,438,1
+Vienna lives in Visakhapatnam,846,856,1
+Zayan lives in Mashhad,4005,542,1
+Boris lives in Baku,2333,48,1
+Selina lives in Amritsar,3762,31,1
+William lives in Yiyang,3947,944,1
+Noel lives in Chelyabinsk,3493,140,1
+Freyja lives in Al-hasakeh,2748,22,1
+Roza lives in Kemerovo,3690,426,1
+Taylan lives in Kochi,3857,436,1
+Jayden lives in Al-madinah,2981,23,1
+Fatima lives in Boston ,2704,99,1
+Victoria lives in Meerut,3925,545,1
+Effie lives in Kã©nitra,2569,451,1
+Jaydan lives in Soweto,2980,778,1
+Roza lives in Gaoyao,3690,258,1
+Ayva lives in Huaibei,2288,325,1
+Raven lives in Quezon city,3608,677,1
+Molly lives in Genova,3427,262,1
+Sky lives in Jeonju ,3794,363,1
+Anas lives in Palembang,2156,632,1
+Elwood lives in Jamnagar,2623,360,1
+Francesca lives in Huainan,2729,326,1
+Elizabeth lives in Osaka,2595,622,1
+Jasper lives in Suzhou ,2973,788,1
+Joseph lives in Varanasi,3018,853,1
+Caden lives in Zunhua,2359,994,1
+Jett lives in Zhuzhou,2998,989,1
+Koby lives in Huhehaote,3131,331,1
+Ashton lives in Haimen,2240,297,1
+Mina lives in Kaiping,3415,412,1
+Emelia lives in Moradabad,2628,565,1
+Margaret lives in Maanshan,3324,525,1
+Faith lives in Hangzhou  ,2698,308,1
+Ibrahim lives in Jakarta,2880,352,1
+Rayyan lives in Zigong,3615,991,1
+Yaqub lives in Alexandria,3964,26,1
+Zahra lives in Changzhi,3987,135,1
+Wilson lives in Wuhan,3949,879,1
+Eadie lives in Dandong,2551,182,1
+Angus lives in Shenzhou,2173,759,1
+Agnes lives in Gongzhuling,2046,268,1
+Caden lives in Yueyang,2359,953,1
+Tommie lives in Miluo,3894,556,1
+Shane lives in Dongyang,3770,209,1
+Aamina lives in Dehradun,1998,191,1
+Ruby-rose lives in Bonn,3696,98,1
+Ava-grace lives in Kyoto,2259,450,1
+Hussain lives in Mexico city,2872,520,1
+Luis lives in Baltimore ,3263,62,1
+Sultan lives in Harbin ,3829,310,1
+Bonnie lives in Vijayawada,2332,855,1
+Adyan lives in Washington ,2043,861,1
+Leja lives in Bucheon ,3179,105,1
+Zakariyya lives in Manchester,3997,536,1
+Damien lives in Bucheon ,2480,105,1
+Elis lives in Changde,2588,128,1
+Freddie lives in Bengbu,2743,85,1
+Sean lives in Taizhou ,3757,807,1
+Molly lives in Ho chi minh city ,3427,320,1
+Mollie lives in Jiaozuo,3426,375,1
+Emanuel lives in Liupanshui,2627,497,1
+Nicola lives in Boston ,3479,99,1
+Sunny lives in Saint petersburg ,3835,717,1
+Wesley lives in Wujin,3941,882,1
+Emmy lives in Bhiwandi,2647,89,1
+Rumaisa lives in Zhaodong,3701,976,1
+Trey lives in Port elizabeth,3900,650,1
+Kit lives in Changyi,3122,134,1
+Beau lives in Wuchuan,2300,877,1
+Callie lives in Chittagong,2372,150,1
+Belle lives in Zhangzhou,2304,974,1
+Barney lives in Haiyang,2294,300,1
+Hayden lives in Kumasi,2834,447,1
+Ifan lives in Fuding,2886,241,1
+Ida lives in Bhubaneswar,2881,91,1
+Aniyah lives in Yinchuan,2178,938,1
+Jovan lives in Xiaogan,3024,897,1
+Athena lives in Medan,2247,543,1
+Zack lives in Columbus ,3985,161,1
+Lucie lives in Guixi,3261,282,1
+Vincent lives in Volgograd,3930,858,1
+Ria lives in Niigata,3638,603,1
+Amirah lives in Bremen,2145,102,1
+Jia lives in Jinjiang,2999,385,1
+Anderson lives in Rawalpindi,2160,689,1
+Ari lives in Luzhou,2204,513,1
+Amira lives in Antananarivo,2144,7,1
+Caspian lives in Atlanta ,2395,43,1
+Aliya lives in Yangjiang,2109,926,1
+Eddison lives in Shouguang,2555,767,1
+Eshaal lives in Linfen,2666,488,1
+Ianis lives in Giza,2878,264,1
+Charles lives in Wuchuan,2411,877,1
+Regan lives in Hegang,3623,313,1
+Aairah lives in Osasco,1996,623,1
+Nicole lives in Chihuahua,3481,149,1
+Selena lives in Barcelona,3761,71,1
+Abubakr lives in Leshan,2027,479,1
+Dana lives in Niamey,2482,578,1
+Abdur-rahman lives in Hengyang,2020,315,1
+Lilliana lives in Bengbu,3216,85,1
+Kai lives in Chon buri,3045,152,1
+Edgar lives in Nanchuan,2558,588,1
+Conrad lives in Kobe,2456,435,1
+Keaton lives in Budapest,3086,60,1
+Eduard lives in Wuxian,2563,885,1
+Leyla lives in Hama,3199,301,1
+Amira lives in Maracaibo,2144,539,1
+Florrie lives in Longyan,2724,505,1
+Abbas lives in Ruzhou,2010,705,1
+Stella lives in Paris,3817,624,1
+Kamran lives in Port harcourt,3060,651,1
+Evangeline lives in Ruijin,2683,703,1
+Billie lives in Langzhong,2321,469,1
+Orla lives in Lichuan,3527,486,1
+Payton lives in Tangshan,3554,813,1
+Ianis lives in Leqing,2878,478,1
+Philip lives in Tongxiang,3564,831,1
+Krystal lives in Huaian,3139,324,1
+Luca lives in Handan,3255,307,1
+Alissia lives in Port-au-prince,2106,626,1
+Safaa lives in Fort worth ,3717,236,1
+Rex lives in Saitama,3634,718,1
+Silas lives in Mangalore,3789,537,1
+Robin lives in Leling,3657,476,1
+Hasnain lives in Gaoyao,2828,258,1
+Stanislaw lives in Daye,3812,190,1
+Lavinia lives in Harare,3163,289,1
+Caoimhe lives in Gaoyou,2379,259,1
+Honor lives in Sagamihara,2859,716,1
+Amber lives in Harbin ,2131,310,1
+Gwen lives in Xingyang,2783,905,1
+Lilly-rose lives in Zaragoza,3224,967,1
+Flora lives in Qiqihaer,2722,671,1
+Trinity lives in Leping,3901,477,1
+Skyler lives in Uberlã¢ndia,3799,841,1
+William lives in Tanger,3947,811,1
+Kai lives in Katowice,3045,421,1
+Arian lives in Zibo,2206,990,1
+Romilly lives in Riyadh,3669,683,1
+Maddie lives in Tunis,3283,798,1
+Uzair lives in Lisbon,3916,456,1
+Wren lives in Wujin,3956,882,1
+Melanie lives in Yongkang,3380,950,1
+Mariya lives in Lingyuan,3333,491,1
+Clayton lives in Leqing,2439,478,1
+Hana lives in Ribeirao prãªto,2799,694,1
+Jakob lives in Meerut,2959,545,1
+Abbas lives in Indianapolis ,2010,345,1
+Zeeshan lives in Konya,4012,438,1
+Kira lives in Torreã³n,3121,835,1
+Poppie lives in Quetta,3576,676,1
+Yousuf lives in Chaoyang ,3975,138,1
+Piper lives in Lichuan,3571,486,1
+Ricky lives in Shulan,3644,770,1
+Ariya lives in Renqiu,2213,692,1
+Presley lives in Nankang,3581,591,1
+Nico lives in Bonn,3478,98,1
+Nellie lives in Changsha,3467,132,1
+Qasim lives in Yulin ,3587,955,1
+Jack lives in Yinchuan,2949,938,1
+Bailey lives in Manaus,2291,535,1
+Finlay lives in Gaoyou,2714,259,1
+Melody lives in Taizhou ,3383,807,1
+Bear lives in Bazhong,2297,77,1
+Mylo lives in Panjin,3443,634,1
+April lives in Hangzhou  ,2196,308,1
+Darci lives in Liupanshui,2495,497,1
+Samara lives in Kabul,3731,399,1
+Katy lives in Ad-dammam,3078,14,1
+Jayce lives in Quã©bec,2979,680,1
+Charley lives in Fuzhou ,2412,249,1
+Brogan lives in Zaozhuang,2346,965,1
+Skyla lives in Deir el-zor,3796,193,1
+Ronnie lives in Riyadh,3673,683,1
+Luna lives in Bucharest,3269,59,1
+Hajra lives in Perth,2791,640,1
+Marie lives in Moscow,3329,524,1
+Delilah lives in Liuan,2514,496,1
+Miya lives in Tokyo,3421,796,1
+Camilla lives in Dingzhou,2377,202,1
+Amalia lives in Zhaotong,2120,977,1
+Safwan lives in Kaiping,3722,412,1
+Teodor lives in Lusaka,3867,459,1
+Raymond lives in Chongzhou,3614,155,1
+Jeremiah lives in Wenling,2993,869,1
+Efa lives in Kerman,2567,427,1
+Bear lives in Aleppo,2297,25,1
+Poppy-mae lives in Rongcheng,3578,697,1
+Sofie lives in Imbaba,3801,343,1
+Elias lives in Panshi,2581,635,1
+Abdallah lives in Cairo,2013,110,1
+Paisley lives in Jodhpur,3544,395,1
+Peter lives in Amsterdam,3562,5,1
+Liaocheng lives in Kaden,484,3043,0
+Zaragoza lives in Brooklyn,967,2349,0
+Bucheon  lives in Regan,105,3623,0
+Volgograd lives in Wiktor,858,3942,0
+Ulsan lives in Levi,843,3194,0
+Zhuhai lives in Sana,986,3738,0
+Fuan lives in Katy,240,3078,0
+Liaoyang lives in Leopold,485,3193,0
+Qingzhou lives in Elle,666,2602,0
+Tyumen lives in Kourtney,838,3135,0
+Santo domingo lives in Ava-mae,708,2260,0
+Luoding lives in Deniz,511,2518,0
+Saint petersburg  lives in Lottie,717,3248,0
+Santa cruz lives in Paula,734,3553,0
+Faisalabad  lives in Nana,229,3448,0
+Panshi lives in Kelsey,635,3092,0
+Wuhan lives in Will,879,3946,0
+Denver  lives in Kobie,197,3130,0
+At-ta'if lives in Iga,42,2887,0
+Zhengzhou lives in Emmy,979,2647,0
+Bogor lives in Bronte,97,2347,0
+Huaibei lives in Trinity,325,3901,0
+Daegu  lives in Junaid,176,3034,0
+Huixian lives in Shiv,332,3782,0
+Puente alto lives in Fatima,657,2704,0
+Jiangmen lives in Ciara,368,2430,0
+Brasilia lives in Uzair,57,3916,0
+Mã¼nchen lives in Martyna,575,3347,0
+Changyi lives in Lina,134,3230,0
+Ghaziabad lives in Romilly,263,3669,0
+Cheongju lives in Dean,145,2510,0
+Denver  lives in Ianis,197,2878,0
+Nova iguaã§u lives in Imogen,608,2894,0
+Lichuan lives in Helena,486,2843,0
+Xinxiang lives in Frazer,912,2741,0
+Tashkent lives in Oliwier,792,3519,0
+Sendai lives in Florence,743,2723,0
+Izhevsk lives in Jovan,349,3024,0
+Surabaya lives in Amelia-rose,785,2138,0
+Patna lives in Lee,637,3173,0
+Oslo lives in Niall,611,3474,0
+Johannesburg lives in Connie,396,2453,0
+Cape town lives in Benedict,111,2307,0
+Seoul lives in Aronas,710,2224,0
+Yingcheng lives in Kian,939,3112,0
+Liuzhou lives in Kara,499,3062,0
+Cuiabã¡ lives in Mikey,165,3399,0
+Haicheng lives in Savanna,294,3749,0
+Kochi lives in Albert,436,2070,0
+Kota lives in Hawwa,439,2832,0
+Dushanbe lives in Brodie,175,2344,0
+Huainan lives in Riley,326,3646,0
+Sã©gou lives in Amy,791,2150,0
+Huhehaote lives in Annabel,331,2180,0
+Qufu lives in Paris,678,624,0
+Aguascalientes lives in Anabelle,18,2152,0
+Nottingham lives in Zain,607,3990,0
+Pretoria lives in Sean,628,3757,0
+Omdurman lives in Alia,617,2098,0
+Xinxiang lives in Layton,912,3169,0
+Zaozhuang lives in Camille,965,2378,0
+Liling lives in Lillie,487,3217,0
+Bozhou lives in Maliha,101,3314,0
+Shiraz lives in Jose,763,3017,0
+Omdurman lives in Ross,617,3685,0
+Ezhou lives in Pearl,228,3555,0
+Jaboatao dos guarapes lives in Lawrence,355,3164,0
+Davao lives in Matei,189,3354,0
+Jilin lives in Zaid,379,3989,0
+Yokohama lives in Kaylen,947,3084,0
+Chenghai lives in Frankie,142,2735,0
+Bengbu lives in Ashley,85,2238,0
+Ghaziabad lives in Zarah,263,4002,0
+Zhangzhou lives in Eben,974,2552,0
+Damascus lives in Daria,172,2500,0
+Mysore lives in Alfred,572,2096,0
+Las vegas  lives in Ciara,472,2430,0
+Zunyi lives in Maizie,995,3305,0
+Hailun lives in Oliwier,296,3519,0
+Denver  lives in Joanna,197,3002,0
+Kawasaki lives in Kaylen,422,3084,0
+Hailun lives in Jayson,296,2984,0
+Mexico city lives in Ismael,520,2928,0
+Bazhong lives in Mohammed,77,3425,0
+Campo grande lives in Yousef,120,3973,0
+Gaziantep lives in Silas,261,3789,0
+Changyi lives in Benjamin,134,2308,0
+Hengyang lives in Jaxon,315,2975,0
+Pingdu lives in Aysha,647,2286,0
+Nashik lives in Gruffydd,596,2780,0
+Bhopal lives in Saxon,90,3751,0
+Bikaner lives in Santino,93,3741,0
+Maceiã³ lives in Anayah,526,2159,0
+Jiujiang lives in Leonard,390,3189,0
+Longyan lives in Arjun,505,2215,0
+Nagpur lives in Owain,581,3538,0
+Taichung lives in Yousuf,801,3975,0
+Hefei lives in Drew,312,2547,0
+Renqiu lives in Ruth,692,3706,0
+Giza lives in Jesse,264,2995,0
+Jiaozhou lives in Arham,374,2203,0
+Nankang lives in Tom,591,3891,0
+Morã³n lives in Archibald,567,2201,0
+Izmir lives in Nataniel,350,3455,0
+Mã¼nchen lives in Anton,575,2187,0
+Ouagadougou lives in Rowan,613,3686,0
+Chengdu lives in Zayd,141,4006,0
+Davao lives in Esmee,189,2672,0
+Juã¡rez lives in Myla,398,3441,0
+Ufa lives in Saara,842,3712,0
+Suining lives in Jared,783,2968,0
+Huazhou lives in Verity,329,3921,0
+Deyang lives in Lilliana,199,3216,0
+Jamnagar lives in Addison,360,2031,0
+Chongjin lives in Barney,153,2294,0
+Yinchuan lives in Anayah,938,2159,0
+Pingdingshan lives in Lowen,646,3253,0
+Liling lives in Niamh,487,3476,0
+Lianjiang lives in Rafferty,481,3595,0
+Ahmedabad lives in Keeva,19,3090,0
+Aligarh lives in Freyja,27,2748,0
+Stockholm lives in Alissa,714,2105,0
+Maoming lives in Kamran,538,3060,0
+Guang'an lives in Baxter,272,2296,0
+Ruzhou lives in Karol,705,3066,0
+Cuernavaca lives in Caspian,164,2395,0
+Brussels lives in Ari,58,2204,0
+Ziyang lives in Karim,992,3064,0
+Khartoum lives in Cassie,402,2398,0
+Kaiping lives in Aniyah,412,2178,0
+Managua lives in Piper,517,3571,0
+Ahmedabad lives in Sullivan,19,3828,0
+Zã¼rich lives in Buddy,996,2355,0
+Rostov-na-donu lives in Talha,699,3847,0
+Niamey lives in Everly,578,2687,0
+Gaoan lives in Gus,254,2781,0
+Zaozhuang lives in Lina,965,3230,0
+Nankang lives in Olivia,591,3514,0
+Nankang lives in Brayden,591,2338,0
+Yokohama lives in Mali,947,3313,0
+Jiangdu lives in Arnav,366,2220,0
+Barcelona lives in Callum,71,2373,0
+Hegang lives in Grayson,313,2776,0
+Dafeng lives in Leonardo,178,3190,0
+Xinzheng lives in Carson,917,2388,0
+Hefei lives in Leela,312,3174,0
+Liuzhou lives in Osman,499,3534,0
+Nanhai lives in Mackenzie,589,3280,0
+Anqiu lives in Maxim,35,3366,0
+Liaoyang lives in Amin,485,2140,0
+Dashiqiao lives in Simeon,187,3790,0
+Harbin  lives in Jazmin,310,2985,0
+Perm lives in Denzel,639,2521,0
+Yongchuan lives in Mary,949,3350,0
+Huainan lives in Julius,326,3033,0
+Ziyang lives in Liberty,992,3205,0
+Kano lives in Melanie,416,3380,0
+Shunde lives in Jonah,771,3010,0
+Guwahati lives in Aahil,285,1995,0
+Yueyang lives in Affan,953,2044,0
+Wuhan lives in Hafsa,879,2788,0
+Yichun  lives in Damian,936,2479,0
+Yuanjiang lives in Vinnie,952,3931,0
+Varanasi lives in Katherine,853,3073,0
+Veracruz lives in Adriana,854,2042,0
+Novokuznetsk lives in David,609,2504,0
+Mira-bhayandar lives in Celeste,560,2405,0
+Jakarta lives in Riaan,352,3639,0
+Yangquan lives in Enya,928,2651,0
+Fuan lives in Gia,240,2766,0
+Mianyang lives in Alyssa,554,2116,0
+Houston  lives in Hasan,323,2825,0
+Oran  lives in Abdur,619,2019,0
+Jieyang lives in Imani,378,2893,0
+San francisco  lives in Marco,729,3322,0
+Preston lives in Amalie,655,2121,0
+Hengyang lives in Anayah,315,2159,0
+Sheffield lives in Filip,755,2713,0
+Zhuji lives in Bonnie,987,2332,0
+Renhuai lives in Vihaan,691,3927,0
+Coimbatore lives in Corben,159,2460,0
+Perm lives in Rumaisa,639,3701,0
+Vladivostok lives in Dylan,857,2550,0
+Cebu lives in Carson,124,2388,0
+Hong kong lives in Patrik,292,3550,0
+Shulan lives in Kiera,770,3115,0
+Naples  lives in Khadija,595,3105,0
+Ulaanbaatar lives in Ellie,840,2605,0
+Lahore lives in Alanna,463,2064,0
+Zahedan lives in Kaitlin,962,3051,0
+Benin city lives in Joey,86,3007,0
+Longhai lives in Rebeca,503,3617,0
+Delhi lives in Sumaya,194,3830,0
+Dongying lives in Madiha,210,3288,0
+Frankfurt am main lives in Macy,239,3282,0
+Casablanca  lives in Alexander,123,2086,0
+Frankfurt am main lives in Courtney,239,2464,0
+San francisco  lives in Lila,729,3206,0
+Istanbul lives in Johnny,348,3009,0
+Vladivostok lives in Thomas,857,3879,0
+Xinyang lives in Eleanor,913,2574,0
+San juan lives in Ellie,731,2605,0
+Feira de santana lives in Joshua,232,3021,0
+Daye lives in Aran,190,2199,0
+Uberlã¢ndia lives in Andy,841,2167,0
+Shuozhou lives in Daria,772,2500,0
+Torreã³n lives in Haya,835,2833,0
+Wanyuan lives in Rocco,863,3660,0
+Jamshedpur lives in Claire,361,2433,0
+Homs lives in Inaaya,321,2896,0
+Barcelona lives in Alec,71,2074,0
+Vijayawada lives in Eliana,855,2580,0
+Fengnan lives in Rayhan,235,3613,0
+Haimen lives in Shiloh,297,3781,0
+Dongguan lives in Hannah,207,2802,0
+San juan lives in Leonardo,731,3190,0
+Cuernavaca lives in Jasmin,164,2970,0
+Dujiangyan lives in Layla,215,3166,0
+Cuiabã¡ lives in Ayan,165,2273,0
+Tel aviv-yafo lives in Iman,814,2892,0
+Sevilla lives in Rosa,745,3677,0
+Maceiã³ lives in Annabel,526,2180,0
+Nottingham lives in Teddie,607,3862,0
+Luzhou lives in Greta,513,2778,0
+Guigang lives in Trey,279,3900,0
+Fuding lives in Elaina,241,2573,0
+Delhi lives in Hendrix,194,2844,0
+Daejeon  lives in Precious,177,3580,0
+Zhoushan lives in Lilly-mai,983,3222,0
+Indore lives in Presley,346,3581,0
+Volgograd lives in Conor,858,2455,0
+Fuyang  lives in Maliha,247,3314,0
+Wuwei lives in Arnav,883,2220,0
+Zhuji lives in Regan,987,3623,0
+Zhucheng lives in Abbie,985,2011,0
+Zhengzhou lives in Samir,979,3733,0
+Cuiabã¡ lives in Mahnoor,165,3297,0
+Xi'ning lives in Kimberly,888,3119,0
+Fuzhou  lives in Katie,249,3076,0
+Jingmen lives in Vienna,382,846,0
+Luzhou lives in Kaden,513,3043,0
+Preston lives in Zidan,655,4013,0
+Nampho lives in Lincoln,584,3231,0
+Liling lives in Isabella,487,2915,0
+Saint petersburg  lives in Brodie,717,2344,0
+Tongcheng lives in Riaan,829,3639,0
+Bursa lives in Filip,107,2713,0
+Aleppo lives in Abdulrahman,25,2018,0
+Dongtai lives in Otto,208,3537,0
+Kawasaki lives in Rahma,422,3598,0
+Hailun lives in Mateo,296,3355,0
+Nova iguaã§u lives in Ella,608,2596,0
+Nova iguaã§u lives in Nikodem,608,3487,0
+Gaoyou lives in Lenny,259,3185,0
+Genova lives in Abel,262,2022,0
+Adana lives in Kaison,15,3050,0
+Al-rakka lives in Brooklyn,24,2349,0
+Yangchun lives in Jemima,925,2988,0
+Seongnam lives in Gemma,744,2757,0
+Baltimore  lives in Eden,62,2556,0
+Sendai lives in Aleeza,743,2076,0
+Suzhou  lives in Gus,788,2781,0
+Xishan lives in Alicia,918,2100,0
+Fortaleza lives in Tiana,237,3882,0
+Anqing lives in Olivia-grace,34,3515,0
+Changle lives in Beatrice,130,2298,0
+Rasht lives in Samson,688,3736,0
+Benin city lives in Jake,86,2958,0
+Cartagena lives in Robin,122,3657,0
+Novosibirsk lives in Zunairah,610,4021,0
+Laiwu lives in Shae,464,3767,0
+Maiduguri lives in Joao,529,3003,0
+Gã¶teborg lives in Amelia-rose,288,2138,0
+Nanyang lives in Kaya,594,3079,0
+Wuchuan lives in Karter,877,3069,0
+Sofia lives in Bruno,713,2352,0
+Fengcheng  lives in Wesley,233,3941,0
+Jiangyou lives in Dalton,371,2478,0
+Bucheon  lives in Avneet,105,2266,0
+Montrã©al lives in Ariana,563,2207,0
+Vientiane lives in Aayan,847,2009,0
+Xuzhou lives in Reginald,921,3625,0
+Bengbu lives in Elspeth,85,2621,0
+Taiyuan lives in Aman,806,2122,0
+Khulna lives in Ffion,432,2712,0
+Calgary lives in Meredith,115,3385,0
+La plata lives in Yousef,461,3973,0
+Meishan lives in Muhammed,547,3436,0
+Yangzhou lives in Cory,929,2463,0
+Gaoan lives in Mary,254,3350,0
+Nampho lives in Tomas,584,3892,0
+Nan'an lives in Emir,585,2639,0
+Preston lives in Vincent,655,3930,0
+Linghai lives in Ralph,490,3601,0
+Shunde lives in Ayra,771,2284,0
+El alto lives in Haydn,222,2835,0
+Jiamusi lives in Lucy,365,3262,0
+Ouagadougou lives in Pippa,613,3572,0
+Faisalabad  lives in Boris,229,2333,0
+Zhangjiakou lives in Harriett,971,2820,0
+Chaoyang  lives in Amelie,138,2139,0
+Miami  lives in Eliana,553,2580,0
+Santa cruz lives in Reagan,734,3616,0
+Dafeng lives in Lorena,178,3245,0
+Gaoyou lives in Emmeline,259,2644,0
+Bhilai nagar lives in Kodi,88,3132,0
+Manchester lives in Robyn,536,3659,0
+Xintai lives in Quinn,911,3588,0
+Chon buri lives in Layla-rose,152,3168,0
+Yaounde lives in Cain,922,2364,0
+Jimo lives in Rueben,380,3699,0
+Yongzhou lives in Daisie,951,2472,0
+Sofia lives in Honey,713,2858,0
+Beiliu lives in Aimee,80,2054,0
+Donetsk  lives in Celeste,205,2405,0
+Chongzhou lives in Celeste,155,2405,0
+Yongkang lives in Harman,950,2812,0
+Sorocaba lives in Avani,777,2262,0
+Hegang lives in Crystal,313,2468,0
+Laixi lives in Aliza,465,2111,0
+Antananarivo lives in Evie-may,7,2691,0
+Shulan lives in Rohan,770,3664,0
+Wenzhou lives in Corben,870,2460,0
+Taian lives in Youssef,800,3974,0
+Tianshui lives in Tyler-james,823,3907,0
+Colombo lives in Haris,113,2805,0
+Warangal lives in Samir,864,3733,0
+Renhuai lives in Oscar,691,3531,0
+Medellã­n lives in Mahnoor,544,3297,0
+Stockholm lives in Jia,714,2999,0
+Yichun  lives in Kajetan,936,3054,0
+Aguascalientes lives in Princess,18,3585,0
+Santa cruz lives in Norah,734,3499,0
+Giza lives in Allegra,264,2112,0
+Changge lives in Harper,129,2815,0
+Huhehaote lives in Eisa,331,2571,0
+Accra lives in Zayn,1,4007,0
+Tashkent lives in Lois,792,3239,0
+Nantong lives in Alfie-lee,593,2095,0
+Palermo lives in Mila,633,3402,0
+Pingdu lives in Elsie-rose,647,2620,0
+Soweto lives in Connie,778,2453,0
+Changle lives in Andrew,130,2166,0
+Nakhon ratchasima lives in Lilly-mai,582,3222,0
+Abidjan lives in Josiah,11,3022,0
+Guiping lives in Sofie,281,3801,0
+Pretoria lives in Ranveer,628,3605,0
+Xiantao lives in Hassan,895,2829,0
+Ruzhou lives in Winifred,705,3950,0
+Johannesburg lives in Zaara,396,3980,0
+Hã  noi  lives in Zion,339,4015,0
+Conakry lives in Aydin,114,2279,0
+Cairo lives in Kaden,110,3043,0
+Guixi lives in Serena,282,3764,0
+Dar es salaam lives in Mustafa,186,3438,0
+Kishinev lives in Ismail,405,2929,0
+Taishan lives in Arran,804,2226,0
+Voronezh lives in Hawwa,859,2832,0
+Qian'an lives in Timur,662,3888,0
+Iã§el lives in Nuala,351,3501,0
+Leizhou lives in Ian,475,2877,0
+Mianyang lives in Helen,554,2842,0
+Yiyang lives in Amir,944,2143,0
+Xinyi  lives in Niamh,914,3476,0
+Chennai  lives in Alexander,143,2086,0
+Songyuan lives in Lilly-mai,775,3222,0
+Jiaozhou lives in Lyra,374,3274,0
+Miami  lives in Zofia,553,4018,0
+Maoming lives in Michal,538,3393,0
+Konya lives in Shelby,438,3780,0
+Medan lives in Jason,543,2972,0
+Bucharest lives in Teddie,59,3862,0
+Bucharest lives in Riya,59,3654,0
+Esfahan lives in Amal,226,2119,0
+Guangzhou lives in Clara,276,2434,0
+Port-au-prince lives in Darla,626,2502,0
+Zhuji lives in Poppy,987,3577,0
+Hubli-dharwad lives in Charlie,330,2414,0
+Panjin lives in Annabella,634,2182,0
+Nakuru lives in Stuart,583,3822,0
+Brussels lives in Eshal,58,2667,0
+Luzhou lives in Colin,513,2450,0
+Chelyabinsk lives in Ellis,140,2612,0
+Shenzhou lives in Madiha,759,3288,0
+Chicago  lives in Daisy-may,147,2475,0
+Hejian lives in Aarav,314,2002,0
+Suining lives in Yaqub,783,3964,0
+Yangquan lives in Brogan,928,2346,0
+Tongcheng lives in Miley,829,3407,0
+Danzhou lives in Dulcie,184,2549,0
+Maiduguri lives in Alfie-lee,529,2095,0
+Linghai lives in Yash,490,3967,0
+Naples  lives in Edison,595,2560,0
+Dehui lives in Cordelia,192,2461,0
+Baotou lives in Amir,70,2143,0
+Hezhou lives in Ellie-may,318,2608,0
+Jiujiang lives in Elia,390,2579,0
+Wuxian lives in Katie,885,3076,0
+Wroclaw lives in Clayton,874,2439,0
+Salem lives in Elina,720,2585,0
+Amman lives in Yara,4,3965,0
+Haora  lives in Keelan,309,3088,0
+Yuyao lives in Bartosz,959,2295,0
+Tripoli lives in Arlo,797,2217,0
+Gaomi lives in Delilah,257,2514,0
+Jingzhou lives in Alfie-james,383,2094,0
+Qidong lives in Alesha,664,2080,0
+Novokuznetsk lives in Aahil,609,1995,0
+Mumbai  lives in Evie-grace,571,2689,0
+Shenzhen lives in Tillie,758,3885,0
+Chongzhou lives in Caitlyn,155,2367,0
+Amman lives in Lily-mai,4,3227,0
+Sã©gou lives in Zoey,791,4017,0
+Lichuan lives in Katie,486,3076,0
+Johannesburg lives in Jana,396,2965,0
+Toronto lives in Faith,834,2698,0
+Yangquan lives in Shelby,928,3780,0
+Jamshedpur lives in Millie,361,3410,0
+Surabaya lives in Nyla,785,3504,0
+Jamshedpur lives in Leandro,361,3172,0
+Cape town lives in Franklin,111,2737,0
+Cairo lives in Hunter,110,2870,0
+Mianyang lives in Abdullahi,554,2017,0
+Jiujiang lives in Conrad,390,2456,0
+Phnom penh lives in Jasper,625,2973,0
+Madrid lives in Annabella,516,2182,0
+Liuzhou lives in Damian,499,2479,0
+Datong lives in Bodhi,188,2331,0
+Anyang lives in Lilly-mae,39,3221,0
+Damascus lives in Abby,172,2012,0
+Tongxiang lives in Chester,831,2421,0
+Daegu  lives in Elliot,176,2610,0
+Maceiã³ lives in Hannah,526,2802,0
+Antananarivo lives in Joe,7,3005,0
+Bristol lives in Rosa,104,3677,0
+Omsk lives in Yahya,618,3961,0
+Changzhou lives in Esmai,136,2669,0
+Shishou lives in Karol,764,3066,0
+Yinchuan lives in Beau,938,2300,0
+Winnipeg lives in Joshua,873,3021,0
+Tolyatti lives in Md,828,3375,0
+San juan lives in Hazel,731,2837,0
+Tã©touan lives in Eleanor,839,2574,0
+Aurangabad lives in Hashir,45,2827,0
+Beining lives in Elisabeth,81,2590,0
+Feicheng lives in Anya,231,2194,0
+Palembang lives in Khaleesi,632,3107,0
+Semarang lives in Beatrice,742,2298,0
+Toronto lives in Zayaan,834,4004,0
+Baoding lives in Monty,67,3431,0
+Enshi lives in Paul,225,3552,0
+Gaocheng lives in Kaitlyn,256,3052,0
+Jiangjin lives in Rayhan,367,3613,0
+Dar es salaam lives in Ottilie,186,3536,0
+Shaoxing lives in Selina,753,3762,0
+Goyang lives in Michelle,270,3394,0
+Kunming lives in Alessandro,448,2081,0
+Dhaka lives in Ezekiel,173,2694,0
+Macheng lives in Marshall,527,3342,0
+Jamnagar lives in Cory,360,2463,0
+Bhiwandi lives in Amalia,89,2120,0
+Chengdu lives in Teddie,141,3862,0
+Guangyuan lives in Hanna,275,2801,0
+Zhuhai lives in Indiana,986,2903,0
+Yaroslave lives in Lyla,932,3272,0
+Xiangfan lives in Poppie,891,3576,0
+Johannesburg lives in Matei,396,3354,0
+London lives in Conan,457,2452,0
+Changge lives in Ruby-rose,129,3696,0
+Toluca  lives in Ieuan,827,2885,0
+Kawasaki lives in Byron,422,2357,0
+Yiyang lives in Dawid,944,2505,0
+San luis potosã­ lives in Alice,732,2099,0
+San diego  lives in Hamza,728,2797,0
+Laiyang lives in Brian,466,2341,0
+Guangzhou lives in Callan,276,2370,0
+Tashkent lives in Eleanor,792,2574,0
+Lilongwe lives in Maxim,454,3366,0
+San diego  lives in Barnaby,728,2293,0
+Xingyi lives in Fergus,906,2710,0
+Danzhou lives in Dilan,184,2530,0
+Jingjiang lives in Kiara,381,3114,0
+Marrakech lives in Jana,540,2965,0
+Antananarivo lives in Charley,7,2412,0
+Zã¼rich lives in Jenson,996,2992,0
+Medellã­n lives in Lucia,544,3258,0
+Mira-bhayandar lives in Louis,560,3250,0
+Chenghai lives in Luis,142,3263,0
+Bangkok lives in Arthur,50,2227,0
+Jinjiang lives in Diya,385,2535,0
+Huixian lives in Ruairi,332,3691,0
+Seoul lives in Ronald,710,3671,0
+Hyderabad lives in Douglas,337,2546,0
+Baotou lives in Maria,70,3326,0
+Kagoshima lives in Rafe,410,3594,0
+Samut prakan lives in Arnold,726,2222,0
+Abidjan lives in Evalyn,11,2681,0
+Chaoyang  lives in Ashley,138,2238,0
+Xi'an   lives in Alexis,887,2091,0
+Liverpool lives in Tanisha,500,3851,0
+Suining lives in Nicola,783,3479,0
+Yiwu lives in Hajra,942,2791,0
+Yuncheng lives in Phoenix,956,3568,0
+Charlotte  lives in Wyatt,139,3957,0
+Riga lives in Drew,682,2547,0
+Mombasa lives in Jacob,561,2951,0
+Xichang lives in Charlie,899,2414,0
+Gã¶teborg lives in Fleur,288,2721,0
+Chandigarh lives in Riya,126,3654,0
+Bozhou lives in Sumayyah,101,3832,0
+West yorkshire lives in Antonina,872,2190,0
+Gorakhpur lives in Kyron,269,3150,0
+Qinhuangdao lives in Pola,667,3574,0
+Fengnan lives in Jaxon,235,2975,0
+Zagreb lives in Ria,961,3638,0
+Toluca  lives in Erik,827,2657,0
+Barnaul lives in Faye,73,2706,0
+Daejeon  lives in Charley,177,2412,0
+Rawalpindi lives in Elsie,689,2618,0
+Chaohu lives in Taylor,137,3858,0
+Yongzhou lives in Zaina,951,3991,0
+Shenzhen lives in Maizie,758,3305,0
+Khartoum lives in Toby,402,3890,0
+Nanchong lives in Reeva,587,3622,0
+Ulyanovsk lives in Damien,844,2480,0
+Jurong lives in Bradley,397,2335,0
+La paz lives in Poppy,453,3577,0
+Colombo lives in Cai,113,2362,0
+Montevideo lives in Zane,523,4000,0
+Kaiyuan  lives in Alissa,413,2105,0
+Maiduguri lives in Yara,529,3965,0
+Wafangdian lives in Elsa,862,2617,0
+Campinas lives in Patrik,119,3550,0
+Benghazi lives in Tara,53,3852,0
+Fengcheng  lives in Kush,233,3142,0
+Mira-bhayandar lives in Ella-grace,560,2597,0
+Yushu lives in Belle,958,2304,0
+Weihai lives in Mali,866,3313,0
+Coimbatore lives in Ariana,159,2207,0
+Medellã­n lives in Daria,544,2500,0
+Shenyang lives in Prince,757,3584,0
+Sorocaba lives in Samuel,777,3737,0
+Linyi lives in Rose,494,3682,0
+Nashville-davidson  lives in Fearne,597,2707,0
+Yixing lives in Fredrick,943,2746,0
+Zhanjiang lives in Livia,975,3233,0
+Dandong lives in Ilyas,182,2890,0
+Nan'an lives in Arian,585,2206,0
+Jacksonville  lives in Devon,356,2524,0
+Samarinda lives in Teodor,725,3867,0
+Huzhou lives in Amelia,336,2135,0
+Tangerang lives in Vivienne,812,3936,0
+Daejeon  lives in Cerys,177,2408,0
+Wugang  lives in Siena,878,3786,0
+Jodhpur lives in Lillia,395,3214,0
+Leizhou lives in Hussain,475,2872,0
+Nashik lives in Lily-mai,596,3227,0
+Nova iguaã§u lives in Sasha,608,3746,0
+Dongying lives in Jamie,210,2963,0
+Jiangyou lives in Mina,371,3415,0
+Cuernavaca lives in Iqra,164,2910,0
+Belã©m lives in Md,84,3375,0
+Cuernavaca lives in Ivie,164,2938,0
+Lilongwe lives in Halle,454,2794,0
+West midlands lives in Fletcher,871,2720,0
+Maceiã³ lives in Soraya,526,3809,0
+Ghaziabad lives in Mackenzie,263,3280,0
+Mã©rida lives in Denny,574,2520,0
+Wugang  lives in Ria,878,3638,0
+Tyneside lives in Ayub,837,2287,0
+Tolyatti lives in Trystan,828,3904,0
+Benxi lives in Emanuel,87,2627,0
+Padang lives in Callie,630,2372,0
+Esfahan lives in Poppy-mae,226,3578,0
+Fengnan lives in Willow,235,3948,0
+Beihai lives in Abdullahi,79,2017,0
+Gwangju  lives in Elizabeth,287,2595,0
+Tbilisi lives in Ayaz,793,2276,0
+Zaragoza lives in Verity,967,3921,0
+Medan lives in Otto,543,3537,0
+Marseille lives in Ivan,541,2937,0
+Shunde lives in Harley,771,2808,0
+Shouguang lives in Matei,767,3354,0
+Kyoto lives in Nathanael,450,3459,0
+Handan lives in Alexa,307,2085,0
+Saratov lives in Lincoln,740,3231,0
+Busan  lives in Ewan,108,2693,0
+Jeddah  lives in Saif,362,3725,0
+Rawalpindi lives in Soraya,689,3809,0
+Gaziantep lives in Maximus,261,3369,0
+Porto alegre lives in Meghan,653,3378,0
+Shantou lives in Persephone,751,3561,0
+Amman lives in Abdul,4,2015,0
+Qujing lives in Anayah,679,2159,0
+Barnaul lives in Juno,73,3036,0
+Cartagena lives in Leonardo,122,3190,0
+Cochabamba lives in Elsie-rose,158,2620,0
+Dublin lives in Maximus,174,3369,0
+Beining lives in Denny,81,2520,0
+Zoucheng lives in Kristina,993,3138,0
+Nanchong lives in Lewis,587,3195,0
+Liverpool lives in Ruqayyah,500,3704,0
+Lufeng lives in Millicent,510,3409,0
+Cairo lives in Maddox,110,3285,0
+Jiangyin lives in Nikola,370,3488,0
+Mombasa lives in Jessica,561,2996,0
+Taipei lives in Trey,803,3900,0
+Aligarh lives in Daniella,27,2486,0
+Mira-bhayandar lives in Catherine,560,2400,0
+Madrid lives in Skylar,516,3798,0
+Jinzhou  lives in Brooklyn,388,2349,0
+Wafangdian lives in Maggie,862,3292,0
+Jaboatao dos guarapes lives in Erik,355,2657,0
+Ziyang lives in Yousef,992,3973,0
+Jiaozuo lives in Faye,375,2706,0
+Wugang  lives in Benas,878,2306,0
+Xiangcheng lives in Yash,890,3967,0
+Yuhang lives in Scarlet,954,3752,0
+Bogota lives in Evalyn,56,2681,0
+Prague lives in Sulayman,627,3827,0
+Colombo lives in Reegan,113,3621,0
+Louisville  lives in Farrah,507,2703,0
+Kyiv  lives in Esmae,407,2668,0
+Kota lives in Anna,439,2179,0
+Morelia lives in Aubree,566,2249,0
+Valencia lives in Mya,850,3439,0
+Xingning lives in Bear,902,2297,0
+Damascus lives in Amelia-rose,172,2138,0
+Khartoum lives in Josephine,402,3019,0
+Antalya lives in Fleur,38,2721,0
+West midlands lives in Esmay,871,2670,0
+Ciudad guayana lives in Ashton,156,2240,0
+Niigata lives in Asma,603,2244,0
+Meihekou lives in Anderson,546,2160,0
+Guanghan lives in Montgomery,273,3430,0
+Kharkiv lives in Lenny,430,3185,0
+Kochi lives in Olaf,436,3511,0
+Osasco lives in Karol,623,3066,0
+Ulsan lives in Elwood,843,2623,0
+Dali lives in Ezra,179,2696,0
+Shishou lives in Allegra,764,2112,0
+Sagamihara lives in Taya,716,3855,0
+Laiyang lives in Georgia,466,2760,0
+Jinzhong lives in Ranveer,387,3605,0
+Wroclaw lives in Jai,874,2955,0
+Lã³dz lives in Pearl,515,3555,0
+Linyi lives in Zakaria,494,3994,0
+Adelaide lives in Zach,16,3982,0
+Konya lives in Coco,438,2443,0
+Manchester lives in Ayyub,536,2289,0
+Zaozhuang lives in Renae,965,3631,0
+Essen lives in Nora,227,3498,0
+Beipiao lives in Farrah,82,2703,0
+Bhubaneswar lives in Amira,91,2144,0
+Shengzhou lives in Aran,756,2199,0
+Zigong lives in Ben,991,2305,0
+Birmingham[]  lives in Maisy,95,3303,0
+Xinghua lives in Bethan,901,2314,0
+Lisbon lives in Hattie,456,2830,0
+Beipiao lives in Szymon,82,3842,0
+Shijiazhuang lives in Rubie,761,3693,0
+Jianyang  lives in Violet,372,3933,0
+Hamhung lives in Hiba,304,2854,0
+Portland  lives in Tommy,652,3895,0
+Vienna lives in Hayley,846,2836,0
+Meerut lives in Georgina,545,2764,0
+Kerman lives in Kyle,427,3147,0
+Hong kong lives in Nathanael,292,3459,0
+The hague lives in Henley,818,2845,0
+Kermanshah lives in Steven,428,3820,0
+Managua lives in Ranveer,517,3605,0
+Jabalpur lives in Craig,354,2465,0
+Rasht lives in Colby,688,2448,0
+Valencia lives in Patryk,850,3551,0
+Jalandhar lives in Rhys,358,3637,0
+Taiyuan lives in Safia,806,3719,0
+Jieyang lives in Paisley,378,3544,0
+Lã³dz lives in Zain,515,3990,0
+Fengcheng  lives in Karim,233,3064,0
+Huzhou lives in Ian,336,2877,0
+Xuanwei lives in Coby,920,2442,0
+Omsk lives in Riaan,618,3639,0
+Maracaibo lives in Rosa,539,3677,0
+Santo domingo lives in Teddie,708,3862,0
+Yingkou lives in George,941,2759,0
+Gorakhpur lives in Frances,269,2728,0
+Gaomi lives in Alexis,257,2091,0
+Kano lives in Franklin,416,2737,0
+Veracruz lives in Lorelei,854,3244,0
+Wuan lives in Alivia,875,2108,0
+Dnipropetrovsk lives in Luqman,204,3270,0
+Havana lives in Tiana,290,3882,0
+Shunde lives in Macey,771,3277,0
+Busan  lives in Elora,108,2615,0
+Stuttgart lives in Mohammed,781,3425,0
+Mangalore lives in Karim,537,3064,0
+Xuancheng lives in Rebecca,919,3618,0
+Guang'an lives in Amiyah,272,2146,0
+Sagamihara lives in Jac,716,2947,0
+Orenburg lives in Aubree,620,2249,0
+Cartagena lives in Gia,122,2766,0
+Ziyang lives in Kayson,992,3085,0
+La paz lives in Emmanuel,453,2641,0
+Kingston lives in Amani,403,2125,0
+Dali lives in Yasin,179,3968,0
+Nehe lives in Flora,600,2722,0
+Liaocheng lives in Owain,484,3538,0
+Xiangfan lives in Rocco,891,3660,0
+Miami  lives in Ayah,553,2272,0
+Samut prakan lives in Ricky,726,3644,0
+Batam lives in Eesa,76,2566,0
+Bucharest lives in Malik,59,3315,0
+Cenxi lives in Estelle,125,2674,0
+Haimen lives in Carolina,297,2386,0
+Xinzheng lives in Taha,917,3845,0
+Barquisimeto lives in Hibba,74,2855,0
+Quito lives in Ismail,661,2929,0
+Huixian lives in Emir,332,2639,0
+Yangchun lives in Xanthe,925,3959,0
+Lomas de zamora lives in Dorothy,502,2543,0
+Oslo lives in Tess,611,3869,0
+Shaoguan lives in Ella-rose,752,2601,0
+Jintan lives in Ayah,386,2272,0
+Mexicali lives in Krystal,552,3139,0
+Huzhou lives in Emmeline,336,2644,0
+Daye lives in Montague,190,3429,0
+Louisville  lives in Esmay,507,2670,0
+Diyarbakir lives in Adil,203,2038,0
+Rotterdam lives in Carolina,700,2386,0
+Jinzhou  lives in Clark,388,2435,0
+Quã©bec lives in Star,680,3814,0
+Malang lives in Chaya,533,2418,0
+Linzhou lives in Vivienne,495,3936,0
+Auckland lives in Sadie,44,3715,0
+Sapporo lives in Melanie,739,3380,0
+Shangzhou lives in Jayce,750,2979,0
+Khartoum lives in Archer,402,2200,0
+Querã©taro lives in Aditya,675,2039,0
+Yerevan lives in Patricia,923,3548,0
+Salvador lives in Daria,722,2500,0
+Belo horizonte lives in Saif,83,3725,0
+Agra lives in Evelina,17,2685,0
+Sana'a lives in Kitty,706,3123,0
+Datong lives in Eli,188,2578,0
+Qom lives in Arla,673,2216,0
+Ad-dammam lives in Henrietta,14,2847,0
+Zhuozhou lives in Shay,988,3774,0
+Saitama lives in Rania,718,3604,0
+Caracas lives in Emme,112,2643,0
+Srinagar lives in Mario,779,3332,0
+Guiyang lives in Bryan,283,2353,0
+Fortaleza lives in Abel,237,2022,0
+Saint petersburg  lives in Diya,717,2535,0
+Vladivostok lives in Ifan,857,2886,0
+Jacksonville  lives in Aaliyah,356,1997,0
+Thiruvananthapuram lives in Sinead,819,3793,0
+Sikasso lives in Monica,773,3428,0
+Ruijin lives in Raife,703,3599,0
+Guigang lives in Klaudia,279,3126,0
+Foshan lives in Abdul,238,2015,0
+Nanchuan lives in Amelia,588,2135,0
+Leling lives in Wojciech,476,3954,0
+Niamey lives in Tommie,578,3894,0
+Rongcheng lives in Leonidas,697,3191,0
+Hamhung lives in Zaki,304,3998,0
+Aurangabad lives in Darla,45,2502,0
+Jiangjin lives in Guy,367,2782,0
+Leshan lives in Lincoln,479,3231,0
+Huaiyin lives in Alvin,327,2114,0
+Xinzheng lives in Mollie,917,3426,0
+Nantong lives in Arlo,593,2217,0
+Kampala lives in Laila,400,3156,0
+Port harcourt lives in Anthony,651,2186,0
+Kuala lumpur lives in Mikail,406,3398,0
+Xianning lives in Hetty,894,2853,0
+Boston  lives in Mollie,99,3426,0
+Osaka lives in Tate,622,3854,0
+Lingyuan lives in Braxton,491,2337,0
+Baku lives in Alastair,48,2067,0
+Tehran lives in Eleri,795,2577,0
+Puente alto lives in Tyler,657,3906,0
+Dar es salaam lives in Wiktoria,186,3943,0
+Jammu lives in Madeline,359,3287,0
+Glasgow lives in Vivienne,265,3936,0
+Changge lives in Harris,129,2821,0
+Yokohama lives in Peggy,947,3557,0
+Daegu  lives in Asma,176,2244,0
+Kayseri lives in Aida,424,2050,0
+Saltillo lives in Shelby,721,3780,0
+Barranquilla lives in Gethin,75,2765,0
+Soweto lives in Asher,778,2236,0
+Linghai lives in Primrose,490,3583,0
+Chaohu lives in Olivia-grace,137,3515,0
+Qiqihaer lives in Affan,671,2044,0
+Xingping lives in Cora,903,2459,0
+Shizuoka lives in Joe,766,3005,0
+Jeddah  lives in Saffron,362,3718,0
+Fortaleza lives in Neve,237,3472,0
+Charlotte  lives in Aqsa,139,2197,0
+Quezon city lives in Arjun,677,2215,0
+Singapore lives in Ava-mae,711,2260,0
+Kampala lives in Hermione,400,2851,0
+Auckland lives in Kaylan,44,3082,0
+Gwalior lives in Jia,286,2999,0
+Surat lives in Hugo,786,2867,0
+Duisburg lives in Nolan,214,3496,0
+Jilin lives in Nela,379,3465,0
+Linyi lives in Theia,494,3873,0
+Yaounde lives in Fredrick,922,2746,0
+Ribeirao prãªto lives in Rudy,694,3698,0
+Changzhi lives in Arun,135,2229,0
+Wuxi lives in Aairah,884,1996,0
+Xinxiang lives in Arnold,912,2222,0
+Lichuan lives in Malachi,486,3309,0
+Zaria lives in Haya,968,2833,0
+Yingkou lives in Gia,941,2766,0
+Linqing lives in Helena,493,2843,0
+Bulawayo lives in Maryam,106,3351,0
+Wuhan lives in Abbie,879,2011,0
+Zhangjiagang lives in Zidan,970,4013,0
+Cuiabã¡ lives in Franciszek,165,2732,0
+Nottingham lives in Ted,607,3861,0
+Amravati lives in Nora,30,3498,0
+Kolkata  lives in Odin,437,3509,0
+Makkah lives in Lilia,532,3209,0
+Prague lives in Isabelle,627,2917,0
+Shenzhou lives in Lia,759,3201,0
+Haimen lives in Peyton,297,3563,0
+Seoul lives in Annabella,710,2182,0
+Blantyre city lives in Aurelia,96,2253,0
+Nampho lives in Lilliana,584,3216,0
+Moscow lives in Fletcher,524,2720,0
+Nanchuan lives in Alex,588,2084,0
+Daejeon  lives in Yannis,177,3963,0
+Shangqiu lives in Cairo,747,110,0
+Mingguang lives in Saarah,558,3713,0
+Lagos lives in Lilly-may,462,3223,0
+Anyang lives in Ava-mae,39,2260,0
+Zhangjiakou lives in Hattie,971,2830,0
+Jiangyin lives in Kathleen,370,3074,0
+Xinmi lives in Colby,909,2448,0
+San jose  lives in Neriah,730,3470,0
+Nanchong lives in Huxley,587,2875,0
+Guanghan lives in Tom,273,3891,0
+Glasgow lives in Erica,265,2656,0
+Karachi lives in Carla,419,2382,0
+Jiamusi lives in Scarlett,365,3753,0
+Rotterdam lives in Hazel,700,2837,0
+Shangzhou lives in Jana,750,2965,0
+Tyneside lives in Heather,837,2839,0
+Linghai lives in Yannis,490,3963,0
+Hailun lives in Finley,296,2715,0
+Caloocan lives in Alistair,118,2107,0
+Wuhan lives in Dina,879,2532,0
+Jingzhou lives in Mollie,383,3426,0
+Zaozhuang lives in Yusra,965,3977,0
+Ouagadougou lives in Max,613,3365,0
+San diego  lives in Hana,728,2799,0
+Dã¼sseldorf lives in Evie-mae,219,2690,0
+Hermosillo lives in Carl,316,2381,0
+Thane lives in Omar,817,3522,0
+Antananarivo lives in Edwin,7,2565,0
+Singapore lives in Mila,711,3402,0
+Salem lives in Layla-mae,720,3167,0
+Anshun lives in Maira,37,3299,0
+Liuan lives in Taylor,496,3858,0
+Yaroslave lives in Milo,932,3413,0
+Prague lives in Violet,627,3933,0
+Anyang lives in Yara,39,3965,0
+Linqing lives in Aasiyah,493,2008,0
+Indore lives in Alec,346,2074,0
+Shangqiu lives in Henry,747,2848,0
+Feicheng lives in Raphael,231,3606,0
+Bengbu lives in Adelina,85,2035,0
+Fushun lives in Rafe,245,3594,0
+Taichung lives in Deniz,801,2518,0
+Bikaner lives in Zackary,93,3986,0
+Duque de caxias lives in Zachary,216,3984,0
+Fuzhou  lives in Nelly,249,3468,0
+Dar es salaam lives in Aminah,186,2142,0
+Nouakchott lives in Milan,579,3403,0
+Qionglai lives in Ieuan,669,2885,0
+Lianyungang lives in Kobi,483,3129,0
+Shijiazhuang lives in Zoha,761,4019,0
+Donggang lives in Stephen,206,3819,0
+Jieshou lives in Artur,377,2228,0
+Shaoyang lives in Ivan,754,2937,0
+Funabashi lives in Aydin,243,2279,0
+Mira-bhayandar lives in Yasmin,560,3970,0
+Torino lives in Neo,833,3469,0
+Changde lives in Lucie,128,3261,0
+Shanghai lives in Abubakr,746,2027,0
+Malang lives in Kitty,533,3123,0
+Shangzhou lives in Sinead,750,3793,0
+Padang lives in Floyd,630,2725,0
+Glasgow lives in Alexis,265,2091,0
+Tiruchchirappalli lives in Rico,825,3645,0
+Dengfeng lives in Nicole,195,3481,0
+Helsinki lives in Paisley,291,3544,0
+Haikou lives in Nikolas,295,3489,0
+Gaoyou lives in Milo,259,3413,0
+Ludhiana lives in Indigo,509,2906,0
+Malang lives in Alexandru,533,2089,0
+Weinan lives in Sara,867,3744,0
+Nanchang lives in Monty,586,3431,0
+Nashville-davidson  lives in Marshall,597,3342,0
+Luanda lives in Gethin,458,2765,0
+Bazhou lives in Kacey,78,3039,0
+Guangyuan lives in Kabir,275,3038,0
+Oslo lives in Polly,611,3575,0
+Kayes lives in Gracie,423,2772,0
+Rome lives in Mariana,684,3328,0
+The hague lives in Lavinia,818,3163,0
+Mysore lives in Hadi,572,2785,0
+Pyongyang lives in Keaton,629,3086,0
+Jiangyan lives in Luciana,369,3260,0
+Fukuoka lives in Madeleine,242,3286,0
+Zigong lives in Zayd,991,4006,0
+Mingguang lives in Jaxson,558,2976,0
+El alto lives in Alexandra,222,2087,0
+Hachioji lives in Miah,293,3389,0
+Malmã¶ lives in Indigo,534,2906,0
+Medan lives in Ida,543,2881,0
+Jiamusi lives in Autumn,365,2257,0
+Tongxiang lives in Brooklyn,831,2349,0
+Bandung lives in Bryan,65,2353,0
+Harbin  lives in Phoenix,310,3568,0
+Zaoyang lives in Nieve,964,3482,0
+Nakhon ratchasima lives in Neriah,582,3470,0
+Amravati lives in Ace,30,2028,0
+Chandigarh lives in Precious,126,3580,0
+Guangyuan lives in Romy,275,3670,0
+Mira-bhayandar lives in Willow,560,3948,0
+Chaoyang  lives in Wojciech,138,3954,0
+Bijie lives in Shiloh,92,3781,0
+Haiyang lives in Hawa,300,2831,0
+Kuala lumpur lives in Lowen,406,3253,0
+Xi'ning lives in Lilith,888,3213,0
+Kalyan lives in Aidan,415,2051,0
+Vadodara lives in Reeva,849,3622,0
+Cali lives in Troy,116,3903,0
+Yongchuan lives in Sapphire,949,3743,0
+Harbin  lives in Gus,310,2781,0
+Panjin lives in Zayaan,634,4004,0
+Hamamatsu lives in Amelia-grace,302,2136,0
+Xiaogan lives in Ruairi,897,3691,0
+Yokohama lives in Theodora,947,3876,0
+Omdurman lives in Rory,617,3676,0
+Kuala lumpur lives in Abel,406,2022,0
+Hamamatsu lives in Osian,302,3532,0
+Pengzhou lives in Payton,638,3554,0
+Zã¼rich lives in Saad,996,3711,0
+Liuzhou lives in Lily-mai,499,3227,0
+Shouguang lives in Maxwell,767,3370,0
+Guadalajara lives in Iwan,271,2942,0
+Huixian lives in Hafsah,332,2789,0
+Fukuoka lives in Ronnie,242,3673,0
+Anyang lives in Bethan,39,2314,0
+Jining  lives in Alessio,384,2083,0
+Rotterdam lives in Tommy,700,3895,0
+N'djamena lives in Elis,576,2588,0
+Lagos lives in Santino,462,3741,0
+Warsaw lives in Hamish,860,2796,0
+Harbin  lives in Lucy,310,3262,0
+Chicago  lives in Yaseen,147,3966,0
+Leshan lives in Inaayah,479,2897,0
+Beining lives in Amalia,81,2120,0
+Sofia lives in Orlaith,713,3528,0
+Panzhihua lives in Jakub,636,2960,0
+Okayama lives in Fynley,615,2750,0
+Qujing lives in Syed,679,3838,0
+Havana lives in Emily,290,2637,0
+Ho chi minh city  lives in Farrah,320,2703,0
+Liyang lives in Isla-rose,501,2926,0
+Lviv lives in Faye,514,2706,0
+Changshu lives in Ayesha,133,2280,0
+Guixi lives in Diego,282,2529,0
+Wenzhou lives in Leon,870,3187,0
+Leizhou lives in Paige,475,3543,0
+Yantai lives in Tabitha,931,3843,0
+Nehe lives in Theo,600,3874,0
+Managua lives in Lorena,517,3245,0
+Shangqiu lives in Ronan,747,3672,0
+Querã©taro lives in Subhan,675,3823,0
+Songyuan lives in Ismael,775,2928,0
+Lichuan lives in Holly,486,2857,0
+Yaroslave lives in Shannon,932,3772,0
+Qujing lives in Renee,679,3632,0
+Linghai lives in Cadi,490,2360,0
+Jiaozuo lives in Raya,375,3610,0
+Guangyuan lives in Hiba,275,2854,0
+Benxi lives in Neve,87,3472,0
+Amritsar lives in Isra,31,2933,0
+Cape town lives in Scarlet,111,3752,0
+Guangshui lives in Lilly-may,274,3223,0
+Alexandria lives in Jason,26,2972,0
+Yangzhou lives in Charlotte,929,2416,0
+Dingzhou lives in Viaan,202,3923,0
+Rosario lives in Joy,698,3025,0
+Hamilton lives in Ayat,305,2275,0
+Amsterdam lives in Peter,3562,5,0
