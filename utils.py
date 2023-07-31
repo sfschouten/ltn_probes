@@ -27,7 +27,7 @@ def get_parser():
     parser.add_argument("--parallelize", action="store_true", help="Whether to parallelize the model")
     parser.add_argument("--device", type=str, default="cuda", help="Device to use for the model")
     # setting up data
-    parser.add_argument("--data_path", type=str, default='final_city_version_2_train.txt')
+    parser.add_argument("--data_path", type=str, default='training_set_26_07_23.txt')
     parser.add_argument("--batch_size", type=int, default=1, help="Batch size to use")
     # which hidden states we extract
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
@@ -86,8 +86,10 @@ def get_dataset(tokenizer, data_file):
     for f in lines:
         text = f.split(",")[0]
         sentences.append(text)
+        #print(f)
         labels.append(tuple(int(f1) for f1 in f.rstrip().split(",")[1:]))
 
+    #data_dict = {'sentence': sentences, "labels": labels}
     data_dict = {'sentence': sentences, "labels": labels}
     data = Dataset.from_dict(data_dict)
     tokenized = data.map(lambda x: tokenizer(

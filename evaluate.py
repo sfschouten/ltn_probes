@@ -7,7 +7,7 @@ import numpy as np
 
 import torch
 import torch.nn as nn
-from torch.utils.data import  DataLoader
+from torch.utils.data import DataLoader
 
 import ltn
 
@@ -15,6 +15,7 @@ from utils import get_parser, load_single_generation, get_dataset
 from customdataloader import CustomDataset
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
@@ -36,6 +37,7 @@ class SPOAttention(nn.Module):
         self.q = nn.Parameter(torch.cat((s, p, o), dim=1))
 
         self.flash = hasattr(torch.nn.functional, 'scaled_dot_product_attention')
+        self.MatrixVector = nn.Parameter(2e-4 * torch.rand([4096, 2099]), requires_grad=True)
 
     def forward(self, x, return_attn_values=True):
         # calculate key, values
@@ -181,7 +183,7 @@ class LogitsToPredicate(torch.nn.Module):
             out = torch.sum(probs * l, dim=1)
         else:
             out = probs
-        return out
+        return out.view(-1)
 
 
 def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, x, y, z, sentence_score):
@@ -194,31 +196,38 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
     Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2), quantifier="f")
     SatAgg = ltn.fuzzy_ops.SatAgg()
 
-    label_a = ltn.Variable("label_a", labels[0].clone().detach())
-    label_b = ltn.Variable("label_b", labels[1].clone().detach())
-    label_c = ltn.Variable("label_c", labels[2].clone().detach())
+    # label_a = ltn.Variable("label_a", labels[0].clone().detach())
+    # label_b = ltn.Variable("label_b", labels[1].clone().detach())
+    # label_c = ltn.Variable("label_c", labels[2].clone().detach())
     label_sentence = ltn.Variable("label_d", labels[3].clone().detach())
 
-    subject_positive = Forall(ltn.diag(x, label_a), Model(x, Subject_l),
-                              cond_vars=[label_a],
-                              cond_fn=lambda t: t.value == 1)
+    """
+    for v in x.value:
+        if not torch.all(torch.where(torch.logical_and(v >= 0., v <= 1.), 1., 0.)):
+            print("dddd")
+    """
+    # print( Model(x, Subject_l).value)
+    subject_positive = Forall(ltn.diag(x, Subject_l), Model(x, Subject_l))
+    action_positive = Forall(ltn.diag(y, Action_l), Model(y, Action_l))
+    object_positive = Forall(ltn.diag(z, Object_l), Model(z, Object_l))
+
+    """
+
     subject_negative = Forall(ltn.diag(x, label_a), Not(Model(x, Subject_l)),
                               cond_vars=[label_a],
                               cond_fn=lambda t: t.value == 0)
 
-    action_positive = Forall(ltn.diag(y, label_b), Model(y, Action_l),
-                             cond_vars=[label_b],
-                             cond_fn=lambda t: t.value == 1)
     action_negative = Forall(ltn.diag(y, label_b), Not(Model(y, Action_l)),
                              cond_vars=[label_b],
                              cond_fn=lambda t: t.value == 0)
 
-    object_positive = Forall(ltn.diag(z, label_c), Model(z, Object_l),
-                             cond_vars=[label_c],
-                             cond_fn=lambda t: t.value == 1)
     object_negative = Forall(ltn.diag(z, label_c), Not(Model(z, Object_l)),
                              cond_vars=[label_c],
                              cond_fn=lambda t: t.value == 0)
+
+    """
+
+
 
     all_sentence_positive = Forall(ltn.diag(label_sentence, sentence_score),
                                    Model_sentence(sentence_score),
@@ -229,6 +238,26 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
                                    Not(Model_sentence(sentence_score)),
                                    cond_vars=[label_sentence],
                                    cond_fn=lambda t: t.value == 0)
+
+
+    """
+
+
+
+    all_sentence_positive = Forall(ltn.diag(label_sentence, sentence_score,x,y,z,Subject_l,Object_l,Action_l),
+                                   Implies(And(And(Model(x, Subject_l),Model(y, Action_l)),Model(z, Object_l)),
+                                               Model_sentence(sentence_score)),
+                                   cond_vars=[label_sentence],
+                                   cond_fn=lambda t: t.value == 1)
+
+    all_sentence_negative = Forall(ltn.diag(label_sentence, sentence_score,x,y,z,Subject_l,Object_l,Action_l),
+                                   Implies(And(Model(x, Subject_l),Model(z, Object_l)),
+                                               Not(Model_sentence(sentence_score))),
+                                   cond_vars=[label_sentence],
+                                   cond_fn=lambda t: t.value == 0)
+    """
+
+    """
 
     all_sentence_positive_implication = Forall(
         ltn.diag(x, y, z, label_a, label_b, label_c, sentence_score, label_sentence),
@@ -249,35 +278,39 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
         cond_vars=[label_sentence],
         cond_fn=lambda t: t.value == 0
     )
+    """""
 
-    sat_agg = SatAgg(subject_negative, subject_positive, action_negative, action_positive, object_negative,
-                     object_positive, all_sentence_positive_implication, all_sentence_positive,
-                     all_sentence_negative, all_sentence_negative_implication)
+    sat_agg = SatAgg(subject_positive, action_positive, object_positive, all_sentence_positive,all_sentence_negative)
 
     # sat_agg = SatAgg(subject_positive, action_positive, object_positive,
     #                  subject_negative, action_negative, object_negative, all_sentence_positive, all_sentence_negative)
 
     return {
         'subject_positive': subject_positive,
-        'subject_negative': subject_negative,
+        # 'subject_negative': subject_negative,
         'action_positive': action_positive,
-        'action_negative': action_negative,
+        # 'action_negative': action_negative,
         'object_positive': object_positive,
-        'object_negative': object_negative,
+        # 'object_negative': object_negative,
         'all_sentence_positive': all_sentence_positive,
         'all_sentence_negative': all_sentence_negative,
-        'all_sentence_positive_implication': all_sentence_positive_implication,
-        'all_sentence_negative_implication': all_sentence_negative_implication,
+        # 'all_sentence_positive_implication': all_sentence_positive_implication,
+        # 'all_sentence_negative_implication': all_sentence_negative_implication,
     }, sat_agg
+
+
+def get_score_ltn(x, y):
+    # print("function")
+    return torch.gather(x, 1, y.view(-1, 1)).view(-1)
 
 
 def train_ltn(dataloader, dataloader_test, args, ndim):
     if args.log_neptune:
         import neptune
         run = neptune.init_run(
-            project=os.getenv('NEPTUNE_PROJECT'),
-            api_token=os.getenv('NEPTUNE_API_KEY'),
-        )  # your credentials
+            project="frankissimo/ltnprobing",
+            api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiI5YTY1M2U5Ni05ZTU0LTQ0YjAtYWM0OC1jNzUyZTIwOWNiNDQifQ==")
+        # your credentials
 
         params = {"learning_rate": args.lr, "optimizer": "Adam", "nr_epochs": args.nr_epochs,
                   "probe_batch_size": args.probe_batch_size, "probe_device": args.probe_device}
@@ -288,39 +321,36 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
         # Create a summary writer
         writer = SummaryWriter()
 
-    #num_heads = 3
-    #heads_per_dim = 4096
-    #embed_dimension = 4096  # num_heads * heads_per_dim
+    # num_heads = 3
+    # heads_per_dim = 4096
+    # embed_dimension = 4096  # num_heads * heads_per_dim
     # input_dim, embed_dim, num_heads
     # attn = ScaledDotProductAttentionModel(4096,3)
     # attn = attn.to(args.probe_device)
 
     attn = SPOAttention(ndim).to(args.probe_device)
 
-    mlp = MLP(layer_sizes=(ndim, 3))
-    mlp_sentence = MLP(layer_sizes=(ndim*3, 1))
+    # mlp = MLP(layer_sizes=(ndim, 3))
+    mlp_sentence = MLP(layer_sizes=( 12291, 1))
+
     # mlp2 = MLP()
     # mlp3 = MLP()
-    Model = ltn.Predicate(LogitsToPredicate(mlp)).to(args.probe_device)
+
+    Model = ltn.Function(func=lambda x, y: get_score_ltn(x, y))
     Model_sentence = ltn.Predicate(LogitsToPredicate(mlp_sentence)).to(args.probe_device)
     # Action_model = ltn.Predicate(LogitsToPredicate(mlp))
     # Object_model = ltn.Predicate(LogitsToPredicate(mlp))
     # Action_model = Action_model.to(args.probe_device)
     # Object_model = Object_model.to(args.probe_device)
 
-    Subject_l = ltn.Constant(torch.tensor([1, 0, 0]))
-    Action_l = ltn.Constant(torch.tensor([0, 1, 0]))
-    Object_l = ltn.Constant(torch.tensor([0, 0, 1]))
-    All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
-
     parameters = []
-    parameters.extend([f for f in Model.parameters()])
+    # parameters.extend([MatrixVector])
     parameters.extend([f for f in Model_sentence.parameters()])
     # parameters.extend([f for f in Action_model.parameters()])
     # parameters.extend([f for f in Object_model.parameters()])
 
     parameters.extend([f for f in attn.parameters()])
-    #parameters.extend([f for f in attn.v_proj.parameters()])
+    # parameters.extend([f for f in attn.v_proj.parameters()])
 
     optimizer = torch.optim.Adam(parameters, lr=args.lr, weight_decay=0)
 
@@ -331,15 +361,34 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
 
             # forward attention
             spo, _ = attn(hs)
-            x = ltn.Variable("x", spo[:, 0, :])
-            y = ltn.Variable("y", spo[:, 1, :])
-            z = ltn.Variable("z", spo[:, 2, :])
+            subject = spo[:, 0, :]
+            action = spo[:, 1, :]
+            object = spo[:, 2, :]
+            scores_sub = subject.mm(attn.MatrixVector)
+            score_action = action.mm(attn.MatrixVector)
+            score_object = object.mm(attn.MatrixVector)
 
-            # sentence_score = ltn.Variable("sentence_score", torch.stack( (Model(x, Subject_l).value, Model(y, Action_l).value, Model(z, Object_l).value), dim=1))
-            sentence_score = ltn.Variable("sentence_score", torch.concat((x.value, y.value, z.value), dim=1))
+            x = ltn.Variable("x", torch.softmax(scores_sub, dim=1))
+            y = ltn.Variable("y", torch.softmax(score_action, dim=1))
+            z = ltn.Variable("z", torch.softmax(score_object, dim=1))
+
+            Subject_l = ltn.Variable("x_label", labels[0])
+            Action_l = ltn.Variable("y_label", labels[1])
+            Object_l = ltn.Variable("z_label", labels[2])
+            # All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
+
+            labels[0] = labels[0].to(args.probe_device)
+            labels[1] = labels[1].to(args.probe_device)
+            labels[2] = labels[2].to(args.probe_device)
+
+            sentence_score = ltn.Variable("sentence_score", torch.concat((subject,action,object, torch.gather(x.value,1,Subject_l.value),
+                                                                           torch.gather(y.value,1,Action_l.value),
+                                                                           torch.gather(z.value,1,Object_l.value)), dim=1))
+            #sentence_score = ltn.Variable("sentence_score",torch.concat((x.value, y.value, z.value), dim=1))
 
             # create axioms
-            axioms, sat_agg = create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, x, y, z, sentence_score)
+            axioms, sat_agg = create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, x, y, z,
+                                            sentence_score)
 
             # calculate loss
             """
@@ -348,7 +397,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                    -torch.log(object_negative.value)-torch.log(object_positive.value)\
                    -torch.log(all_sentence_positive_implication.value)-torch.log(all_sentence_positive.value)\
                    -torch.log(all_sentence_negative.value)
-            
+
             loss =  - torch.log(subject_positive.value) \
                     - torch.log(action_positive.value) \
                     - torch.log(object_positive.value)
@@ -386,26 +435,52 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     # Action_model.eval()
     # Object_model.eval()
     attn.eval()
+
     with torch.no_grad():
         for hs, sentences, labels in tqdm(dataloader_test):
             hs = hs.to(args.probe_device)
 
-            spo, attention_values = attn(hs)
-            x = ltn.Variable("x", spo[:, 0, :])
-            y = ltn.Variable("y", spo[:, 1, :])
-            z = ltn.Variable("z", spo[:, 2, :])
+            spo, _ = attn(hs)
+            subject = spo[:, 0, :]
+            action = spo[:, 1, :]
+            object = spo[:, 2, :]
+            scores_sub = subject.mm(attn.MatrixVector)
+            score_action = action.mm(attn.MatrixVector)
+            score_object = object.mm(attn.MatrixVector)
 
-            sentence_score = ltn.Variable("sentence_score", torch.concat((x.value, y.value, z.value), dim=1))
+            x = ltn.Variable("x", torch.softmax(scores_sub, dim=1))
+            y = ltn.Variable("y", torch.softmax(score_action, dim=1))
+            z = ltn.Variable("z", torch.softmax(score_object, dim=1))
 
-            axioms, _ = create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, x, y, z, sentence_score)
+            Subject_l = ltn.Variable("x_label", labels[0])
+            Action_l = ltn.Variable("y_label", labels[1])
+            Object_l = ltn.Variable("z_label", labels[2])
+            All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
+
+            labels[0] = labels[0].to(args.probe_device)
+            labels[1] = labels[1].to(args.probe_device)
+            labels[2] = labels[2].to(args.probe_device)
+
+            ltn.Variable("sentence_score",
+                         torch.concat((subject, action, object, torch.gather(x.value, 1, Subject_l.value),
+                                       torch.gather(y.value, 1, Action_l.value),
+                                       torch.gather(z.value, 1, Object_l.value)), dim=1))
+            """
+            sentence_score = ltn.Variable("sentence_score",
+                                          torch.concat((torch.gather(x.value, 1, torch.argmax(x.value,dim=1).view(-1, 1)).view(-1, 1)
+                                                        , torch.gather(y.value, 1, torch.argmax(y.value,dim=1).view(-1, 1)).view(-1, 1)
+                                                        , torch.gather(z.value, 1, torch.argmax(z.value,dim=1).view(-1, 1)).view(-1, 1)),
+                                                       dim=1))
+            """
+            #sentence_score = ltn.Variable("sentence_score", torch.concat((x.value, y.value, z.value), dim=1))
 
             torch.set_printoptions(precision=2, sci_mode=False, linewidth=160)
             print(sentences)
-            print(f"PETER = SUBJECT                      ", Model(x, Subject_l).value,            labels[0])
-            print(f"(LIVE) IN SENTENCE                   ", Model(y, Action_l).value,             labels[1])
-            print(f"AMSTERDAM = OBJECT                   ", Model(z, Object_l).value,             labels[2])
+            print(f" SUBJECT                      ", torch.argmax(x.value, dim=1), labels[0])
+            print(f"(LIVE) IN SENTENCE                   ", torch.argmax(y.value, dim=1), labels[1])
+            print(f" OBJECT                   ", torch.argmax(z.value, dim=1), labels[2])
             print(f"'PETER LIVES IN AMSTERDAM' = SENTENCE", Model_sentence(sentence_score).value, labels[3])
-            print(attention_values)
+            # print(attention_values)
 
             if args.log_neptune:
                 for key, value in axioms.items():
@@ -426,7 +501,7 @@ def main(args, generation_args):
     dataset_test, _ = get_dataset(None, args.test_data_path)
 
     def trim_hidden_states(hs):
-        mask = np.isfinite(hs)          # (nr_samples, nr_layers, nr_tokens, nr_dims)
+        mask = np.isfinite(hs)  # (nr_samples, nr_layers, nr_tokens, nr_dims)
         mask = mask.all(axis=3)
         token_cnt = mask.sum(axis=2)
         trim_i = token_cnt.max()
@@ -435,8 +510,10 @@ def main(args, generation_args):
 
     # load dataset and hidden states
     if not args.random_baseline:
-        hs_train = trim_hidden_states(load_single_generation(vars(generation_args) | {'data_path': args.train_data_path}))
-        hs_test = trim_hidden_states(load_single_generation(vars(generation_args) | {'data_path': args.test_data_path}))
+        generation_args.data_path = args.train_data_path
+        hs_train = trim_hidden_states(load_single_generation(vars(generation_args)))
+        generation_args.data_path = args.test_data_path
+        hs_test = trim_hidden_states(load_single_generation(vars(generation_args)))
     else:
         hs_train = np.random.randn(len(dataset_train), 32, 512)
         hs_test = np.random.randn(len(dataset_test), 32, 512)
@@ -446,6 +523,15 @@ def main(args, generation_args):
     hs_dataset_train = CustomDataset(hs_train_t, dataset_train)
     batch_size = args.probe_batch_size if args.probe_batch_size > 0 else len(hs_train_t)
     hs_dataloader_train = DataLoader(hs_dataset_train, batch_size=batch_size, shuffle=True)
+    val = [f[0] for f in dataset_train["labels"]]
+    val.extend([f[1] for f in dataset_train["labels"]])
+    val.extend([f[2] for f in dataset_train["labels"]])
+
+    print("tot actions",len(list(set([f[1] for f in dataset_train["labels"]]))))
+    print("tot subjects", len(list(set([f[0] for f in dataset_train["labels"]]))))
+    print("tot objects", len(list(set([f[2] for f in dataset_train["labels"]]))))
+
+    print("max_elements", max(list(val)))
 
     # test
     hs_test_t = torch.Tensor(hs_test).squeeze()
@@ -462,12 +548,12 @@ if __name__ == "__main__":
     # We'll also add some additional args for evaluation
     parser.add_argument("--nr_epochs", type=int, default=200)
     parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--probe_batch_size", type=int, default=-1)
+    parser.add_argument("--probe_batch_size", type=int, default=32)
     parser.add_argument("--probe_device", type=str, default='cuda')
     parser.add_argument("--log_neptune", action='store_true')
     parser.add_argument("--log_tensorboard", action='store_true')
-    parser.add_argument("--train_data_path", type=str, default='final_city_version_2_train.txt')
-    parser.add_argument("--test_data_path", type=str, default='city_test_cleaned.txt')
+    parser.add_argument("--train_data_path", type=str, default='training_set_26_07_23.txt')
+    parser.add_argument("--test_data_path", type=str, default='test_set_26_07_23.txt')
     parser.add_argument("--random_baseline", action='store_true',
                         help="Use randomly generated 'hidden states' to test if probe is able to learn with a random "
                              "set of numbers, indicating that we are not really probing.")
