@@ -1,0 +1,36 @@
+Rome,Italy
+Milan,Italy
+Naples,Italy
+Turin,Italy
+Palermo,Italy
+Genoa,Italy
+Amsterdam,Netherlands
+Rotterdam,Netherlands
+Breda,Netherlands
+Utrecht,Netherlands
+Eindhoven,Netherlands
+Tilburg,Netherlands
+London,United Kingdom
+Birmingham,United Kingdom
+Liverpool,United Kingdom
+Leds,United Kingdom
+Manchester,United Kingdom
+Cambridge,United Kingdom
+Paris,France
+Nice,France
+Bordeaux,France
+Calais,France
+Evreux,France
+Lyon,France
+Barcelona,Spain
+Zaragoza,Spain
+Bilbao,Spain
+Toledo,Spain
+Cordoba,Spain
+Madrid,Spain
+Hamburg,Germany
+Berlin,Germany
+Bremen,Germany
+Cologne,Germany
+Dortmund,Germany
+Frankfurt,Germany

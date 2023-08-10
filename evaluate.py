@@ -186,7 +186,7 @@ class LogitsToPredicate(torch.nn.Module):
         return out.view(-1)
 
 
-def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, x, y, z, sentence_score):
+def create_axioms(Model, Model_person, Subject_l, Action_l, Object_l, labels, x, y, z, sentence_score=None):
     # we define the connectives, quantifiers, and the SatAgg
     Not = ltn.Connective(ltn.fuzzy_ops.NotStandard())
     Or = ltn.Connective(ltn.fuzzy_ops.OrLuk())
@@ -194,12 +194,15 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
     Equiv = ltn.Connective(ltn.fuzzy_ops.Equiv(ltn.fuzzy_ops.AndProd(), ltn.fuzzy_ops.ImpliesReichenbach()))
     Implies = ltn.Connective(ltn.fuzzy_ops.ImpliesLuk())
     Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2), quantifier="f")
-    SatAgg = ltn.fuzzy_ops.SatAgg()
+    SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=4.0))
 
     # label_a = ltn.Variable("label_a", labels[0].clone().detach())
     # label_b = ltn.Variable("label_b", labels[1].clone().detach())
     # label_c = ltn.Variable("label_c", labels[2].clone().detach())
-    label_sentence = ltn.Variable("label_d", labels[3].clone().detach())
+    label_sentence = ltn.Variable("label_d", labels[3].clone().detach())  # sentence correctly
+    label_person_subject = ltn.Variable("label_person_subject", labels[4].clone().detach())
+    label_person_action = ltn.Variable("label_person_action", labels[5].clone().detach())
+    label_person_object = ltn.Variable("label_person_object", labels[6].clone().detach())
 
     """
     for v in x.value:
@@ -207,9 +210,56 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
             print("dddd")
     """
     # print( Model(x, Subject_l).value)
-    subject_positive = Forall(ltn.diag(x, Subject_l), Model(x, Subject_l))
+    """
+    subject_positive = Forall(ltn.diag(x, Subject_l), Model(x, Subject_l)
     action_positive = Forall(ltn.diag(y, Action_l), Model(y, Action_l))
     object_positive = Forall(ltn.diag(z, Object_l), Model(z, Object_l))
+    """
+
+    subject_positive = Forall(ltn.diag(label_person_subject, x, Subject_l),
+                              And(Model(x, Subject_l), Model_person(x)),
+                              cond_vars=[label_person_subject],
+                              cond_fn=lambda t: t.value == 1)
+
+    object_positive = Forall(ltn.diag(label_person_object, z, Object_l),
+                             And(Model(z, Object_l), Model_person(z)),
+                             cond_vars=[label_person_object],
+                             cond_fn=lambda t: t.value == 1)
+
+    action_positive = Forall(ltn.diag(y, Action_l), Model(y, Action_l))
+
+    is_not_person_subject = Forall(ltn.diag(label_person_subject, x, Subject_l),
+                                   And(Model(x, Subject_l), Not(Model_person(x))),
+                                   cond_vars=[label_person_subject],
+                                   cond_fn=lambda t: t.value == 0)
+
+    is_not_person_object = Forall(ltn.diag(label_person_object, z, Object_l),
+                                  And(Model(z, Object_l), Not(Model_person(z))),
+                                  cond_vars=[label_person_object],
+                                  cond_fn=lambda t: t.value == 0)
+
+    """
+    is_person_subject = Forall(ltn.diag(label_person_subject, x),
+                               Model_person(x),
+                               cond_vars=[label_person_subject],
+                               cond_fn=lambda t: t.value == 1)
+
+    is_not_person_subject = Forall(ltn.diag(label_person_subject, x),
+                                   Not(Model_person(x)),
+                                   cond_vars=[label_person_subject],
+                                   cond_fn=lambda t: t.value == 0)
+
+    is_person_object = Forall(ltn.diag(label_person_object, z),
+                              Model_person(z),
+                              cond_vars=[label_person_object],
+                              cond_fn=lambda t: t.value == 1)
+
+    is_not_person_object = Forall(ltn.diag(label_person_object, z),
+                                  Not(Model_person(z)),
+                                  cond_vars=[label_person_object],
+                                  cond_fn=lambda t: t.value == 0)
+                                  
+    """
 
     """
 
@@ -227,8 +277,7 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
 
     """
 
-
-
+    """
     all_sentence_positive = Forall(ltn.diag(label_sentence, sentence_score),
                                    Model_sentence(sentence_score),
                                    cond_vars=[label_sentence],
@@ -238,7 +287,8 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
                                    Not(Model_sentence(sentence_score)),
                                    cond_vars=[label_sentence],
                                    cond_fn=lambda t: t.value == 0)
-
+    
+    """
 
     """
 
@@ -280,7 +330,8 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
     )
     """""
 
-    sat_agg = SatAgg(subject_positive, action_positive, object_positive, all_sentence_positive,all_sentence_negative)
+    sat_agg = SatAgg(subject_positive, action_positive, object_positive, is_not_person_subject,
+                     is_not_person_object)
 
     # sat_agg = SatAgg(subject_positive, action_positive, object_positive,
     #                  subject_negative, action_negative, object_negative, all_sentence_positive, all_sentence_negative)
@@ -292,8 +343,12 @@ def create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, 
         # 'action_negative': action_negative,
         'object_positive': object_positive,
         # 'object_negative': object_negative,
-        'all_sentence_positive': all_sentence_positive,
-        'all_sentence_negative': all_sentence_negative,
+        # 'all_sentence_positive': all_sentence_positive,
+        # 'all_sentence_negative': all_sentence_negative,
+        # 'is_person_subject': is_person_subject,
+        'is_not_person_subject': is_not_person_subject,
+        # 'is_person_object': is_person_object,
+        'is_not_person_object': is_not_person_object,
         # 'all_sentence_positive_implication': all_sentence_positive_implication,
         # 'all_sentence_negative_implication': all_sentence_negative_implication,
     }, sat_agg
@@ -331,13 +386,15 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     attn = SPOAttention(ndim).to(args.probe_device)
 
     # mlp = MLP(layer_sizes=(ndim, 3))
-    mlp_sentence = MLP(layer_sizes=( 12291, 1))
+    # mlp_sentence = MLP(layer_sizes=( 12291, 1))
+    mlp_person = MLP(layer_sizes=(2099, 1))
 
     # mlp2 = MLP()
     # mlp3 = MLP()
 
     Model = ltn.Function(func=lambda x, y: get_score_ltn(x, y))
-    Model_sentence = ltn.Predicate(LogitsToPredicate(mlp_sentence)).to(args.probe_device)
+    # Model_sentence = ltn.Predicate(LogitsToPredicate(mlp_sentence)).to(args.probe_device)
+    Model_person = ltn.Predicate(LogitsToPredicate(mlp_person)).to(args.probe_device)
     # Action_model = ltn.Predicate(LogitsToPredicate(mlp))
     # Object_model = ltn.Predicate(LogitsToPredicate(mlp))
     # Action_model = Action_model.to(args.probe_device)
@@ -345,7 +402,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
 
     parameters = []
     # parameters.extend([MatrixVector])
-    parameters.extend([f for f in Model_sentence.parameters()])
+    parameters.extend([f for f in Model_person.parameters()])
     # parameters.extend([f for f in Action_model.parameters()])
     # parameters.extend([f for f in Object_model.parameters()])
 
@@ -381,14 +438,15 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             labels[1] = labels[1].to(args.probe_device)
             labels[2] = labels[2].to(args.probe_device)
 
+            """
             sentence_score = ltn.Variable("sentence_score", torch.concat((subject,action,object, torch.gather(x.value,1,Subject_l.value),
                                                                            torch.gather(y.value,1,Action_l.value),
                                                                            torch.gather(z.value,1,Object_l.value)), dim=1))
-            #sentence_score = ltn.Variable("sentence_score",torch.concat((x.value, y.value, z.value), dim=1))
+            """
+            # sentence_score = ltn.Variable("sentence_score",torch.concat((x.value, y.value, z.value), dim=1))
 
             # create axioms
-            axioms, sat_agg = create_axioms(Model, Model_sentence, Subject_l, Action_l, Object_l, labels, x, y, z,
-                                            sentence_score)
+            axioms, sat_agg = create_axioms(Model, Model_person, Subject_l, Action_l, Object_l, labels, x, y, z)
 
             # calculate loss
             """
@@ -431,7 +489,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             step += 1
 
     Model.eval()
-    Model_sentence.eval()
+    Model_person.eval()
     # Action_model.eval()
     # Object_model.eval()
     attn.eval()
@@ -465,6 +523,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                          torch.concat((subject, action, object, torch.gather(x.value, 1, Subject_l.value),
                                        torch.gather(y.value, 1, Action_l.value),
                                        torch.gather(z.value, 1, Object_l.value)), dim=1))
+
             """
             sentence_score = ltn.Variable("sentence_score",
                                           torch.concat((torch.gather(x.value, 1, torch.argmax(x.value,dim=1).view(-1, 1)).view(-1, 1)
@@ -472,14 +531,65 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                                                         , torch.gather(z.value, 1, torch.argmax(z.value,dim=1).view(-1, 1)).view(-1, 1)),
                                                        dim=1))
             """
-            #sentence_score = ltn.Variable("sentence_score", torch.concat((x.value, y.value, z.value), dim=1))
+            # sentence_score = ltn.Variable("sentence_score", torch.concat((x.value, y.value, z.value), dim=1))
+            And = ltn.Connective(ltn.fuzzy_ops.AndMin())
+            Not = ltn.Connective(ltn.fuzzy_ops.NotStandard())
+            Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=6), quantifier="f")
 
             torch.set_printoptions(precision=2, sci_mode=False, linewidth=160)
             print(sentences)
             print(f" SUBJECT                      ", torch.argmax(x.value, dim=1), labels[0])
             print(f"(LIVE) IN SENTENCE                   ", torch.argmax(y.value, dim=1), labels[1])
             print(f" OBJECT                   ", torch.argmax(z.value, dim=1), labels[2])
-            print(f"'PETER LIVES IN AMSTERDAM' = SENTENCE", Model_sentence(sentence_score).value, labels[3])
+            print(f" PERSON - subject                      ", Model_person(x), labels[4])
+            print(f" PERSON - object                      ", Model_person(z), labels[6])
+
+            label_subject = ltn.Variable("subject_label", torch.argmax(x.value, dim=1))
+            label_action = ltn.Variable("subject_action", torch.argmax(y.value, dim=1))
+            label_object = ltn.Variable("subject_object", torch.argmax(z.value, dim=1))
+
+            label_sentence = ltn.Variable("label_d", labels[3].clone().detach())  # sentence correctly
+            label_person_subject = ltn.Variable("label_person_subject", labels[4].clone().detach())
+            label_person_action = ltn.Variable("label_person_action", labels[5].clone().detach())
+            label_person_object = ltn.Variable("label_person_object", labels[6].clone().detach())
+
+
+
+
+            subject_max = torch.max(x.value,dim=1)[0]
+            action_max = torch.max(y.value, dim=1)[0]
+            object_max = torch.max(z.value, dim=1)[0]
+            person_max = Model_person(x).value
+            object_person = Model_person(z).value
+
+
+
+
+            subject_positive = Forall(ltn.diag( x, label_subject,y,label_action,z,label_object,label_sentence),
+                                      And(And(And(Model(x, label_subject), Model_person(x)),
+                                              Model(y, label_action)),
+                                          And(Model(z, label_object), Not(Model_person(z)))),
+                                      cond_vars=[label_sentence],
+                                      cond_fn=lambda t: t.value == 1)
+
+            subject_negative = Forall(ltn.diag(x, label_subject, y, label_action, z, label_object, label_sentence),
+                                      And(And(And(Model(x, label_subject), Model_person(x)),
+                                              Model(y, label_action)),
+                                          And(Model(z, label_object), Not(Model_person(z)))),
+                                      cond_vars=[label_sentence],
+                                      cond_fn=lambda t: t.value == 0)
+
+
+
+
+            print(f" Sentences positive                  ",subject_positive.value)
+            print(f" Sentences negative                  ", subject_negative.value)
+
+
+            print("Sentences positive - for each row",torch.min(torch.min(torch.min(subject_max,person_max),action_max),torch.min(object_max,1-object_person)))
+                  
+
+            # print(f"'PETER LIVES IN AMSTERDAM' = SENTENCE", Model_sentence(sentence_score).value, labels[3])
             # print(attention_values)
 
             if args.log_neptune:
@@ -527,7 +637,7 @@ def main(args, generation_args):
     val.extend([f[1] for f in dataset_train["labels"]])
     val.extend([f[2] for f in dataset_train["labels"]])
 
-    print("tot actions",len(list(set([f[1] for f in dataset_train["labels"]]))))
+    print("tot actions", len(list(set([f[1] for f in dataset_train["labels"]]))))
     print("tot subjects", len(list(set([f[0] for f in dataset_train["labels"]]))))
     print("tot objects", len(list(set([f[2] for f in dataset_train["labels"]]))))
 
