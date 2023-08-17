@@ -96,7 +96,7 @@ while i < 333:
 
 phrases.append("Amsterdam lives in Peter,0,1,0,0")
 
-file3 = open("final_city_version_2_train.txt", "w", encoding="utf-8")
+file3 = open("../data/final_city_version_2_train.txt", "w", encoding="utf-8")
 
 for f in phrases:
     file3.write(f + "\n")
