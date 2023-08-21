@@ -32,6 +32,7 @@ Not = ltn.Connective(ltn.fuzzy_ops.NotStandard())
 Id = ltn.Connective(Identity())
 Implies = ltn.Connective(ltn.fuzzy_ops.ImpliesReichenbach())
 ForAll = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2), quantifier="f")
+# SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=4.0))
 SatAgg = ltn.fuzzy_ops.SatAgg()
 
 
@@ -70,19 +71,6 @@ class FrameRoleAttention(nn.Module):
             return y, att if return_attn_values else y
 
 
-class LogitsToPredicate(torch.nn.Module):
-    def __init__(self, logits_model):
-        super(LogitsToPredicate, self).__init__()
-        self.logits_model = logits_model
-        self.sigmoid = torch.nn.Sigmoid()
-
-    def forward(self, x, l):
-        logits = self.logits_model(x)
-        probs = self.sigmoid(logits)
-        out = torch.sum(probs * l, dim=1)
-        return out
-
-
 def create_axioms(x, labels, frames, frame_roles, frames_roles_count, predicates, device):
     # create tuples of predicates (frames and frame roles), their inputs, and labels
     var_pairs = {}
@@ -97,7 +85,7 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, predicates
     # for all pairs of (x, l) in our batch, if l==1 then P(x) if l==0 then -P(x)
     closed_formulas = {
         f'{name}_{v}': ForAll(
-            ltn.diag(x_var, l_var), op(p_var(x_var, l_var)),
+            ltn.diag(x_var, l_var), op(p_var(x_var)),
             cond_vars=[l_var], cond_fn=lambda t: t.value == v
         )
         for name, (p_var, x_var, l_var) in var_pairs.items()
@@ -105,12 +93,11 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, predicates
     }
 
     # presence of frame element implies presence of frame
-    one = ltn.Variable('one', torch.ones((1,), device=device))
     closed_formulas |= {
         f'{frame_roles[i]}->{frames[j]}': (
             lambda p_frame_role, x_frame_role, _1, p_frame, x_frame, _2: ForAll(
-                [one] + ltn.diag(x_frame_role, x_frame),
-                Implies(p_frame_role(x_frame_role, one), p_frame(x_frame, one))
+                ltn.diag(x_frame_role, x_frame),
+                Implies(p_frame_role(x_frame_role), p_frame(x_frame))
             )
         )(*var_pairs[frame_roles[i]], *var_pairs[frames[j]])
         for i, j in frames_roles_count.nonzero().tolist()
@@ -120,7 +107,7 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, predicates
 
     # TODO add formulas that capture frame relations
 
-    return closed_formulas
+    return var_pairs, closed_formulas
 
 
 def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_roles_count, args, ndim):
@@ -148,7 +135,10 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
 
     # predicates, one for each frame and frame-role
     predicates = {
-        name: ltn.Predicate(LogitsToPredicate(nn.Linear(args.probe_attn_n_value_d, 1))).to(args.probe_device)
+        name: ltn.Predicate(nn.Sequential(
+            nn.Linear(args.probe_attn_n_value_d, 1),
+            nn.Sigmoid()
+        )).to(args.probe_device)
         for name in frames + frame_roles
     }
 
@@ -173,7 +163,7 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
 
             x = forward(hs)
 
-            closed_formulas = create_axioms(
+            _, closed_formulas = create_axioms(
                 x, labels, frames, frame_roles, frames_roles_count, predicates, args.probe_device)
 
             sat_agg = SatAgg(*list(closed_formulas.values()))
@@ -185,8 +175,8 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
             optimizer.step()
 
             if args.log_neptune:
-                for key, value in closed_formulas.items():
-                    run[f'train/{key}'].append(value.value)
+                # for key, value in closed_formulas.items():
+                #     run[f'train/{key}'].append(value.value)
                 run["train/loss"].append(loss.cpu().detach())
 
     def test_epoch():
@@ -200,15 +190,37 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
 
                 x = forward(hs)
 
-                closed_formulas = create_axioms(
+                var_pairs, closed_formulas = create_axioms(
                     x, labels, frames, frame_roles, frames_roles_count, predicates, args.probe_device)
 
                 sat_agg = SatAgg(*list(closed_formulas.values()))
                 loss = 1 - sat_agg
 
+                metrics = {}
+                for name, (p_var, x_var, l_var) in var_pairs.items():
+                    if name not in frames:
+                        continue
+                    pred = p_var.model(x_var.value).squeeze()
+                    labels = l_var.value.squeeze()
+                    correct = (pred - labels.float()).abs() < 0.5
+                    tp = torch.sum(correct[labels]).item()
+                    fp = torch.sum(~correct[labels]).item()
+                    tn = torch.sum(correct[~labels]).item()
+                    fn = torch.sum(~correct[~labels]).item()
+
+                    metrics[f'{name}_tp'] = tp / len(hs)
+                    metrics[f'{name}_fp'] = fp / len(hs)
+                    metrics[f'{name}_tn'] = tn / len(hs)
+                    metrics[f'{name}_fn'] = fn / len(hs)
+                    metrics[f'{name}_pr'] = tp / (tp + fp) if tp + fp > 0 else -1
+                    metrics[f'{name}_re'] = tp / (tp + fn) if tp + fn > 0 else -1
+                    metrics[f'{name}_f1'] = 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) > 0 else -1
+
                 if args.log_neptune:
-                    for key, value in closed_formulas.items():
-                        run[f'test/{key}'].append(value.value)
+                    # for key, value in closed_formulas.items():
+                    #     run[f'test/{key}'].append(value.value)
+                    for key, value in metrics.items():
+                        run[f'test/{key}'].append(value)
                     run["test/loss"].append(loss)
         return sat_agg
 
@@ -242,25 +254,25 @@ def main(args, generation_args):
         return hs[:, :, :trim_i, :]
 
     # load dataset and hidden states
-    hs = trim_hidden_states(load_single_generation(vars(generation_args)))
+    hs = trim_hidden_states(load_single_generation(vars(generation_args))).squeeze()
 
     # normalize
     # hs[~np.isfinite(hs)] = np.nan
     # hs -= np.nanmean(hs, axis=0, keepdims=True)
     # hs /= np.nanstd(hs, axis=0, keepdims=True)
 
-    ndim = hs.squeeze().shape[-1]
+    nsamples, ntokens, ndim = hs.shape
 
     train_data = dataset['train']
     test_data = dataset['test']
 
     if args.random_baseline:
-        hs = np.random.randn(len(dataset), 32, ndim)
+        hs[:len(train_data)] = np.random.randn(len(train_data), ntokens, ndim)
     elif args.shuffled_baseline:
         np.random.shuffle(hs)
 
     # train LTN probe
-    hs_t = torch.Tensor(hs).squeeze()
+    hs_t = torch.Tensor(hs)
     hs_dataset_train = CustomDataset(hs_t[:len(train_data)], train_data)
     hs_dataset_test = CustomDataset(hs_t[len(train_data):], test_data)
     batch_size = args.probe_batch_size if args.probe_batch_size > 0 else len(hs_t)
@@ -273,10 +285,10 @@ def main(args, generation_args):
 if __name__ == '__main__':
     parser = get_parser()
     _generation_args, _ = parser.parse_known_args()
-    parser.add_argument("--nr_epochs", type=int, default=10)
+    parser.add_argument("--nr_epochs", type=int, default=100)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--probe_batch_size", type=int, default=128)
-    parser.add_argument("--probe_weight_decay", type=float, default=0.05)
+    parser.add_argument("--probe_weight_decay", type=float, default=0)
     parser.add_argument("--probe_attn_n_key_query_d", type=int, default=128)
     parser.add_argument("--probe_attn_n_value_d", type=int, default=128)
     parser.add_argument("--probe_attn_bias", type=bool, default=True)

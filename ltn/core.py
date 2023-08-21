@@ -279,7 +279,7 @@ def process_ltn_objects(objects):
 
     Raises
     ----------
-    :class:`TypeError`
+    :class:`TypeErrortorch.ones(1)`
         Raises when the type of the input parameter is incorrect.
     """
     # check inputs
