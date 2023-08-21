@@ -106,17 +106,17 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, predicates
 
     # presence of frame element implies presence of frame
     one = ltn.Variable('one', torch.ones((1,), device=device))
-    for i, j in frames_roles_count.nonzero().tolist():
-        frame_role_name = frame_roles[i]
-        frame_name = frames[j]
-        p_frame_role, x_frame_role, l_frame_role = var_pairs[frame_role_name]
-        p_frame, x_frame, l_frame = var_pairs[frame_name]
-        closed_formulas[f'{frame_role_name}->{frame_name}'] = ForAll(
-            [one] + ltn.diag(x_frame_role, x_frame),
-            Implies(p_frame_role(x_frame_role, one), p_frame(x_frame, one))
-        )
+    closed_formulas |= {
+        f'{frame_roles[i]}->{frames[j]}': (
+            lambda p_frame_role, x_frame_role, _1, p_frame, x_frame, _2: ForAll(
+                [one] + ltn.diag(x_frame_role, x_frame),
+                Implies(p_frame_role(x_frame_role, one), p_frame(x_frame, one))
+            )
+        )(*var_pairs[frame_roles[i]], *var_pairs[frames[j]])
+        for i, j in frames_roles_count.nonzero().tolist()
+    }
 
-    # TODO add 'presence of frame implies presence of _core_ frame elements' formulas
+    # TODO add "presence of frame implies presence of _core_ frame elements" formulas
 
     # TODO add formulas that capture frame relations
 
