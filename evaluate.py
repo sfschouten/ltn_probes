@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 
 import ltn
 
-from utils import get_parser, load_single_generation, get_dataset
+from utils import get_parser, load_single_generation, get_synthetic_dataset
 from customdataloader import CustomDataset
 
 from dotenv import load_dotenv
@@ -607,8 +607,8 @@ def main(args, generation_args):
     print(f'Name of first device: {torch.cuda.get_device_name(0)}')
     print()
 
-    dataset_train, _ = get_dataset(None, args.train_data_path)
-    dataset_test, _ = get_dataset(None, args.test_data_path)
+    dataset_train, _ = get_synthetic_dataset(None, args.train_data_path)
+    dataset_test, _ = get_synthetic_dataset(None, args.test_data_path)
 
     def trim_hidden_states(hs):
         mask = np.isfinite(hs)  # (nr_samples, nr_layers, nr_tokens, nr_dims)

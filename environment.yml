@@ -2,6 +2,7 @@ channels:
   - defaults
   - conda-forge
 dependencies:
+  - main::nltk
   - conda-forge::cudatoolkit
   - conda-forge::cudatoolkit-dev
   - conda-forge::transformers

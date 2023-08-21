@@ -11,7 +11,7 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForMaske
 
 from auto_gptq import AutoGPTQForCausalLM
 
-from datasets import Dataset
+from datasets import Dataset, load_dataset
 
 
 def get_parser():
@@ -27,7 +27,8 @@ def get_parser():
     parser.add_argument("--parallelize", action="store_true", help="Whether to parallelize the model")
     parser.add_argument("--device", type=str, default="cuda", help="Device to use for the model")
     # setting up data
-    parser.add_argument("--data_path", type=str, default='training_set_26_07_23.txt')
+    parser.add_argument("--dataset", type=str, default="synthetic", choices=['synthetic', 'framenet'])
+    parser.add_argument("--data_path", type=str, default='data/training_set_26_07_23.txt')
     parser.add_argument("--batch_size", type=int, default=1, help="Batch size to use")
     # which hidden states we extract
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
@@ -39,9 +40,9 @@ def get_parser():
     return parser
 
 
-def load_model(model_name, cache_dir=None, parallelize=False, device="cuda", use_auto_gptq=None):
+def load_model(model_name, cache_dir=None, device="cuda", use_auto_gptq=None):
     """
-    Loads a model and its corresponding tokenizer, either parallelized across GPUs (if the model permits that; usually just use this for T5-based models) or on a single GPU
+    Loads a model and its corresponding tokenizer
     """
 
     use_auto_gptq = use_auto_gptq or 'gptq' in model_name.lower()
@@ -65,19 +66,71 @@ def load_model(model_name, cache_dir=None, parallelize=False, device="cuda", use
 
     # specify model_max_length (the max token length) to be 512 to ensure that padding works
     # (it's not set by default for e.g. DeBERTa, but it's necessary for padding to work properly)
-    tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir, model_max_length=512)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir, model_max_length=512,
+                                              add_prefix_space=True)
     model.eval()
 
-    # put on the correct device
-    if parallelize:
-        model.parallelize()
-    else:
-        model = model.to(device)
+    model = model.to(device)
 
     return model, tokenizer, model_type
 
 
-def get_dataset(tokenizer, data_file):
+def get_framenet_dataset(tokenizer):
+    data = load_dataset('hf_framenet')['full']
+
+    if tokenizer:
+        # tokenize once to measure longest in dataset, then use that as max_length (necessary because 'longest' only
+        # works for padding up to longest in the batch)
+        stack = [('longest', 9999)]
+        while len(stack) > 0:
+            padding, max_len = stack.pop()
+            data = data.map(lambda x: tokenizer(
+                x['sentence'].split(' '),
+                truncation=True,
+                is_split_into_words=True,
+                padding=padding,
+                max_length=max_len,
+            )).with_format("torch")
+            emp_max_len = max(len(s) for s in data['input_ids'])
+            if emp_max_len != max_len:
+                stack.append(('max_length', emp_max_len))
+
+    # add 'labels' column with one-hot encoding of frames and frame roles
+    frames = [f'f_{n}' for n in data.features['frames'][0]['id'].names]
+    frame_roles = [f'fe_{n}' for n in data.features['frames'][0]['frame_elements'][0]['id'].names]
+    nr_frames = len(frames)
+    nr_frame_roles = len(frame_roles)
+
+    frames_roles_count = torch.zeros((nr_frame_roles, nr_frames))
+
+    def create_labels(x):
+        nonlocal frames_roles_count
+        full_label = torch.zeros((nr_frames + nr_frame_roles)).bool()
+        for f in x['frames']:
+            label = torch.stack([
+                torch.nn.functional.one_hot(torch.tensor(f['id']), num_classes=nr_frames + nr_frame_roles)
+            ] + [
+                torch.nn.functional.one_hot(torch.tensor(nr_frames + fr['id']), num_classes=nr_frames + nr_frame_roles)
+                for fr in f['frame_elements']
+            ]).any(dim=0)
+            full_label |= label
+            frames_roles_count += (label[:nr_frames].unsqueeze(dim=0).bool() & label[nr_frames:].unsqueeze(dim=1).bool())
+
+        return {'labels': full_label}
+
+    data = data.map(create_labels, load_from_cache_file=False).with_format("torch")
+
+    used_roles = frames_roles_count.sum(dim=1).nonzero().squeeze()
+    frame_roles = [f for i, f in enumerate(frame_roles) if i in used_roles]
+    frames_roles_count = frames_roles_count.index_select(dim=0, index=used_roles)
+
+    used_labels = torch.cat((torch.arange(nr_frames), nr_frames + used_roles))
+    data = data.map(lambda x: {'labels': x['labels'].index_select(dim=1, index=used_labels)}, batched=True)
+    data = data.shuffle(seed=0)
+    return data, frames, frame_roles, frames_roles_count
+
+
+def get_synthetic_dataset(tokenizer, data_file):
     with open(data_file, 'r') as f:
         lines = f.readlines()
 
@@ -86,10 +139,8 @@ def get_dataset(tokenizer, data_file):
     for f in lines:
         text = f.split(",")[0]
         sentences.append(text)
-        #print(f)
         labels.append(tuple(int(f1) for f1 in f.rstrip().split(",")[1:]))
 
-    #data_dict = {'sentence': sentences, "labels": labels}
     data_dict = {'sentence': sentences, "labels": labels}
     data = Dataset.from_dict(data_dict)
     tokenized = data.map(lambda x: tokenizer(
@@ -100,17 +151,15 @@ def get_dataset(tokenizer, data_file):
     return data, tokenized
 
 
-def get_dataloader(dataset, tokenizer, batch_size=16, device="cuda", pin_memory=True, num_workers=1):
+def get_dataloader(dataset, tokenizer, batch_size=16, pin_memory=True, num_workers=1):
     # get a random permutation of the indices; we'll take the first num_examples of these that do not get truncated
     # random_idxs = np.random.permutation(len(dataset))
 
-    # remove examples that would be truncated (since this messes up contrast pairs)
     keep_idxs = []
     # for idx in random_idxs:
     for idx in range(len(dataset)):
         input = dataset['sentence'][int(idx)]
-        input_text = input.split(",")[0]
-        if len(tokenizer.encode(input_text, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
+        if len(tokenizer.encode(input, truncation=False)) < tokenizer.model_max_length - 2:  # include small margin to be conservative
             keep_idxs.append(int(idx))
     dataset = dataset.remove_columns(list(set(dataset.column_names) & {'sentence', 'token_type_ids'}))
 
