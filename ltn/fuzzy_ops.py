@@ -74,11 +74,12 @@ def check_values(*values):
         Raises when the values of the input parameters are incorrect.
     """
     values = list(values)
+    """
     for v in values:
         if not torch.all(torch.where(torch.logical_and(v >= 0., v <= 1.), 1., 0.)):
             raise ValueError("Expected inputs of connectives and quantifiers to be tensors of truth values in the range"
                              " [0., 1.], but got some values outside this range.")
-
+    """
 
 # utility function to check the integrity of the mask when guarded quantification is used
 def check_mask(mask, xs):

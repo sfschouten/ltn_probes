@@ -1,0 +1,100 @@
+catullo is a river otter,catullo,604,river_otter.n.01,316,carnivore.n.01,2,Waterfront,26,river_otter.n.01,316,1
+attila is a border collie,attila,919,border_collie.n.01,146,carnivore.n.01,2,Domestic,6,border_collie.n.01,146,1
+bengal tiger is a larry,bengal_tiger.n.01,607,larry,332,carnivore.n.01,2,Forest,10,bengal_tiger.n.01,607,0
+buck is a palfrey,buck,86,palfrey.n.01,352,ungulate.n.01,11,Varied,24,palfrey.n.01,352,1
+lionet is a titto,lionet.n.01,506,titto,26,carnivore.n.01,2,Grassland,11,lionet.n.01,506,0
+merlin is a barren ground caribou,merlin,421,barren_ground_caribou.n.01,888,ungulate.n.01,11,Arctic,1,barren_ground_caribou.n.01,888,1
+european wood mouse is a regina,european_wood_mouse.n.01,642,regina,764,rodent.n.01,9,Forest,10,european_wood_mouse.n.01,642,0
+birillo is a prairie vole,birillo,974,prairie_vole.n.01,461,rodent.n.01,9,Grassland,11,prairie_vole.n.01,461,1
+crab eating raccoon is a woodstock,crab-eating_raccoon.n.01,851,woodstock,96,carnivore.n.01,2,Forest,10,crab-eating_raccoon.n.01,851,0
+galax is a black and tan coonhound,galax,945,black-and-tan_coonhound.n.01,334,carnivore.n.01,2,Countryside,4,black-and-tan_coonhound.n.01,334,1
+wharf rat is a coco,wharf_rat.n.02,758,coco,574,rodent.n.01,9,Urban,23,wharf_rat.n.02,758,0
+galax is a carthorse,galax,945,carthorse.n.01,365,ungulate.n.01,11,Farm,8,carthorse.n.01,365,1
+african wild ass is a julio,african_wild_ass.n.01,984,julio,569,ungulate.n.01,11,Desert,5,african_wild_ass.n.01,984,0
+duff is a thoroughbred,duff,405,thoroughbred.n.02,1005,ungulate.n.01,11,Domestic,6,thoroughbred.n.02,1005,1
+exmoor is a alan,exmoor.n.02,245,alan,878,ungulate.n.01,11,Forest,10,exmoor.n.02,245,0
+pongo is a rhodesian ridgeback,pongo,866,rhodesian_ridgeback.n.01,869,carnivore.n.01,2,Domestic,6,rhodesian_ridgeback.n.01,869,1
+quagga is a cassandra,quagga.n.01,615,cassandra,757,ungulate.n.01,11,Prehistoric,18,quagga.n.01,615,0
+falco is a mexican hairless,falco,746,mexican_hairless.n.01,798,carnivore.n.01,2,Domestic,6,mexican_hairless.n.01,798,1
+nonstarter is a ursula,nonstarter.n.02,150,ursula,508,ungulate.n.01,11,Varied,24,nonstarter.n.02,150,0
+zelda is a guernsey,zelda,99,guernsey.n.02,229,ungulate.n.01,11,Farm,8,guernsey.n.02,229,1
+neve is a australian terrier,neve,692,australian_terrier.n.01,895,carnivore.n.01,2,Domestic,6,australian_terrier.n.01,895,1
+rhodesian ridgeback is a lina,rhodesian_ridgeback.n.01,869,lina,605,carnivore.n.01,2,Domestic,6,rhodesian_ridgeback.n.01,869,0
+niki is a spotted hyena,niki,394,spotted_hyena.n.01,220,carnivore.n.01,2,Savanna,19,spotted_hyena.n.01,220,1
+brood bitch is a fluffy,brood_bitch.n.01,236,fluffy,940,carnivore.n.01,2,Domestic,6,brood_bitch.n.01,236,0
+kelvin is a hereford,kelvin,680,hereford.n.01,377,ungulate.n.01,11,Farm,8,hereford.n.01,377,1
+pole horse is a claud,pole_horse.n.01,300,claud,1002,ungulate.n.01,11,Farm,8,pole_horse.n.01,300,0
+daffy is a cotswold,daffy,485,cotswold.n.01,248,ungulate.n.01,11,Farm,8,cotswold.n.01,248,1
+kuvasz is a iole,kuvasz.n.01,542,iole,482,carnivore.n.01,2,Domestic,6,kuvasz.n.01,542,0
+athos is a water chevrotain,athos,45,water_chevrotain.n.01,842,ungulate.n.01,11,Wetland,27,water_chevrotain.n.01,842,1
+delma is a chow,delma,210,chow.n.03,877,carnivore.n.01,2,Domestic,6,chow.n.03,877,1
+wanda is a vaquita,wanda,345,vaquita.n.01,678,aquatic_mammal.n.01,0,Ocean,16,vaquita.n.01,678,1
+reynard is a byron,reynard.n.01,955,byron,815,carnivore.n.01,2,Varied,24,reynard.n.01,955,0
+cesare is a tortoiseshell,cesare,892,tortoiseshell.n.03,957,carnivore.n.01,2,Domestic,6,tortoiseshell.n.03,957,1
+ferret badger is a diomede,ferret_badger.n.01,738,diomede,336,carnivore.n.01,2,Forest,10,ferret_badger.n.01,738,0
+spank is a common eland,spank,454,common_eland.n.01,417,ungulate.n.01,11,Grassland,11,common_eland.n.01,417,1
+doberman is a titti,doberman.n.01,100,titti,894,carnivore.n.01,2,Domestic,6,doberman.n.01,100,0
+cesare is a snake muishond,cesare,892,snake_muishond.n.01,313,carnivore.n.01,2,Forest,10,snake_muishond.n.01,313,1
+large poodle is a molly,large_poodle.n.01,116,molly,379,carnivore.n.01,2,Domestic,6,large_poodle.n.01,116,0
+shell is a anoa,shell,466,anoa.n.01,356,ungulate.n.01,11,Forest,10,anoa.n.01,356,1
+golden retriever is a peggy,golden_retriever.n.01,35,peggy,165,carnivore.n.01,2,Domestic,6,golden_retriever.n.01,35,0
+fido is a old english sheepdog,fido,474,old_english_sheepdog.n.01,259,carnivore.n.01,2,Farm,8,old_english_sheepdog.n.01,259,1
+aragorn is a polar hare,aragorn,386,polar_hare.n.01,850,lagomorph.n.01,7,Arctic,1,polar_hare.n.01,850,1
+suslik is a runa,suslik.n.01,528,runa,149,rodent.n.01,9,Grassland,11,suslik.n.01,528,0
+ozzy is a hack,ozzy,573,hack.n.06,613,ungulate.n.01,11,Farm,8,hack.n.06,613,1
+otterhound is a icaro,otterhound.n.01,920,icaro,839,carnivore.n.01,2,Waterfront,26,otterhound.n.01,920,0
+mudder is a laio,mudder.n.01,749,laio,589,ungulate.n.01,11,Farm,8,mudder.n.01,749,0
+alaska is a manul,alaska,415,manul.n.01,928,carnivore.n.01,2,Varied,24,manul.n.01,928,1
+dun is a cira,dun.n.01,215,cira,640,ungulate.n.01,11,Varied,24,dun.n.01,215,0
+catullo is a santa gertrudis,catullo,604,santa_gertrudis.n.01,155,ungulate.n.01,11,Farm,8,santa_gertrudis.n.01,155,1
+misty is a vaquita,misty,395,vaquita.n.01,678,aquatic_mammal.n.01,0,Ocean,16,vaquita.n.01,678,1
+steller sea lion is a birillo,steller_sea_lion.n.01,189,birillo,974,aquatic_mammal.n.01,0,Ocean,16,steller_sea_lion.n.01,189,0
+zoe is a hampshire,zoe,951,hampshire.n.02,659,ungulate.n.01,11,Farm,8,hampshire.n.02,659,1
+basenji is a zoe,basenji.n.01,186,zoe,951,carnivore.n.01,2,Domestic,6,basenji.n.01,186,0
+buck is a eskimo dog,buck,86,eskimo_dog.n.01,111,carnivore.n.01,2,Varied,24,eskimo_dog.n.01,111,1
+european water shrew is a bea,european_water_shrew.n.01,900,bea,501,insectivore.n.01,6,Waterfront,26,european_water_shrew.n.01,900,0
+devil is a pomeranian,devil,711,pomeranian.n.01,608,carnivore.n.01,2,Domestic,6,pomeranian.n.01,608,1
+right whale is a eco,right_whale.n.01,733,eco,28,aquatic_mammal.n.01,0,Ocean,16,right_whale.n.01,733,0
+luce is a bluetick,luce,428,bluetick.n.01,521,carnivore.n.01,2,Countryside,4,bluetick.n.01,521,1
+nube is a right whale,nube,602,right_whale.n.01,733,aquatic_mammal.n.01,0,Ocean,16,right_whale.n.01,733,1
+minnie is a merino,minnie,978,merino.n.01,224,ungulate.n.01,11,Farm,8,merino.n.01,224,1
+cayuse is a zagor.,cayuse.n.01,194,zagor.,272,ungulate.n.01,11,Varied,24,cayuse.n.01,194,0
+regina is a common eland,regina,764,common_eland.n.01,417,ungulate.n.01,11,Grassland,11,common_eland.n.01,417,1
+aoudad is a feffy,aoudad.n.01,676,feffy,74,ungulate.n.01,11,Mountains,15,aoudad.n.01,676,0
+raley is a buckskin,raley,985,buckskin.n.01,710,ungulate.n.01,11,Farm,8,buckskin.n.01,710,1
+kid is a norberto,kid.n.05,172,norberto,0,ungulate.n.01,11,Farm,8,kid.n.05,172,0
+nube is a woolly mammoth,nube,602,woolly_mammoth.n.01,693,proboscidean.n.01,8,Prehistoric,18,woolly_mammoth.n.01,693,1
+jack is a raisa,jack.n.12,712,raisa,904,ungulate.n.01,11,Farm,8,jack.n.12,712,0
+neve is a white rhinoceros,neve,692,white_rhinoceros.n.01,780,ungulate.n.01,11,Grassland,11,white_rhinoceros.n.01,780,1
+old english sheepdog is a exi,old_english_sheepdog.n.01,259,exi,848,carnivore.n.01,2,Farm,8,old_english_sheepdog.n.01,259,0
+swamp rabbit is a icaro,swamp_rabbit.n.02,490,icaro,839,lagomorph.n.01,7,Wetland,27,swamp_rabbit.n.02,490,0
+koda is a cryptoprocta,koda,742,cryptoprocta.n.01,662,carnivore.n.01,2,Forest,10,cryptoprocta.n.01,662,1
+border collie is a bruce,border_collie.n.01,146,bruce,1001,carnivore.n.01,2,Domestic,6,border_collie.n.01,146,0
+fanny is a serotine,fanny,500,serotine.n.01,1007,bat.n.01,1,Forest,10,serotine.n.01,1007,1
+ursula is a cheviot,ursula,508,cheviot.n.01,715,ungulate.n.01,11,Farm,8,cheviot.n.01,715,1
+eskimo dog is a coco,eskimo_dog.n.01,111,coco,574,carnivore.n.01,2,Varied,24,eskimo_dog.n.01,111,0
+didi is a bighorn,didi,445,bighorn.n.02,1004,ungulate.n.01,11,Mountains,15,bighorn.n.02,1004,1
+giant eland is a hachikohermione,giant_eland.n.01,843,hachikohermione,852,ungulate.n.01,11,Grassland,11,giant_eland.n.01,843,0
+fiamma is a cairn,fiamma,13,cairn.n.02,618,carnivore.n.01,2,Domestic,6,cairn.n.02,618,1
+gazella subgutturosa is a elfo,gazella_subgutturosa.n.01,654,elfo,202,ungulate.n.01,11,Grassland,11,gazella_subgutturosa.n.01,654,0
+raley is a hind,raley,985,hind.n.02,805,ungulate.n.01,11,Forest,10,hind.n.02,805,1
+farm horse is a rush,farm_horse.n.01,625,rush,699,ungulate.n.01,11,Farm,8,farm_horse.n.01,625,0
+yellow throated marten is a luce,yellow-throated_marten.n.01,578,luce,428,carnivore.n.01,2,Forest,10,yellow-throated_marten.n.01,578,0
+alan is a border collie,alan,878,border_collie.n.01,146,carnivore.n.01,2,Domestic,6,border_collie.n.01,146,1
+american staffordshire terrier is a zelda,american_staffordshire_terrier.n.01,748,zelda,99,carnivore.n.01,2,Domestic,6,american_staffordshire_terrier.n.01,748,0
+eco is a long tailed porcupine,eco,28,long-tailed_porcupine.n.01,603,rodent.n.01,9,Forest,10,long-tailed_porcupine.n.01,603,1
+cotswold is a casper,cotswold.n.01,248,casper,78,ungulate.n.01,11,Farm,8,cotswold.n.01,248,0
+lala is a frosted bat,lala,16,frosted_bat.n.01,88,bat.n.01,1,Varied,24,frosted_bat.n.01,88,1
+labrador retriever is a lupin,labrador_retriever.n.01,913,lupin,343,carnivore.n.01,2,Domestic,6,labrador_retriever.n.01,913,0
+serval is a mya,serval.n.01,183,mya,281,carnivore.n.01,2,Grassland,11,serval.n.01,183,0
+bice is a affenpinscher,bice,768,affenpinscher.n.01,917,carnivore.n.01,2,Domestic,6,affenpinscher.n.01,917,1
+smooth haired fox terrier is a pedro,smooth-haired_fox_terrier.n.01,69,pedro,54,carnivore.n.01,2,Domestic,6,smooth-haired_fox_terrier.n.01,69,0
+ursula is a southern flying squirrel,ursula,508,southern_flying_squirrel.n.01,583,rodent.n.01,9,Forest,10,southern_flying_squirrel.n.01,583,1
+jungle cat is a lancelot,jungle_cat.n.01,760,lancelot,512,carnivore.n.01,2,Forest,10,jungle_cat.n.01,760,0
+pluto is a longhorn,pluto,11,longhorn.n.01,448,ungulate.n.01,11,Farm,8,longhorn.n.01,448,1
+broodmare is a fluffy,broodmare.n.01,959,fluffy,940,ungulate.n.01,11,Farm,8,broodmare.n.01,959,0
+western big eared bat is a koda,western_big-eared_bat.n.01,520,koda,742,bat.n.01,1,Forest,10,western_big-eared_bat.n.01,520,0
+dido is a killer whale,dido,161,killer_whale.n.01,818,aquatic_mammal.n.01,0,Ocean,16,killer_whale.n.01,818,1
+wolf pup is a athos,wolf_pup.n.01,391,athos,45,carnivore.n.01,2,Forest,10,wolf_pup.n.01,391,0
+pongo is a ibizan hound,pongo,866,ibizan_hound.n.01,312,carnivore.n.01,2,Varied,24,ibizan_hound.n.01,312,1
+tabby is a nora,tabby.n.02,124,nora,994,carnivore.n.01,2,Domestic,6,tabby.n.02,124,0

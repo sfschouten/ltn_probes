@@ -14,7 +14,7 @@ def main(args):
     elif args.dataset == 'framenet':
         dataset, _, _, _, _ = get_framenet_dataset(tokenizer)
         dataset = dataset.remove_columns(['frames', 'labels'])
-    dataloader = get_dataloader(dataset, tokenizer, batch_size=args.batch_size)
+    dataloader = get_dataloader(dataset, tokenizer, batch_size=args.batch_size, device=args.device)
 
     # Get the hidden states and labels
     print("Generating hidden states")

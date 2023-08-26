@@ -142,10 +142,11 @@ def get_synthetic_dataset(tokenizer, data_file):
 
     sentences = []
     labels = []
+
     for f in lines:
         text = f.split(",")[0]
         sentences.append(text)
-        labels.append(tuple(int(f1) for f1 in f.rstrip().split(",")[1:]))
+        labels.append([int(f.split(",")[f1]) for f1 in range(len(f.split(","))) if f1 != 0 and f1 != 1 and f1 != 3 and f1 != 5 and f1 != 7  and f1!=9])
 
     data_dict = {'sentence': sentences, "labels": labels}
     data = Dataset.from_dict(data_dict)
