@@ -7,7 +7,7 @@ def main(args):
     model, tokenizer, _ = load_model(args.model_name, args.cache_dir, args.parallelize, args.device)
 
     print("Loading dataloader")
-    _, dataset = get_dataset(tokenizer, args.data_path)
+    _, dataset = get_dataset(tokenizer,args.data_path)
     dataset = dataset.remove_columns(['labels'])
     dataloader = get_dataloader(dataset, tokenizer, batch_size=args.batch_size, device=args.device)
 

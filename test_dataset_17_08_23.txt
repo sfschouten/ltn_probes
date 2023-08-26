@@ -1,0 +1,100 @@
+exi is a hearing dog,exi,592,hearing_dog.n.01,667,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,hearing_dog.n.01,667,1
+king charles spaniel is a brad,king_charles_spaniel.n.01,810,brad,891,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,king_charles_spaniel.n.01,810,0
+zelda is a caracal,zelda,114,caracal.n.01,745,carnivore.n.01,2,feline.n.01,12,cat.n.01,28,caracal.n.01,745,1
+irish terrier is a nero,irish_terrier.n.01,567,nero,96,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,irish_terrier.n.01,567,0
+milo is a european water shrew,milo,999,european_water_shrew.n.01,514,insectivore.n.01,6,shrew.n.02,36,water_shrew.n.01,148,european_water_shrew.n.01,514,1
+trevor is a canada lynx,trevor,169,canada_lynx.n.01,895,carnivore.n.01,2,feline.n.01,12,cat.n.01,28,canada_lynx.n.01,895,1
+exi is a hudson bay collared lemming,exi,592,hudson_bay_collared_lemming.n.01,157,rodent.n.01,9,lemming.n.01,18,pied_lemming.n.01,108,hudson_bay_collared_lemming.n.01,157,1
+grampus is a birillo,grampus.n.02,709,birillo,962,aquatic_mammal.n.01,0,cetacean.n.01,7,whale.n.02,150,grampus.n.02,709,0
+fuffi is a old english sheepdog,fuffi,965,old_english_sheepdog.n.01,163,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,old_english_sheepdog.n.01,163,1
+newfoundland is a lavanda,newfoundland.n.01,387,lavanda,924,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,newfoundland.n.01,387,0
+ricola is a kid,ricola,193,kid.n.05,38,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,kid.n.05,38,1
+tennessee walker is a macbeth,tennessee_walker.n.01,251,macbeth,561,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,tennessee_walker.n.01,251,0
+scottish deerhound is a daffy,scottish_deerhound.n.01,536,daffy,763,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,scottish_deerhound.n.01,536,0
+dylan is a clydesdale terrier,dylan,523,clydesdale_terrier.n.01,365,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,clydesdale_terrier.n.01,365,1
+fisher is a lala,fisher.n.02,724,lala,31,carnivore.n.01,2,musteline_mammal.n.01,25,marten.n.01,88,fisher.n.02,724,0
+artemide is a water dog,artemide,453,water_dog.n.02,307,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,water_dog.n.02,307,1
+pacific walrus is a nikita,pacific_walrus.n.01,288,nikita,304,aquatic_mammal.n.01,0,pinniped_mammal.n.01,30,walrus.n.01,147,pacific_walrus.n.01,288,0
+galax is a liver spotted dalmatian,galax,24,liver-spotted_dalmatian.n.01,970,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,liver-spotted_dalmatian.n.01,970,1
+mantled ground squirrel is a ron,mantled_ground_squirrel.n.01,780,ron,503,rodent.n.01,9,squirrel.n.01,38,ground_squirrel.n.02,60,mantled_ground_squirrel.n.01,780,0
+raisa is a hairy legged vampire bat,raisa,294,hairy-legged_vampire_bat.n.01,828,bat.n.01,1,carnivorous_bat.n.01,5,vampire_bat.n.01,143,hairy-legged_vampire_bat.n.01,828,1
+nora is a common lynx,nora,747,common_lynx.n.01,560,carnivore.n.01,2,feline.n.01,12,cat.n.01,28,common_lynx.n.01,560,1
+kob is a lapo,kob.n.01,385,lapo,542,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,kob.n.01,385,0
+american bison is a nala,american_bison.n.01,405,nala,847,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,american_bison.n.01,405,0
+cassian is a european wildcat,cassian,202,european_wildcat.n.01,248,carnivore.n.01,2,feline.n.01,12,cat.n.01,28,european_wildcat.n.01,248,1
+ord kangaroo rat is a devil,ord_kangaroo_rat.n.01,966,devil,448,rodent.n.01,9,rat.n.01,34,pocket_rat.n.01,109,ord_kangaroo_rat.n.01,966,0
+elfo is a western grey squirrel,elfo,287,western_grey_squirrel.n.01,342,rodent.n.01,9,squirrel.n.01,38,tree_squirrel.n.01,139,western_grey_squirrel.n.01,342,1
+farm horse is a ricola,farm_horse.n.01,486,ricola,193,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,farm_horse.n.01,486,0
+molly is a african hunting dog,molly,172,african_hunting_dog.n.01,507,carnivore.n.01,2,canine.n.02,4,wild_dog.n.01,152,african_hunting_dog.n.01,507,1
+loki is a southern flying squirrel,loki,546,southern_flying_squirrel.n.01,555,rodent.n.01,9,squirrel.n.01,38,american_flying_squirrel.n.01,2,southern_flying_squirrel.n.01,555,1
+bactrian camel is a brigitta,bactrian_camel.n.01,253,brigitta,170,ungulate.n.01,11,even-toed_ungulate.n.01,11,camel.n.01,27,bactrian_camel.n.01,253,0
+bershka is a hognose bat,bershka,783,hognose_bat.n.01,239,bat.n.01,1,carnivorous_bat.n.01,5,leafnose_bat.n.01,78,hognose_bat.n.01,239,1
+dingo is a pluto,dingo.n.01,879,pluto,915,carnivore.n.01,2,canine.n.02,4,wild_dog.n.01,152,dingo.n.01,879,0
+raley is a lesser rorqual,raley,71,lesser_rorqual.n.01,281,aquatic_mammal.n.01,0,cetacean.n.01,7,whale.n.02,150,lesser_rorqual.n.01,281,1
+milking shorthorn is a giotto,milking_shorthorn.n.01,752,giotto,613,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,milking_shorthorn.n.01,752,0
+trevor is a bullock,trevor,169,bullock.n.01,682,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,bullock.n.01,682,1
+pacific walrus is a spank,pacific_walrus.n.01,288,spank,825,aquatic_mammal.n.01,0,pinniped_mammal.n.01,30,walrus.n.01,147,pacific_walrus.n.01,288,0
+stepper is a lallo,stepper.n.03,259,lallo,241,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,stepper.n.03,259,0
+billy is a chiacoan peccary,billy,495,chiacoan_peccary.n.01,772,ungulate.n.01,11,even-toed_ungulate.n.01,11,peccary.n.01,105,chiacoan_peccary.n.01,772,1
+dik dik is a elfo,dik-dik.n.01,87,elfo,287,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,dik-dik.n.01,87,0
+maga is a cavalry horse,maga,424,cavalry_horse.n.01,250,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,cavalry_horse.n.01,250,1
+water dog is a fluffy,water_dog.n.02,307,fluffy,914,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,water_dog.n.02,307,0
+adelchi is a water vole,adelchi,81,water_vole.n.02,986,rodent.n.01,9,wood_rat.n.01,42,vole.n.01,146,water_vole.n.02,986,1
+dalã¬ is a chestnut,dalã¬,479,chestnut.n.06,600,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,chestnut.n.06,600,1
+southern flying squirrel is a dalã¬,southern_flying_squirrel.n.01,555,dalã¬,479,rodent.n.01,9,squirrel.n.01,38,american_flying_squirrel.n.01,2,southern_flying_squirrel.n.01,555,0
+ermes is a river otter,ermes,332,river_otter.n.01,210,carnivore.n.01,2,musteline_mammal.n.01,25,otter.n.02,102,river_otter.n.01,210,1
+borzoi is a fluffy,borzoi.n.01,869,fluffy,914,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,borzoi.n.01,869,0
+astra is a american water spaniel,astra,635,american_water_spaniel.n.01,443,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,american_water_spaniel.n.01,443,1
+leopardess is a wiskey,leopardess.n.01,43,wiskey,34,carnivore.n.01,2,feline.n.01,12,big_cat.n.01,16,leopardess.n.01,43,0
+hachikohermione is a giant eland,hachikohermione,878,giant_eland.n.01,187,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,giant_eland.n.01,187,1
+grizzly is a mya,grizzly.n.01,880,mya,837,carnivore.n.01,2,bear.n.01,2,brown_bear.n.01,23,grizzly.n.01,880,0
+muriel is a rambouillet,muriel,609,rambouillet.n.01,457,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,rambouillet.n.01,457,1
+feist is a blu,feist.n.01,348,blu,650,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,feist.n.01,348,0
+casper is a black rhinoceros,casper,313,black_rhinoceros.n.01,972,ungulate.n.01,11,odd-toed_ungulate.n.01,28,rhinoceros.n.01,116,black_rhinoceros.n.01,972,1
+palfrey is a fluffy,palfrey.n.01,610,fluffy,914,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,palfrey.n.01,610,0
+macrotus is a dido,macrotus.n.01,487,dido,160,bat.n.01,1,carnivorous_bat.n.01,5,leafnose_bat.n.01,78,macrotus.n.01,487,0
+user is a sand cat,user,940,sand_cat.n.01,522,carnivore.n.01,2,feline.n.01,12,cat.n.01,28,sand_cat.n.01,522,1
+sauro is a german short haired pointer,sauro,254,german_short-haired_pointer.n.01,669,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,german_short-haired_pointer.n.01,669,1
+elmo is a dusky footed woodrat,elmo,466,dusky-footed_woodrat.n.01,768,rodent.n.01,9,wood_rat.n.01,42,packrat.n.02,103,dusky-footed_woodrat.n.01,768,1
+farm horse is a akira,farm_horse.n.01,486,akira,718,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,farm_horse.n.01,486,0
+ron is a gazella subgutturosa,ron,503,gazella_subgutturosa.n.01,481,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,gazella_subgutturosa.n.01,481,1
+large civet is a linus,large_civet.n.01,15,linus,703,carnivore.n.01,2,viverrine.n.01,40,civet.n.01,30,large_civet.n.01,15,0
+mya is a seeing eye dog,mya,837,seeing_eye_dog.n.01,13,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,seeing_eye_dog.n.01,13,1
+cactus mouse is a otello,cactus_mouse.n.01,199,otello,604,rodent.n.01,9,mouse.n.01,24,wood_mouse.n.01,155,cactus_mouse.n.01,199,0
+itaco is a orange bat,itaco,923,orange_bat.n.01,469,bat.n.01,1,carnivorous_bat.n.01,5,leafnose_bat.n.01,78,orange_bat.n.01,469,1
+bullock is a nino,bullock.n.02,305,nino,321,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,bullock.n.02,305,0
+mya is a milking shorthorn,mya,837,milking_shorthorn.n.01,752,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,milking_shorthorn.n.01,752,1
+stalking horse is a ricola,stalking-horse.n.04,21,ricola,193,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,stalking-horse.n.04,21,0
+lupin is a thoroughbred,lupin,957,thoroughbred.n.02,91,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,thoroughbred.n.02,91,1
+bluetick is a rocky,bluetick.n.01,100,rocky,498,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,bluetick.n.01,100,0
+akira is a wild boar,akira,718,wild_boar.n.01,142,ungulate.n.01,11,even-toed_ungulate.n.01,11,swine.n.01,131,wild_boar.n.01,142,1
+steller sea lion is a phoebe,steller_sea_lion.n.01,941,phoebe,460,aquatic_mammal.n.01,0,pinniped_mammal.n.01,30,seal.n.09,122,steller_sea_lion.n.01,941,0
+vea is a steenbok,vea,35,steenbok.n.01,893,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,steenbok.n.01,893,1
+european water shrew is a fata,european_water_shrew.n.01,514,fata,603,insectivore.n.01,6,shrew.n.02,36,water_shrew.n.01,148,european_water_shrew.n.01,514,0
+runa is a devon,runa,223,devon.n.02,839,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,devon.n.02,839,1
+airedale is a macbeth,airedale.n.01,643,macbeth,561,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,airedale.n.01,643,0
+woodstock is a coondog,woodstock,242,coondog.n.01,897,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,coondog.n.01,897,1
+pariah dog is a olga,pariah_dog.n.01,817,olga,120,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,pariah_dog.n.01,817,0
+calypsa is a lion cub,calypsa,290,lion_cub.n.01,741,carnivore.n.01,2,feline.n.01,12,big_cat.n.01,16,lion_cub.n.01,741,1
+blu is a american staffordshire terrier,blu,650,american_staffordshire_terrier.n.01,751,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,american_staffordshire_terrier.n.01,751,1
+housedog is a aragorn,housedog.n.01,532,aragorn,614,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,housedog.n.01,532,0
+marlon is a california sea lion,marlon,753,california_sea_lion.n.01,901,aquatic_mammal.n.01,0,pinniped_mammal.n.01,30,seal.n.09,122,california_sea_lion.n.01,901,1
+pooch is a marghe,pooch.n.01,383,marghe,553,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,pooch.n.01,383,0
+cassandra is a south american sea lion,cassandra,394,south_american_sea_lion.n.01,211,aquatic_mammal.n.01,0,pinniped_mammal.n.01,30,seal.n.09,122,south_american_sea_lion.n.01,211,1
+brown hyena is a artemisia,brown_hyena.n.01,795,artemisia,249,carnivore.n.01,2,canine.n.02,4,hyena.n.01,70,brown_hyena.n.01,795,0
+molly is a ocelot,molly,172,ocelot.n.01,74,carnivore.n.01,2,feline.n.01,12,cat.n.01,28,ocelot.n.01,74,1
+argali is a didi,argali.n.01,533,didi,22,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,argali.n.01,533,0
+molly is a gee gee,molly,172,gee-gee.n.01,564,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,gee-gee.n.01,564,1
+affenpinscher is a merlino,affenpinscher.n.01,836,merlino,231,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,affenpinscher.n.01,836,0
+snake muishond is a jamba,snake_muishond.n.01,728,jamba,402,carnivore.n.01,2,musteline_mammal.n.01,25,weasel.n.02,149,snake_muishond.n.01,728,0
+small civet is a doc,small_civet.n.01,627,doc,686,carnivore.n.01,2,viverrine.n.01,40,civet.n.01,30,small_civet.n.01,627,0
+red is a soft coated wheaten terrier,red,491,soft-coated_wheaten_terrier.n.01,504,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,soft-coated_wheaten_terrier.n.01,504,1
+pallid bat is a malik,pallid_bat.n.01,404,malik,246,bat.n.01,1,carnivorous_bat.n.01,5,vespertilian_bat.n.01,144,pallid_bat.n.01,404,0
+daenerys is a leopard cat,daenerys,589,leopard_cat.n.01,140,carnivore.n.01,2,feline.n.01,12,cat.n.01,28,leopard_cat.n.01,140,1
+moke is a ulma,moke.n.01,506,ulma,212,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,moke.n.01,506,0
+palfrey is a gordon,palfrey.n.01,610,gordon,461,ungulate.n.01,11,odd-toed_ungulate.n.01,28,equine.n.01,41,palfrey.n.01,610,0
+eden is a giant schnauzer,eden,766,giant_schnauzer.n.01,391,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,giant_schnauzer.n.01,391,1
+entlebucher is a wagner,entlebucher.n.01,657,wagner,328,carnivore.n.01,2,canine.n.02,4,dog.n.01,36,entlebucher.n.01,657,0
+shell is a ibex,shell,959,ibex.n.01,569,ungulate.n.01,11,even-toed_ungulate.n.01,11,ruminant.n.01,119,ibex.n.01,569,1
+eastern grey squirrel is a hulk,eastern_grey_squirrel.n.01,245,hulk,264,rodent.n.01,9,squirrel.n.01,38,tree_squirrel.n.01,139,eastern_grey_squirrel.n.01,245,0
+mantled ground squirrel is a zhen,mantled_ground_squirrel.n.01,780,zhen,750,rodent.n.01,9,squirrel.n.01,38,ground_squirrel.n.02,60,mantled_ground_squirrel.n.01,780,0

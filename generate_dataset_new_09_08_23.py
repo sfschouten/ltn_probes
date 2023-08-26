@@ -67,8 +67,11 @@ total_elements = list(set(person_used))
 total_elements.extend(list(set(city_used)))
 total_elements.extend(list(set(action_used)))
 total_elements = list(set(total_elements))
-total_elements.extend(sorted(list(set([f1.replace("_", "") for f1 in nations]))))
+#total_elements.extend(sorted(list(set([f1.replace("_", "") for f1 in nations]))))
+total_nations = list(sorted(list(set([f1.replace("_", "") for f1 in nations]))))
 my_dict = {}
+
+print("total_elements",len(total_elements))
 for_iteration = 0
 for f in total_elements:
     my_dict[f] = 0
@@ -79,26 +82,39 @@ file3 = open("training_set_09_08_23.txt", "w", encoding="utf-8")
 
 for f in phrases:
     elements = f.split(" ")
-
-
-    file3.write(f.replace("_", " ") + "," + total_elements.index(elements[0]).__str__() + "," + total_elements.index(
-        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__() + "," + total_elements.index(nations[
-                    cities.index(elements[3])].replace("_", "")).__str__()+ "," + "1" + "\n")
-    added_row.append(f + "," + total_elements.index(elements[0]).__str__() + "," + total_elements.index(
-        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__() + ","+
-        total_elements.index(nations[cities.index(elements[3])].replace("_", "")).__str__() + "," + "1" + "\n")
+    file3.write(f.replace("_", " ") + "," + nations[
+        cities.index(elements[3])].replace("_", "") + "," + total_elements.index(
+        elements[0]).__str__() + "," + total_elements.index(
+        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__() + "," + total_nations.index(nations[
+                                                                                                                    cities.index(
+                                                                                                                        elements[
+                                                                                                                            3])].replace(
+        "_", "")).__str__() + "," + "1" + "\n")
+    added_row.append(f + "," + nations[cities.index(elements[3])].replace("_", "") + "," + total_elements.index(
+        elements[0]).__str__() + "," + total_elements.index(
+        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__() + "," +
+                     total_nations.index(
+                         nations[cities.index(elements[3])].replace("_", "")).__str__() + "," + "1" + "\n")
     my_dict[elements[0]] += 1
     my_dict[elements[-1]] += 1
     my_dict["lives in"] += 1
 
 for f in incorrect_sentences:
     elements = f.split(" ")
-    file3.write(f.replace("_", " ") + "," + total_elements.index(elements[0]).__str__() + "," + total_elements.index(
-        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__() + "," + total_elements.index(nations[
-                    cities.index(elements[0])].replace("_", "")).__str__()+ "," + "0" + "\n")
-    added_row.append(f + "," + total_elements.index(elements[0]).__str__() + "," + total_elements.index(
-        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__() + "," + total_elements.index(nations[
-                    cities.index(elements[0])].replace("_", "")).__str__() + "," + "0" + "\n")
+    file3.write(f.replace("_", " ") + "," + nations[
+        cities.index(elements[0])] + "," + total_elements.index(elements[0]).__str__() + "," + total_elements.index(
+        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__() + "," + total_nations.index(nations[
+                                                                                                                    cities.index(
+                                                                                                                        elements[
+                                                                                                                            0])].replace(
+        "_", "")).__str__() + "," + "0" + "\n")
+    added_row.append(f + "," + nations[
+                         cities.index(elements[0])].replace("_", "") + "," + total_elements.index(elements[0]).__str__() + "," + total_elements.index(
+        "lives in").__str__() + "," + total_elements.index(elements[-1]).__str__()  + "," + total_nations.index(nations[
+                                                                                                      cities.index(
+                                                                                                          elements[
+                                                                                                              0])].replace(
+        "_", "")).__str__() + "," + "0" + "\n")
     my_dict[elements[0]] += 1
     my_dict[elements[-1]] += 1
     my_dict["lives in"] += 1
