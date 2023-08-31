@@ -80,7 +80,7 @@ def get_framenet_dataset(tokenizer):
 
     if tokenizer:
         # tokenize once to measure longest in dataset, then use that as max_length (necessary because 'longest' only
-        # works for padding up to longest in the batch)
+        # works for padding up to longest in the batch, but we want the same length for everything)
         stack = [('longest', 9999)]
         while len(stack) > 0:
             padding, max_len = stack.pop()
@@ -102,6 +102,7 @@ def get_framenet_dataset(tokenizer):
     nr_frame_roles = len(frame_roles)
 
     frames_roles_count = torch.zeros((nr_frame_roles, nr_frames))
+    frames_implications = torch.zeros((nr_frames, nr_frames))
 
     def create_labels(x):
         nonlocal frames_roles_count
@@ -115,19 +116,23 @@ def get_framenet_dataset(tokenizer):
             ]).any(dim=0)
             full_label |= label
             frames_roles_count += (label[:nr_frames].unsqueeze(dim=0).bool() & label[nr_frames:].unsqueeze(dim=1).bool())
+            if f['implied_by']:
+                i = int(f['implied_by'])
+                frames_implications[i] += label[:nr_frames].int()
 
         return {'labels': full_label}
 
     data = data.map(create_labels, load_from_cache_file=False).with_format("torch")
 
+    # remove the frame roles that are not present in the data
     used_roles = frames_roles_count.sum(dim=1).nonzero().squeeze()
     frame_roles = [f for i, f in enumerate(frame_roles) if i in used_roles]
     frames_roles_count = frames_roles_count.index_select(dim=0, index=used_roles)
-
     used_labels = torch.cat((torch.arange(nr_frames), nr_frames + used_roles))
     data = data.map(lambda x: {'labels': x['labels'].index_select(dim=1, index=used_labels)}, batched=True)
+
     data = data.shuffle(seed=0)
-    return data, frames, frame_roles, frames_roles_count
+    return data, frames, frame_roles, frames_roles_count, frames_implications
 
 
 def get_synthetic_dataset(tokenizer, data_file):

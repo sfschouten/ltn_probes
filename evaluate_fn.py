@@ -71,7 +71,7 @@ class FrameRoleAttention(nn.Module):
             return y, att if return_attn_values else y
 
 
-def create_axioms(x, labels, frames, frame_roles, frames_roles_count, predicates, device):
+def create_axioms(x, labels, frames, frame_roles, frames_roles_count, frames_implications, predicates):
     # create tuples of predicates (frames and frame roles), their inputs, and labels
     var_pairs = {}
     for i, name in enumerate(frames + frame_roles):
@@ -103,14 +103,52 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, predicates
         for i, j in frames_roles_count.nonzero().tolist()
     }
 
-    # TODO add "presence of frame implies presence of _core_ frame elements" formulas
+    # formulas that capture frame relations
+    closed_formulas |= {
+        f'{frames[i]}->{frames[j]}': (
+            lambda p_frame1, x_frame1, _1, p_frame2, x_frame2, _2: ForAll(
+                ltn.diag(x_frame1, x_frame2),
+                Implies(p_frame1(x_frame1), p_frame2(x_frame2))
+            )
+        )(*var_pairs[frames[i]], *var_pairs[frames[j]])
+        for i, j in frames_implications.nonzero().tolist()
+    }
 
-    # TODO add formulas that capture frame relations
+    # TODO add "presence of frame implies presence of _core_ frame elements" formulas?
 
     return var_pairs, closed_formulas
 
 
-def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_roles_count, args, ndim):
+def calc_metrics(var_pairs, to_calc, dummy_baseline=False):
+    metrics = {}
+    for name, (p_var, x_var, l_var) in var_pairs.items():
+        if name not in to_calc:
+            continue
+
+        labels = l_var.value.squeeze()
+        if dummy_baseline:
+            pred = torch.ones_like(labels.float())
+            assert False in labels.mode()[0], "False must be the most common class"
+        else:
+            pred = p_var.model(x_var.value).squeeze()
+
+        correct = (pred - labels.float()).abs() < 0.5
+        tp = torch.sum(correct[labels]).item()
+        fp = torch.sum(~correct[labels]).item()
+        tn = torch.sum(correct[~labels]).item()
+        fn = torch.sum(~correct[~labels]).item()
+
+        metrics[f'{name}_tp'] = tp / len(labels)
+        metrics[f'{name}_fp'] = fp / len(labels)
+        metrics[f'{name}_tn'] = tn / len(labels)
+        metrics[f'{name}_fn'] = fn / len(labels)
+        metrics[f'{name}_pr'] = tp / (tp + fp) if tp + fp > 0 else -1
+        metrics[f'{name}_re'] = tp / (tp + fn) if tp + fn > 0 else -1
+        metrics[f'{name}_f1'] = 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) > 0 else -1
+    return metrics
+
+
+def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_roles_count, frames_implications, args, ndim):
     if args.log_neptune:
         import neptune
         run = neptune.init_run(
@@ -164,7 +202,7 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
             x = forward(hs)
 
             _, closed_formulas = create_axioms(
-                x, labels, frames, frame_roles, frames_roles_count, predicates, args.probe_device)
+                x, labels, frames, frame_roles, frames_roles_count, frames_implications, predicates)
 
             sat_agg = SatAgg(*list(closed_formulas.values()))
             loss = 1 - sat_agg
@@ -179,7 +217,7 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
                 #     run[f'train/{key}'].append(value.value)
                 run["train/loss"].append(loss.cpu().detach())
 
-    def test_epoch():
+    def test_epoch(prefix="", dummy_baseline=False):
         for p in predicates.values():
             p.eval()
         attn.eval()
@@ -191,41 +229,21 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
                 x = forward(hs)
 
                 var_pairs, closed_formulas = create_axioms(
-                    x, labels, frames, frame_roles, frames_roles_count, predicates, args.probe_device)
+                    x, labels, frames, frame_roles, frames_roles_count, frames_implications, predicates)
 
                 sat_agg = SatAgg(*list(closed_formulas.values()))
                 loss = 1 - sat_agg
-
-                metrics = {}
-                for name, (p_var, x_var, l_var) in var_pairs.items():
-                    if name not in frames:
-                        continue
-                    pred = p_var.model(x_var.value).squeeze()
-                    labels = l_var.value.squeeze()
-                    correct = (pred - labels.float()).abs() < 0.5
-                    tp = torch.sum(correct[labels]).item()
-                    fp = torch.sum(~correct[labels]).item()
-                    tn = torch.sum(correct[~labels]).item()
-                    fn = torch.sum(~correct[~labels]).item()
-
-                    metrics[f'{name}_tp'] = tp / len(hs)
-                    metrics[f'{name}_fp'] = fp / len(hs)
-                    metrics[f'{name}_tn'] = tn / len(hs)
-                    metrics[f'{name}_fn'] = fn / len(hs)
-                    metrics[f'{name}_pr'] = tp / (tp + fp) if tp + fp > 0 else -1
-                    metrics[f'{name}_re'] = tp / (tp + fn) if tp + fn > 0 else -1
-                    metrics[f'{name}_f1'] = 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) > 0 else -1
-
+                metrics = calc_metrics(var_pairs, frames, dummy_baseline=dummy_baseline)
+                metrics = {f'{prefix}{key}': v for key, v in metrics.items()}
                 if args.log_neptune:
-                    # for key, value in closed_formulas.items():
-                    #     run[f'test/{key}'].append(value.value)
                     for key, value in metrics.items():
                         run[f'test/{key}'].append(value)
                     run["test/loss"].append(loss)
         return sat_agg
 
     # test once to see random performance
-    test_epoch()
+    test_epoch(prefix='init_', dummy_baseline=False)
+    test_epoch(prefix='dummy_', dummy_baseline=True)
     for e in tqdm(range(args.nr_epochs)):
         train_epoch()
         test_sat = test_epoch()
@@ -242,7 +260,7 @@ def main(args, generation_args):
     print(f'Name of first device: {torch.cuda.get_device_name(0)}')
     print()
 
-    data, frames, frame_roles, frames_roles_count = get_framenet_dataset(None)
+    data, frames, frame_roles, frames_roles_count, frames_implications = get_framenet_dataset(None)
     dataset = data.train_test_split(test_size=.2, shuffle=False)
 
     def trim_hidden_states(hs):
@@ -279,7 +297,8 @@ def main(args, generation_args):
     hs_dataloader_train = DataLoader(hs_dataset_train, batch_size=batch_size, shuffle=True)
     hs_dataloader_test = DataLoader(hs_dataset_test, batch_size=len(test_data), shuffle=True)
 
-    train_ltn(hs_dataloader_train, hs_dataloader_test, frames, frame_roles, frames_roles_count, args, ndim)
+    train_ltn(hs_dataloader_train, hs_dataloader_test, frames, frame_roles, frames_roles_count, frames_implications,
+              args, ndim)
 
 
 if __name__ == '__main__':
