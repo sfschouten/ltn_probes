@@ -264,12 +264,12 @@ def main(args, generation_args):
     dataset = data.train_test_split(test_size=.2, shuffle=False)
 
     def trim_hidden_states(hs):
-        mask = np.isfinite(hs)  # (nr_samples, nr_layers, nr_tokens, nr_dims)
-        mask = mask.all(axis=3)
-        token_cnt = mask.sum(axis=2)
+        mask = np.isfinite(hs)  # (nr_samples, nr_tokens, nr_dims, nr_layers)
+        mask = mask.all(axis=2)
+        token_cnt = mask.sum(axis=1)
         trim_i = token_cnt.max()
-        print(f'Trimming to {trim_i} from {hs.shape[2]}.')
-        return hs[:, :, :trim_i, :]
+        print(f'Trimming to {trim_i} from {hs.shape[1]}.')
+        return hs[:, :trim_i, :, :]
 
     # load dataset and hidden states
     hs = trim_hidden_states(load_single_generation(vars(generation_args))).squeeze()

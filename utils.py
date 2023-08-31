@@ -278,7 +278,7 @@ def get_all_hidden_states(model, dataloader, layer=None, all_layers=True):
     for batch in tqdm(dataloader):
         hs = get_individual_hidden_states(model, batch, layer=layer, all_layers=all_layers)
 
-        if dataloader.batch_size == 1:
+        if dataloader.batch_size == 1 and len(hs.shape) < 4:
             hs = hs.unsqueeze(0)
 
         all_hs.append(hs)
