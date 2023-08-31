@@ -61,10 +61,10 @@ def create_framenet_subset(min_impl_by=5, max_impl_by=10, min_nr_samples=100, lo
             continue
 
         # BFS over frame-to-frame relation graph
-        queue = [(id, {fe['ID']: (fe['ID'], fe['name']) for fe in framenet.frame(id)['FE'].values()})]
+        queue = [(id, [], {fe['ID']: (fe['ID'], fe['name']) for fe in framenet.frame(id)['FE'].values()})]
         visited = {id}
         while queue:
-            current_id, current_map = queue.pop()
+            current_id, current_path, current_map = queue.pop()
             current_frame = framenet.frame(current_id)
 
             for rel in current_frame.frameRelations:
@@ -82,16 +82,18 @@ def create_framenet_subset(min_impl_by=5, max_impl_by=10, min_nr_samples=100, lo
                     if fe_rel['subID'] in current_map
                 }
 
+                new_path = current_path + [rel]
+
                 visited.add(neighbour_id)
-                queue.append((neighbour_id, new_map))
+                queue.append((neighbour_id, new_path, new_map))
 
                 # there is a path from the original frame to this one
-                implied_by[neighbour_id].append((id, new_map))
+                implied_by[neighbour_id].append((id, new_path, new_map))
 
     candidates = {
         f_id: (
             framenet.frame(f_id),
-            {f2_id: (framenet.frame(f2_id), _map) for f2_id, _map in impl_by}
+            {f2_id: (framenet.frame(f2_id), path, _map) for f2_id, path, _map in impl_by}
         )
         for f_id, impl_by in implied_by.items()
         if max_impl_by >= len(impl_by) >= min_impl_by
@@ -99,7 +101,7 @@ def create_framenet_subset(min_impl_by=5, max_impl_by=10, min_nr_samples=100, lo
 
     if log:
         pprint({
-            f_id: (f['name'], {f2_id: f2['name'] for f2_id, (f2, _) in impl_by.items()})
+            f_id: (f['name'], {f2_id: (f2['name'], path) for f2_id, (f2, path, _) in impl_by.items()})
             for f_id, (f, impl_by) in candidates.items()
         })
 
@@ -158,17 +160,17 @@ class HFFrameNet(ds.GeneratorBasedBuilder):
         self.implied_frames = {(f_id, f['name']) for f_id, (f, _) in frames.items()}
         self.asserted_frames = {
             (f_id, f['name'])
-            for _, (_, impl_by) in frames.items() for f_id, (f, _) in impl_by.items()
+            for _, (_, impl_by) in frames.items() for f_id, (f, _, _) in impl_by.items()
         }
         self.asserted_to_implied = {key: set() for key, _ in self.asserted_frames}
         for f1_id, (f1, impl_by) in frames.items():
-            for f2_id, (_, fe_map) in impl_by.items():
+            for f2_id, (_, _, fe_map) in impl_by.items():
                 self.asserted_to_implied[f2_id].add((f1_id, f1['name'], tuple(v for v in fe_map.values())))
 
         self.implied_frame_roles = {(fe['ID'], fe['name']) for (f, _) in frames.values() for fe in f['FE'].values()}
         self.asserted_frame_roles = {
             (fe['ID'], fe['name'])
-            for (_, impl_by) in frames.values() for (f, _) in impl_by.values() for fe in f['FE'].values()
+            for (_, impl_by) in frames.values() for (f, _, _) in impl_by.values() for fe in f['FE'].values()
         }
 
         frame_names = ([_class_name(id, name, 'asserted') for id, name in self.asserted_frames]

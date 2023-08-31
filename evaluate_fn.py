@@ -274,11 +274,6 @@ def main(args, generation_args):
     # load dataset and hidden states
     hs = trim_hidden_states(load_single_generation(vars(generation_args))).squeeze()
 
-    # normalize
-    # hs[~np.isfinite(hs)] = np.nan
-    # hs -= np.nanmean(hs, axis=0, keepdims=True)
-    # hs /= np.nanstd(hs, axis=0, keepdims=True)
-
     nsamples, ntokens, ndim = hs.shape
 
     train_data = dataset['train']
@@ -304,7 +299,7 @@ def main(args, generation_args):
 if __name__ == '__main__':
     parser = get_parser()
     _generation_args, _ = parser.parse_known_args()
-    parser.add_argument("--nr_epochs", type=int, default=100)
+    parser.add_argument("--nr_epochs", type=int, default=25)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--probe_batch_size", type=int, default=128)
     parser.add_argument("--probe_weight_decay", type=float, default=0)
