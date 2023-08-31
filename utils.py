@@ -68,10 +68,11 @@ def load_model(model_name, cache_dir=None, device="cuda", use_auto_gptq=None):
     # (it's not set by default for e.g. DeBERTa, but it's necessary for padding to work properly)
     tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir, model_max_length=512,
                                               add_prefix_space=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
     model.eval()
-
     model = model.to(device)
-
     return model, tokenizer, model_type
 
 
