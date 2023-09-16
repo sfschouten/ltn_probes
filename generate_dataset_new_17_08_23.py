@@ -13,6 +13,16 @@ for f in file_animali:
 animali = sorted(list(set(animali)))
 keys = sorted(list(set(my_dict.keys())))
 
+random.shuffle(keys)
+#keys=keys[:250]
+keys = sorted(list(set(keys)))
+my_dict_new={}
+for f in keys:
+    if f in my_dict:
+        my_dict_new[f]=my_dict[f]
+
+my_dict=my_dict_new
+
 unique_list = animali.copy()
 unique_list.extend(keys)
 random.shuffle(unique_list)
@@ -91,7 +101,7 @@ action = " is a "
 
 tmp_animmals = []
 
-for rip in range(4):
+for rip in range(1):
     for i in my_dict:
         if tmp_animmals == []:
             tmp_animmals = animali.copy()

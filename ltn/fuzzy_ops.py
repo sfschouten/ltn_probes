@@ -1413,6 +1413,121 @@ class AggregPMean(AggregationOperator):
             return torch.pow(torch.mean(xs, dim=dim, keepdim=keepdim), 1 / p)
 
 
+class AggregLogSum(AggregationOperator):
+    """
+    `pMean` fuzzy aggregation operator.
+
+    :math:`A_{pM}(x_1, \\dots, x_n) = (\\frac{1}{n} \\sum_{i = 1}^n x_i^p)^{\\frac{1}{p}}`
+
+    Parameters
+    ----------
+    p : :obj:`int`, default=2
+        Value of hyper-parameter `p` of the `pMean` fuzzy aggregation operator.
+    stable : :obj:`bool`, default=True
+        Flag indicating whether to use the :ref:`stable version <stable>` of the operator or not.
+
+    Attributes
+    ----------
+    p : :obj:`int`
+        See `p` parameter.
+    stable : :obj:`bool`
+        See `stable` parameter.
+
+    Notes
+    -----
+    The `pMean` aggregation operator has been selected as an approximation of
+    :math:`\exists` with :math:`p \geq 1`.
+    If :math:`p \\to \infty`, then the `pMean` operator tends to the
+    maximum of the input values (classical behavior of :math:`\exists`).
+
+    Examples
+    --------
+    >>> import ltn
+    >>> import torch
+    >>> Exists = ltn.Quantifier(ltn.fuzzy_ops.AggregPMean(), quantifier='e')
+    >>> print(Exists)
+    Quantifier(agg_op=AggregPMean(p=2, stable=True), quantifier='e')
+    >>> p = ltn.Predicate(func=lambda x: torch.nn.Sigmoid()(
+    ...                                     torch.sum(x, dim=1)
+    ...                                  ))
+    >>> x = ltn.Variable('x', torch.tensor([[0.56], [0.9], [0.7]]))
+    >>> print(p(x).value)
+    tensor([0.6365, 0.7109, 0.6682])
+    >>> print(Exists(x, p(x)).value)
+    tensor(0.6726)
+
+    .. automethod:: __call__
+    """
+    def __init__(self, p=2, stable=True,weights=None):
+        """
+        This constructor has to be used to set whether it has to be used the stable version (it avoids gradient
+        problems) of the p-mean aggregator or not. Also, it is possible to set the value of the parameter p.
+
+        Parameters
+        ----------
+        p: :obj:`int`
+            Value of the parameter p.
+        stable: :obj:`bool`
+            A boolean flag indicating whether it has to be used the stable version of the aggregator or not.
+        """
+        self.p = p
+        self.stable = stable
+        self.weights = weights
+
+    def __repr__(self):
+        return "AggregPMean(p=" + str(self.p) + ", stable=" + str(self.stable) + ")"
+
+    def __call__(self, xs, dim=None, keepdim=False, mask=None, p=None, stable=None):
+        """
+        It applies the `pMean` aggregation operator to the given formula's :ref:`grounding <notegrounding>`
+        on the selected dimensions.
+
+        Parameters
+        ----------
+        xs : :class:`torch.Tensor`
+            :ref:`Grounding <notegrounding>` of formula on which the aggregation has to be performed.
+        dim : :obj:`tuple` of :obj:`int`, default=None
+            Tuple containing the indexes of dimensions on which the aggregation has to be performed.
+        keepdim : :obj:`bool`, default=False
+            Flag indicating whether the output has to keep the same dimensions as the input after
+            the aggregation.
+        mask : :class:`torch.Tensor`, default=None
+            Boolean mask for excluding values of 'xs' from the aggregation. It is internally used for guarded
+            quantification. The mask must have the same shape of 'xs'. `False` means exclusion, `True` means inclusion.
+        p : :obj:`int`, default=None
+            Value of hyper-parameter `p` of the `pMean` fuzzy aggregation operator.
+        stable : :obj:`bool`, default=None
+            Flag indicating whether to use the :ref:`stable version <stable>` of the operator or not.
+
+        Returns
+        ----------
+        :class:`torch.Tensor`
+            `pMean` fuzzy aggregation of the formula.
+
+        Raises
+        ------
+        :class:`ValueError`
+            Raises when the :ref:`grounding <notegrounding>` of the formula ('xs') and the mask do not have the same
+            shape.
+            Raises when the 'mask' is not boolean.
+        """
+        p = self.p if p is None else p
+        stable = self.stable if stable is None else stable
+        if stable:
+            xs = pi_0(xs)
+        xs = torch.pow(xs, p)
+        if mask is not None:
+            check_mask(mask, xs)
+            # we sum the values of xs which are not filtered out by the mask
+            numerator = torch.sum(torch.where(~mask, torch.zeros_like(xs), torch.mul(torch.log(xs),torch.tensor(self.weights).cuda())), dim=dim, keepdim=keepdim)
+            # we count the number of 1 in the mask
+
+            return numerator
+        else:
+            return  torch.sum(torch.mul(torch.log(xs),torch.tensor(self.weights).cuda()), dim=dim, keepdim=keepdim)
+
+
+
 class AggregPMeanError(AggregationOperator):
     """
     `pMeanError` fuzzy aggregation operator.
