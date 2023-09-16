@@ -1152,6 +1152,19 @@ class AggregationOperator:
         """
         raise NotImplementedError()
 
+eps = 1e-4
+not_zeros = lambda x: (1-eps)*x + eps
+not_ones = lambda x: (1-eps)*x
+class Aggreg_wMean(AggregationOperator):
+    def __init__(self, p=2, stable=False):
+        self.stable = stable
+
+    def __call__(self,  xs, dim=None, stable=None, keepdim=False, mask=None ,weights=[1.0,1.0,1.0,1.0,1.0,0.00,0.00,0.00,0.00]): #
+        stable = self.stable if stable is None else stable
+        if stable:
+            xs = not_zeros(xs)  # Assuming not_zeros is defined elsewhere for handling zeros
+        weights = torch.tensor(weights).cuda()
+        return torch.sum(weights * xs) / torch.sum(weights)
 
 class AggregMin(AggregationOperator):
     """
