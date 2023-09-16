@@ -2,6 +2,8 @@ import csv
 import math
 import os
 import pickle
+import random
+
 import neptune
 from torch import optim
 from tqdm import tqdm
@@ -42,12 +44,12 @@ class SPOAttention(nn.Module):
         self.dropout = nn.Dropout(0.5)
 
         self.flash = hasattr(torch.nn.functional, 'scaled_dot_product_attention')
-        self.MatrixVector = nn.Parameter(2e-4 * torch.rand([4096, 1013 + 2]), requires_grad=True)
-        self.MatrixVectorFirst = nn.Parameter(2e-4 * torch.rand([4096, 12]), requires_grad=True)
+        # self.MatrixVector = nn.Parameter(2e-4 * torch.rand([4096, 1013 + 2]), requires_grad=True)
+        # self.MatrixVectorFirst = nn.Parameter(2e-4 * torch.rand([4096, 12]), requires_grad=True)
         # self.MatrixVectorSecond = nn.Parameter(2e-4 * torch.rand([4096, 43]), requires_grad=True)
         # self.MatrixVectorThird = nn.Parameter(2e-4 * torch.rand([4096, 156]), requires_grad=True)
-        self.MatrixContinent = nn.Parameter(2e-4 * torch.rand([4096, 9]), requires_grad=False)
-        self.MatrixHabitat = nn.Parameter(2e-4 * torch.rand([4096, 28]), requires_grad=True)
+        # self.MatrixContinent = nn.Parameter(2e-4 * torch.rand([4096, 9]), requires_grad=False)
+        # self.MatrixHabitat = nn.Parameter(2e-4 * torch.rand([4096, 28]), requires_grad=True)
 
     def forward(self, x, return_attn_values=True):
         # calculate key, values
@@ -136,15 +138,15 @@ class MLP(torch.nn.Module):
 
     def __init__(self, layer_sizes=(4096, 4)):
         super(MLP, self).__init__()
-        self.elu = torch.nn.ELU()
+        self.elu = torch.nn.ReLU()
         self.dropout = torch.nn.Dropout(0.2)
 
         layers = [torch.nn.Linear(layer_sizes[i - 1], layer_sizes[i])
                   for i in range(1, len(layer_sizes))]
 
-
-
         # [torch.nn.init.xavier_uniform(f.weight) for f in layers]
+        for i in layers:
+            i.weight.data = (2e-4 * torch.rand([layer_sizes[1], layer_sizes[0]]))
 
         self.linear_layers = torch.nn.ModuleList(layers)  #
 
@@ -193,15 +195,18 @@ class LogitsToPredicate(torch.nn.Module):
         """
         probs = self.softmax(logits)
         if l != None:
-            out = torch.gather(probs,1,l)
+            out = torch.gather(probs, 1, l)
         else:
             out = probs
         return out
 
 
-def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Object_l, score_category, score_continent,
+def create_axioms(Model, Model_continent, Model_category, Model_habitat, Model_person, Model_object, Subject_l,
+                  Action_l, Object_l, score_category,
+                  score_continent,
                   score_habitat, labels, x, y,
-                  z, label_category, label_continent, label_habitat, label_sentence, epoch,subject,action,object):
+                  z, label_category, label_continent, label_habitat, label_sentence, label_sentence_macro, epoch,
+                  subject, action, object):
     # we define the connectives, quantifiers, and the SatAgg
     Not = ltn.Connective(ltn.fuzzy_ops.NotStandard())
     Or = ltn.Connective(ltn.fuzzy_ops.OrLuk())
@@ -211,8 +216,8 @@ def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Obj
     Forall_person = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=6.0), quantifier="f")
     Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
     Forall_object = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
-    SatAgg =ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=4.0))
-
+    SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=4.0))
+    # agg_op=ltn.fuzzy_ops.AggregLogSum(weights=[10,1,1,1,1,1,1,1,10,1])
 
     """
 
@@ -242,7 +247,7 @@ def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Obj
     if epoch >= 450:
         # Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=6.0), quantifier="f")
         SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=7.0))
-    
+
     if epoch >= 500:
         Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=7.0), quantifier="f")
         SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=7.0))
@@ -261,25 +266,25 @@ def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Obj
                               cond_fn=lambda t: t.value == 0)
 
     """
-    label_object= ltn.Variable("object",torch.tensor(torch.zeros(label_sentence.value.shape[0],label_sentence.value.shape[1]),dtype=torch.int64))
+    label_object = ltn.Variable("object",
+                                torch.tensor(torch.zeros(label_sentence.value.shape[0], label_sentence.value.shape[1]),
+                                             dtype=torch.int64))
     label_subject = ltn.Variable("subject",
-                                torch.tensor(torch.ones(label_sentence.value.shape[0], label_sentence.value.shape[1]),dtype=torch.int64))
-    subject_positive = Forall_object(ltn.diag(label_sentence, x, Subject_l),
+                                 torch.tensor(torch.ones(label_sentence.value.shape[0], label_sentence.value.shape[1]),
+                                              dtype=torch.int64))
+
+    subject_positive = Forall(ltn.diag(label_sentence, x, Subject_l, label_sentence_macro),
                               Model(x, Subject_l),
-                              cond_vars=[label_sentence],
-                              cond_fn=lambda t: t.value == 1)
+                              cond_vars=[label_sentence, label_sentence_macro],
+                              cond_fn=lambda t, t1: torch.logical_or(t.value == 1,
+                                                                     torch.logical_and(t.value == 0, t1.value == 1)))
 
     action_positive = Forall(ltn.diag(y, Action_l), Model(y, Action_l))
 
-    axiom_category = Forall(ltn.diag(label_sentence, score_category, label_category),
-                            Model(score_category, label_category),
-                            cond_vars=[label_sentence],
-                            cond_fn=lambda t: t.value == 1)
-
-    object_positive = Forall_object(ltn.diag(label_sentence, z, Object_l),
+    object_positive = Forall_object(ltn.diag(label_sentence, z, Object_l, label_sentence_macro),
                                     Model(z, Object_l),
-                                    cond_vars=[label_sentence],
-                                    cond_fn=lambda t: t.value == 1)
+                                    cond_vars=[label_sentence, label_sentence_macro],
+                                    cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
 
     """
     list_continents=[]
@@ -298,15 +303,7 @@ def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Obj
     axiom_continent = SatAgg(list_continents[0],list_continents[1],list_continents[2],list_continents[3],list_continents[4],list_continents[5],
                              list_continents[6],list_continents[7],list_continents[8])
     """
-
-    axiom_habitat = Forall(ltn.diag(label_sentence, score_habitat, label_habitat),
-                           Model(score_habitat, label_habitat),
-                           cond_vars=[label_sentence],
-                           cond_fn=lambda t: t.value == 1)
-
-
-
-    #weights=[1.0,1.0,1.0,1.0,1.0,0.5,0.5,0.5,0.5]
+    # weights=[1.0,1.0,1.0,1.0,1.0,0.5,0.5,0.5,0.5]
     """
     if epoch<1000:
         sat_agg = SatAgg(object_positive, subject_positive, action_positive, axiom_category, axiom_habitat)
@@ -338,34 +335,42 @@ def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Obj
         }, sat_agg
     else:
     """
-    subject = ltn.Variable("subject",subject)
+
+    subject = ltn.Variable("subject", subject)
     action = ltn.Variable("action", action)
     object = ltn.Variable("object", object)
+    axiom_habitat = Forall(ltn.diag(label_sentence, score_habitat, label_habitat, label_sentence_macro),
+                           Model_habitat(score_habitat, label_habitat),
+                           cond_vars=[label_sentence, label_sentence_macro],
+                           cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
 
-    """
-    
-    is_not_person_subject = Forall(ltn.diag(label_sentence, subject, label_object),
+    axiom_category = Forall(ltn.diag(label_sentence, score_category, label_category),
+                            Model_category(score_category, label_category),
+                            cond_vars=[label_sentence],
+                            cond_fn=lambda t: t.value == 1)
+
+    is_not_person_subject = Forall(ltn.diag(label_sentence, subject, label_object, label_sentence_macro),
                                    Model_person(subject, label_object),
-                                   cond_vars=[label_sentence],
-                                   cond_fn=lambda t: t.value == 0)
+                                   cond_vars=[label_sentence, label_sentence_macro],
+                                   cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
 
-    is_not_person_object = Forall(ltn.diag(label_sentence, object, label_object),
-                                  Model_person(object, label_object),
-                                  cond_vars=[label_sentence],
-                                  cond_fn=lambda t: t.value == 0)
-    """
+    is_not_person_object = Forall(ltn.diag(label_sentence, object, label_object, label_sentence_macro),
+                                  Model_object(object, label_object),
+                                  cond_vars=[label_sentence, label_sentence_macro],
+                                  cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
 
-    is_person_subject = Forall(ltn.diag(label_sentence, subject, label_subject),
-                               Model_person(subject, label_subject),
-                               cond_vars=[label_sentence],
-                               cond_fn=lambda t: t.value == 1)
+    is_person_subject = Forall(ltn.diag(label_sentence, subject, label_subject, label_sentence_macro),
+                               Model_person(subject, label_subject, label_sentence_macro),
+                               cond_vars=[label_sentence, label_sentence_macro],
+                               cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
 
-    is_person_object = Forall(ltn.diag(label_sentence, object, label_object),
-                              Model_person(object, label_object),
-                              cond_vars=[label_sentence],
-                              cond_fn=lambda t: t.value == 1)
-    sat_agg = SatAgg(object_positive, subject_positive, action_positive, axiom_category, axiom_habitat
-                     , is_person_subject, is_person_object)
+    is_person_object = Forall(ltn.diag(label_sentence, object, label_subject, label_sentence_macro),
+                              Model_object(object, label_subject),
+                              cond_vars=[label_sentence, label_sentence_macro],
+                              cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
+
+    sat_agg = SatAgg(object_positive, subject_positive, action_positive, axiom_category, is_person_subject,
+                     is_person_object, is_not_person_object, is_not_person_object, axiom_habitat, is_not_person_subject)
 
     return {
         'subject_positive': subject_positive,
@@ -373,10 +378,12 @@ def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Obj
         'Forall': Forall.agg_op.p,
         'Forallobject': Forall_object.agg_op.p,
         # 'subject_negative': subject_negative,
-        # 'is_person_subject': is_person_subject,
-        # 'is_person_object': is_person_object,
+        'is_person_subject': is_person_subject,
+        'is_person_object': is_person_object,
+        'is_not_person_object': is_not_person_object,
+        'is_not_person_object': is_not_person_object,
         # 'is_implication':is_implication,
-        'axiom_category': axiom_category,
+        # 'axiom_category': axiom_category,
         # 'is_implication_nation':is_implication_nation,
         # 'subject_negative': subject_negative,
         'action_positive': action_positive,
@@ -388,25 +395,127 @@ def create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Obj
         # 'object_negative': object_negative,
         # 'all_sentence_positive': all_sentence_positive,
         # 'all_sentence_negative': all_sentence_negative,
-        'is_person_subject': is_person_subject,
-        #'is_not_person_subject': is_not_person_subject,
-        'is_person_object': is_person_object,
-        #'is_not_person_object': is_not_person_object,
-
+        'axiom_category': axiom_category,
         # 'all_sentence_positive_implication': all_sentence_positive_implication,
         # 'all_sentence_negative_implication': all_sentence_negative_implication,
     }, sat_agg
 
-    # axiom_habitat,,action_positive, axiom_category, subject_positive,
-    # subject_positive, object_positive, action_positive, axiom_category,
-    # ,is_not_person_subject, is_person_subject, is_not_person_object, is_person_object
-    #
-    # sat_agg = torch.log(object_positive.value) #+ torch.log(action_positive.value) + torch.log(subject_positive.value)
 
-    # sat_agg = SatAgg(subject_positive, action_positive, object_positive,
-    #                  subject_negative, action_negative, object_negative, all_sentence_positive, all_sentence_negative)
+def create_axioms_test(Model, Model_continent, Model_category, Model_habitat, Model_person, Model_object, Subject_l,
+                       Action_l, Object_l,
+                       score_category,
+                       score_continent,
+                       score_habitat, labels, x, y,
+                       z, label_category, label_continent, label_habitat, label_sentence, label_sentence_macro, epoch,
+                       subject, action,
+                       object):
+    # we define the connectives, quantifiers, and the SatAgg
+    Not = ltn.Connective(ltn.fuzzy_ops.NotStandard())
+    Or = ltn.Connective(ltn.fuzzy_ops.OrLuk())
+    And = ltn.Connective(ltn.fuzzy_ops.AndMin())
+    Equiv = ltn.Connective(ltn.fuzzy_ops.Equiv(ltn.fuzzy_ops.AndProd(), ltn.fuzzy_ops.ImpliesReichenbach()))
+    Implies = ltn.Connective(ltn.fuzzy_ops.ImpliesLuk())
+    Forall_person = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=6.0), quantifier="f")
+    Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
+    Forall_object = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
+    SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=4.0))
+
+    subject = ltn.Variable("subject", subject)
+    action = ltn.Variable("action", action)
+    object = ltn.Variable("object", object)
+
+    label_object = ltn.Variable("object",
+                                torch.tensor(torch.zeros(label_sentence.value.shape[0], label_sentence.value.shape[1]),
+                                             dtype=torch.int64))
+    label_subject = ltn.Variable("subject",
+                                 torch.tensor(torch.ones(label_sentence.value.shape[0], label_sentence.value.shape[1]),
+                                              dtype=torch.int64))
+
+    first_axiom_positive = Forall(
+        ltn.diag(x, Subject_l, y, Action_l, z, Object_l, subject, object, label_subject, label_sentence,
+                 label_sentence_macro),
+        And(And(And(Model(x, Subject_l), Model_person(subject, label_subject)), Model(y, Action_l)),
+            And(Model(z, Object_l), Model_object(object, label_subject))),
+        cond_vars=[label_sentence, label_sentence_macro],
+        cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
+
+    second_axiom_positive = Forall(
+        ltn.diag(x, Subject_l, y, Action_l, z, Object_l, subject, object, label_subject, label_sentence,
+                 score_category, label_category, label_sentence_macro),
+        Implies(And(And(And(Model(x, Subject_l), Model_person(subject, label_subject)), Model(y, Action_l)),
+                    And(Model(z, Object_l), Model_object(object, label_subject))),
+                And(And(Model(x, Subject_l), Model_person(subject, label_subject)),
+                    And(Model_category(score_category, label_category), Model_object(object, label_subject)))),
+        cond_vars=[label_sentence, label_sentence_macro],
+        cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
+
+    thirth_axiom_positive = Forall(
+        ltn.diag(x, Subject_l, y, Action_l, z, Object_l, subject, object, label_subject, label_sentence,
+                 score_habitat, label_habitat, label_sentence_macro),
+        Implies(And(And(And(Model(x, Subject_l), Model_person(subject, label_subject)), Model(y, Action_l)),
+                    And(Model(z, Object_l), Model_object(object, label_subject))),
+                And(And(Model(x, Subject_l), Model_person(subject, label_subject)),
+                    And(Model_habitat(score_habitat, label_habitat), Model_object(object, label_subject)))),
+        cond_vars=[label_sentence, label_sentence_macro],
+        cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
+
+    fourth_axiom_positive = Forall(
+        ltn.diag(x, Subject_l, y, Action_l, z, Object_l, subject, object, label_subject, label_sentence,
+                 score_habitat, label_habitat, label_sentence_macro),
+        Implies(And(And(And(Model(x, Subject_l), Model_person(subject, label_subject)), Model(y, Action_l)),
+                    And(Model(z, Object_l), Model_object(object, label_subject))),
+                And(And(Model(x, Subject_l), Model_person(subject, label_subject)),
+                    And(Model_habitat(score_habitat, label_habitat), Model_object(object, label_subject)))),
+        cond_vars=[label_sentence, label_sentence_macro],
+        cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
 
 
+
+    first_axiom_negative = Forall(
+        ltn.diag(x, Subject_l, y, Action_l, z, Object_l, subject, object, label_subject, label_sentence,
+                 label_sentence_macro),
+        And(And(And(Model(x, Subject_l), Model_person(subject, label_subject)), Model(y, Action_l)),
+            And(Model(z, Object_l), Model_object(object, label_subject))),
+        cond_vars=[label_sentence, label_sentence_macro],
+        cond_fn=lambda t, t1: torch.logical_and(t.value == 0, t1.value == 0))
+
+    second_axiom_negative = Forall(
+        ltn.diag(x, Subject_l, y, Action_l, z, Object_l, subject, object, label_subject, label_sentence,
+                 score_category, label_category, label_sentence_macro),
+        Implies(And(And(And(Model(x, Subject_l), Model_person(subject, label_subject)), Model(y, Action_l)),
+                    And(Model(z, Object_l), Model_object(object, label_subject))),
+                And(And(Model(x, Subject_l), Model_person(subject, label_subject)),
+                    And(Model_category(score_category, label_category), Model_object(object, label_subject)))),
+        cond_vars=[label_sentence, label_sentence_macro],
+        cond_fn=lambda t, t1: torch.logical_and(t.value == 0, t1.value == 0))
+
+    thirth_axiom_negative = Forall(
+        ltn.diag(x, Subject_l, y, Action_l, z, Object_l, subject, object, label_subject, label_sentence,
+                 score_habitat, label_habitat, label_sentence_macro),
+        Implies(And(And(And(Model(x, Subject_l), Model_person(subject, label_subject)), Model(y, Action_l)),
+                    And(Model(z, Object_l), Model_object(object, label_subject))),
+                And(And(Model(x, Subject_l), Model_person(subject, label_subject)),
+                    And(Model_habitat(score_habitat, label_habitat), Model_object(object, label_subject)))),
+        cond_vars=[label_sentence, label_sentence_macro],
+        cond_fn=lambda t, t1: torch.logical_and(t.value == 0, t1.value == 0))
+
+    sat_agg = SatAgg(first_axiom_negative, first_axiom_positive, second_axiom_positive, second_axiom_negative,
+                     thirth_axiom_positive, thirth_axiom_negative)
+
+    return {
+
+        'Forall': Forall.agg_op.p,
+        'Forallobject': Forall_object.agg_op.p,
+
+        'first_axiom_positive': first_axiom_positive,
+        'second_axiom_positive': second_axiom_positive,
+        'thirth_axiom_positive': thirth_axiom_positive,
+
+        'first_axiom_negative': first_axiom_negative,
+        'second_axiom_negative': second_axiom_negative,
+        'thirth_axiom_negative': thirth_axiom_negative,
+
+    }, sat_agg
 
 
 def get_score_ltn(x, y):
@@ -447,17 +556,25 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     # mlp = MLP(layer_sizes=(ndim, 3))
     # mlp_sentence = MLP(layer_sizes=( 12291, 1))
     mlp_person = MLP(layer_sizes=(4096, 2))
-    mlp_object= MLP(layer_sizes=(4096, 2))
+    mlp_object = MLP(layer_sizes=(4096, 2))
+    mlp_subject_action_object = MLP(layer_sizes=(4096, 1013 + 2))
+    mlp_habitat = MLP(layer_sizes=(4096, 28))
+    mlp_continent = MLP(layer_sizes=(4096, 9))
+    mlp_category = MLP(layer_sizes=(4096, 12))
 
     # mlp2 = MLP()
     # mlp3 = MLP()
 
-    Model = ltn.Function(func=lambda x, y: get_score_ltn(x, y))
-    Model_continent = ltn.Function(func=lambda x, y: get_score_contient(x, y))
-    Model_habitat = ltn.Function(func=lambda x, y: get_score_contient(x, y))
+    # Model = ltn.Function(func=lambda x, y: get_score_ltn(x, y))
+    Model = ltn.Predicate(LogitsToPredicate(mlp_subject_action_object)).to(args.probe_device)
+    # Model_continent = ltn.Function(func=lambda x, y: get_score_contient(x, y))
+    # Model_habitat = ltn.Function(func=lambda x, y: get_score_contient(x, y))
+    Model_habitat = ltn.Predicate(LogitsToPredicate(mlp_habitat)).to(args.probe_device)
+    Model_continent = ltn.Predicate(LogitsToPredicate(mlp_continent)).to(args.probe_device)
+    Model_category = ltn.Predicate(LogitsToPredicate(mlp_category)).to(args.probe_device)
     # Model_sentence = ltn.Predicate(LogitsToPredicate(mlp_sentence)).to(args.probe_device)
     Model_person = ltn.Predicate(LogitsToPredicate(mlp_person)).to(args.probe_device)
-    #Model_object = ltn.Predicate(LogitsToPredicate(mlp_object)).to(args.probe_device)
+    Model_object = ltn.Predicate(LogitsToPredicate(mlp_object)).to(args.probe_device)
     # Action_model = ltn.Predicate(LogitsToPredicate(mlp))
     # Object_model = ltn.Predicate(LogitsToPredicate(mlp))
     # Action_model = Action_model.to(args.probe_device)
@@ -466,7 +583,10 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     parameters = []
     # parameters.extend([MatrixVector])
     parameters.extend([f for f in Model_person.parameters()])
-    #parameters.extend([f for f in Model_object.parameters()])
+    parameters.extend([f for f in Model_object.parameters()])
+    parameters.extend([f for f in Model.parameters()])
+    parameters.extend([f for f in Model_habitat.parameters()])
+    parameters.extend([f for f in Model_category.parameters()])
     # parameters.extend([f for f in Action_model.parameters()])
     # parameters.extend([f for f in Object_model.parameters()])
 
@@ -476,22 +596,27 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
     steps = 10
 
     optimizer = torch.optim.Adam(parameters, lr=args.lr, weight_decay=0)
-    #scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=50, eta_min=0)
+    # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=50, eta_min=0)
 
     """
     print("loading models")
     Model.load_state_dict(torch.load("Model.pt"))
     Model_person.load_state_dict(torch.load("Model_person.pt"))
+    Model_object.load_state_dict(torch.load("Model_object.pt"))
     attn.load_state_dict(torch.load("attn.pt"))
     """
 
-    # Model.train()
-    # Model_person.train()
+    Model.eval()
+    Model_person.eval()
+    Model_object.eval()
+    Model_category.eval()
+    Model_habitat.eval()
     # Action_model.eval()
     # Object_model.eval()
-    # attn.train()
+    attn.eval()
 
     step = 0
+
     for epoch in tqdm(range(args.nr_epochs)):
         for hs, _, labels in dataloader:
 
@@ -504,21 +629,21 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             subject = spo[:, 0, :]
             action = spo[:, 1, :]
             object = spo[:, 2, :]
-            scores_sub = subject.mm(attn.MatrixVector)
-            score_action = action.mm(attn.MatrixVector)
-            score_object = object.mm(attn.MatrixVector)
-            score_first = object.mm(attn.MatrixVectorFirst)
+            # scores_sub = subject.mm(attn.MatrixVector)
+            # score_action = action.mm(attn.MatrixVector)
+            # score_object = object.mm(attn.MatrixVector)
+            # score_first = object.mm(attn.MatrixVectorFirst)
             # score_second = object.mm(attn.MatrixVectorSecond)
             # score_third = object.mm(attn.MatrixVectorThird)
-            score_continent = object.mm(attn.MatrixContinent)
-            score_habitat = object.mm(attn.MatrixHabitat)
+            # score_continent = object.mm(attn.MatrixContinent)
+            # score_habitat = object.mm(attn.MatrixHabitat)
 
-            x = ltn.Variable("x", torch.softmax(scores_sub, dim=1))
-            y = ltn.Variable("y", torch.softmax(score_action, dim=1))
-            z = ltn.Variable("z", torch.softmax(score_object, dim=1))
-            score_category = ltn.Variable("score_category", torch.softmax(score_first, dim=1))
-            score_continent = ltn.Variable("score_continent", torch.sigmoid(score_continent))
-            score_habitat = ltn.Variable("score_habitat", torch.softmax(score_habitat, dim=1))
+            x = ltn.Variable("x", subject)
+            y = ltn.Variable("y", action)
+            z = ltn.Variable("z", object)
+            score_category = ltn.Variable("score_category", object)
+            score_continent = ltn.Variable("score_continent", object)
+            score_habitat = ltn.Variable("score_habitat", object)
             # k2 = ltn.Variable("k2", torch.softmax(score_second, dim=1))
             # k3 = ltn.Variable("k3", torch.softmax(score_third, dim=1))
 
@@ -531,6 +656,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             # label_continent = ltn.Variable("label_continent",torch.flip(torch.reshape(torch.cat(labels[31:40]), (-1, 9)), dims=(1,)))  # primi 31-39
             label_continent = label_habitat
             label_sentence = ltn.Variable("label_sentence", labels[5])
+            label_sentence_macro = ltn.Variable("label_sentence_macro", labels[6])
             # All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
 
             # labels[0] = labels[0].to(args.probe_device)
@@ -545,10 +671,15 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             # sentence_score = ltn.Variable("sentence_score",torch.concat((x.value, y.value, z.value), dim=1))
 
             # create axioms
-            axioms, sat_agg = create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l, Object_l,
+
+            axioms, sat_agg = create_axioms(Model, Model_continent, Model_category, Model_habitat, Model_person,
+                                            Model_object, Subject_l, Action_l,
+                                            Object_l,
                                             score_category,
                                             score_continent, score_habitat, labels, x, y,
-                                            z, label_category, label_continent, label_habitat, label_sentence, epoch,subject,action,object)
+                                            z, label_category, label_continent, label_habitat, label_sentence,
+                                            label_sentence_macro, epoch,
+                                            subject, action, object)
 
             # calculate loss
             """
@@ -568,8 +699,10 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
             # - torch.log(all_sentence_positive_implication.value) - torch.log(all_sentence_positive.value) \
             # - torch.log(all_sentence_negative.value)
 
+            """
             if epoch == 200 or epoch == 300 or epoch == 400:
                 optimizer.defaults['lr'] = optimizer.defaults['lr'] / 10
+            """
 
             # descend gradient
             optimizer.zero_grad()
@@ -596,31 +729,33 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                 run[f'train/optimizer_lr'].append(optimizer.param_groups[0]["lr"])
 
             step += 1
-            #scheduler.step()
+            # scheduler.step()
 
-        if epoch % 100 == 0:
+        if epoch % 500 == 0 and epoch != 0:
             Model.eval()
             Model_person.eval()
-            #Model_object.eval()
-            # Action_model.eval()
-            # Object_model.eval()
+            Model_object.eval()
             attn.eval()
 
+            if args.log_neptune:
+                filename = run._sys_id + ".csv"
+            else:
+                filename = "prova.csv"
 
-            with open(run._sys_id+".csv", 'w',newline='') as file_output:
+            with open(filename, 'w', newline='') as file_output:
                 # create the csv writer
-                writer = csv.writer(file_output,delimiter=";")
+                writer = csv.writer(file_output, delimiter=";")
 
-                row = ["sentences", "label_sentence","first_axiom", "second_axiom", "third_axiom", "fourth_axiom", "fifth_axiom",
-                       "sixty_axiom", "label_sentence", "x", "subject_max_index", "Subject_l", "y", "action_max_index",
+                row = ["sentences", "label_sentence", "first_axiom", "second_axiom", "third_axiom", "fourth_axiom",
+                       "fifth_axiom",
+                       "label_sentence", "x", "subject_max_index", "Subject_l", "y", "action_max_index",
                        "Action_l", "z",
                        "object_max_index", "Object_l",
                        "score_habitat", "habitat_index", "label_habitat", "score_category", "category_index",
-                       "label_category", "score_continent", "continent_index","person_max","object_max", "label_continent"]
+                       "label_category", "score_continent", "continent_index", "person_max", "object_max",
+                       "label_continent"]
 
                 writer.writerow(row)
-
-
 
                 with torch.no_grad():
                     for hs, sentences, labels in tqdm(dataloader_test):
@@ -633,25 +768,25 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                         action = spo[:, 1, :]
                         object = spo[:, 2, :]
 
-                        #subject = ltn.variable("subject", subject)
-                        #action = ltn.variable("action", action)
-                        #object = ltn.variable("object", object)
+                        # subject = ltn.variable("subject", subject)
+                        # action = ltn.variable("action", action)
+                        # object = ltn.variable("object", object)
 
-                        scores_sub = subject.mm(attn.MatrixVector)
-                        score_action = action.mm(attn.MatrixVector)
-                        score_object = object.mm(attn.MatrixVector)
-                        score_first = object.mm(attn.MatrixVectorFirst)
+                        # scores_sub = subject.mm(attn.MatrixVector)
+                        # score_action = action.mm(attn.MatrixVector)
+                        # score_object = object.mm(attn.MatrixVector)
+                        # score_first = object.mm(attn.MatrixVectorFirst)
                         # score_second = object.mm(attn.MatrixVectorSecond)
                         # score_third = object.mm(attn.MatrixVectorThird)
-                        score_continent = object.mm(attn.MatrixContinent)
-                        score_habitat = object.mm(attn.MatrixHabitat)
+                        # score_continent = object.mm(attn.MatrixContinent)
+                        # score_habitat = object.mm(attn.MatrixHabitat)
 
-                        x = ltn.Variable("x", torch.softmax(scores_sub, dim=1))
-                        y = ltn.Variable("y", torch.softmax(score_action, dim=1))
-                        z = ltn.Variable("z", torch.softmax(score_object, dim=1))
-                        score_category = ltn.Variable("score_category", torch.softmax(score_first, dim=1))
-                        score_continent = ltn.Variable("score_continent", torch.sigmoid(score_continent))
-                        score_habitat = ltn.Variable("score_habitat", torch.sigmoid(score_habitat))
+                        x = ltn.Variable("x", subject)
+                        y = ltn.Variable("y", action)
+                        z = ltn.Variable("z", object)
+                        score_category = ltn.Variable("score_category", object)
+                        score_continent = ltn.Variable("score_continent", object)
+                        score_habitat = ltn.Variable("score_habitat", object)
                         # k2 = ltn.Variable("k2", torch.softmax(score_second, dim=1))
                         # k3 = ltn.Variable("k3", torch.softmax(score_third, dim=1))
 
@@ -665,33 +800,63 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                         # label_continent = ltn.Variable("label_continent",torch.flip(torch.reshape(torch.cat(labels[31:40]), (-1, 9)), dims=(1,)))  # primi 31-39
                         label_continent = label_habitat
                         label_sentence = ltn.Variable("label_sentence", labels[5])
+                        label_sentence_macro = ltn.Variable("label_sentence_macro", labels[6])
                         # All_sentence_l = ltn.Constant(torch.tensor([0, 0, 0, 1]))
 
                         # labels[0] = labels[0].to(args.probe_device)
                         # labels[1] = labels[1].to(args.probe_device)
                         # labels[2] = labels[2].to(args.probe_device)
 
-                        ltn.Variable("sentence_score",
-                                     torch.concat((subject, action, object, torch.gather(x.value, 1, Subject_l.value),
-                                                   torch.gather(y.value, 1, Action_l.value),
-                                                   torch.gather(z.value, 1, Object_l.value)), dim=1))
-
                         # create axioms
-                        axioms, sat_agg = create_axioms(Model, Model_continent, Model_person, Subject_l, Action_l,
+                        axioms, sat_agg = create_axioms(Model, Model_continent, Model_category, Model_habitat,
+                                                        Model_person, Model_object, Subject_l,
+                                                        Action_l,
                                                         Object_l,
                                                         score_category,
                                                         score_continent, score_habitat, labels, x, y,
                                                         z, label_category, label_continent, label_habitat,
                                                         label_sentence,
-                                                        epoch,subject,action,object)
+                                                        label_sentence_macro,
+                                                        epoch, subject, action, object)
 
-                        """
-                        sentence_score = ltn.Variable("sentence_score",
-                                                      torch.concat((torch.gather(x.value, 1, torch.argmax(x.value,dim=1).view(-1, 1)).view(-1, 1)
-                                                                    , torch.gather(y.value, 1, torch.argmax(y.value,dim=1).view(-1, 1)).view(-1, 1)
-                                                                    , torch.gather(z.value, 1, torch.argmax(z.value,dim=1).view(-1, 1)).view(-1, 1)),
-                                                                   dim=1))
-                        """
+                        # create axioms
+                        axioms_test, sat_agg_test = create_axioms_test(Model, Model_continent, Model_category,
+                                                                       Model_habitat, Model_person,
+                                                                       Model_object, Subject_l,
+                                                                       Action_l,
+                                                                       Object_l,
+                                                                       score_category,
+                                                                       score_continent, score_habitat, labels, x, y,
+                                                                       z, label_category, label_continent,
+                                                                       label_habitat,
+                                                                       label_sentence,
+                                                                       label_sentence_macro,
+                                                                       epoch, subject, action, object)
+
+                        if args.log_neptune:
+                            filename_std = run._sys_id + "_results.csv"
+                        else:
+                            filename_std = "prova2.csv"
+                        if not os.path.exists(filename_std):
+                            row = ["epoch"]
+                            row.extend(
+                                [list(axioms.keys())[f] for f in range(len(list(axioms.keys()))) if f != 2 and f != 1])
+                            row.extend([list(axioms_test.keys())[f] for f in range(len(list(axioms_test.keys()))) if
+                                        f != 0 and f != 1])
+                            with open(filename_std, 'a', newline="") as file_out:
+                                # create the csv writer
+                                writer_out = csv.writer(file_out, delimiter=";")
+
+                                writer_out.writerow(row)
+
+                        with open(filename_std, 'a', newline="") as file_out:
+                            # create the csv writer
+                            writer_out = csv.writer(file_out, delimiter=";")
+                            row = [epoch]
+                            row.extend([float(f.value) for f in list(axioms.values()) if not isinstance(f, float)])
+                            row.extend([float(f.value) for f in list(axioms_test.values()) if not isinstance(f, float)])
+                            writer_out.writerow(row)
+                            file_out.flush()
                         # sentence_score = ltn.Variable("sentence_score", torch.concat((x.value, y.value, z.value), dim=1))
                         And = ltn.Connective(ltn.fuzzy_ops.AndMin())
                         Not = ltn.Connective(ltn.fuzzy_ops.NotStandard())
@@ -700,53 +865,15 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                         torch.set_printoptions(precision=2, sci_mode=False, linewidth=160)
                         print(sentences)
                         positive_index = [f for f in range(len(labels[5])) if labels[5][f] == 1][:10]
-                        print(f" SUBJECT                      ",
-                              [torch.argmax(x.value, dim=1).cpu().detach().numpy()[f] for f in positive_index],
-                              [labels[0].cpu().detach().numpy()[f1] for f1 in positive_index])
-                        # print(f"(LIVE) IN SENTENCE                   ", torch.argmax(y.value, dim=1),torch.ones(labels[0].shape[0], dtype=torch.int64) * 1014)
-                        print(f" OBJECT                   ",
-                              [torch.argmax(z.value, dim=1).cpu().detach().numpy()[f] for f in positive_index],
-                              [labels[1].cpu().detach().numpy()[f1] for f1 in positive_index])
-                        print(f" FirstCategory                   ",
-                              [torch.argmax(score_category.value, dim=1).cpu().detach().numpy()[f] for f in
-                               positive_index],
-                              [label_category.value.cpu().detach().numpy()[f1][0] for f1 in positive_index])
 
-                        """
 
-                        print(f" Continent                   ",
-                              [torch.argmax(score_continent.value, dim=1).cpu().detach().numpy()[f] for f in
-                               positive_index],
-                              [label_continent.value.cpu().detach().numpy()[f1][0] for f1 in positive_index])
-                        """
+                        x.value = Model.model(x.value)
+                        y.value = Model.model(y.value)
 
-                        print(f" Habitat                   ",
-                              [torch.argmax(score_habitat.value, dim=1).cpu().detach().numpy()[f] for f in
-                               positive_index],
-                              [label_habitat.value.cpu().detach().numpy()[f1][0] for f1 in positive_index])
-
-                        """
-                        print(f" SeconCategory                   ",
-                              [torch.argmax(k2.value, dim=1).cpu().detach().numpy()[f] for f in positive_index],
-                              [label_second.value.cpu().detach().numpy()[f1][0] for f1 in positive_index])
-                        print(f" ThirdCategory                   ",
-                              [torch.argmax(k3.value, dim=1).cpu().detach().numpy()[f] for f in positive_index],
-                              [label_third.value.cpu().detach().numpy()[f1][0] for f1 in positive_index])
-                        """
-                        print(f" PERSON - subject - prediction                     ", torch.max(torch.softmax(Model_person.model(subject),dim=0),dim=1))
-                        print(f" PERSON - subject - label                     ", labels[5])
-                        print(f" PERSON - object - prediction                     ", torch.max(torch.softmax(Model_person.model(object),dim=0),dim=1))
-                        print(f" PERSON - object - label                     ", labels[5])
-
-                        # label_subject = ltn.Variable("subject_label", torch.argmax(x.value, dim=1))
-                        # label_action = ltn.Variable("subject_action", torch.argmax(y.value, dim=1))
-                        # label_object = ltn.Variable("subject_object", torch.argmax(z.value, dim=1))
-                        # label_object = ltn.Variable("subject_nation", torch.argmax(k.value, dim=1))
-
-                        # label_sentence = ltn.Variable("label_d", labels[4].clone().detach())  # sentence correctly
-                        # label_person_subject = ltn.Variable("label_person_subject", labels[4].clone().detach())
-                        # label_person_action = ltn.Variable("label_person_action", labels[5].clone().detach())
-                        # label_person_object = ltn.Variable("label_person_object", labels[6].clone().detach())
+                        score_category.value = Model_category.model(z.value)
+                        score_habitat.value = Model_habitat.model(z.value)
+                        score_continent.value = Model_continent.model(z.value)
+                        z.value = Model.model(z.value)
 
                         subject_max = torch.max(x.value, dim=1)[0].cpu().detach().view(-1, 1)
                         action_max = torch.max(y.value, dim=1)[0].cpu().detach().view(-1, 1)
@@ -758,8 +885,8 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                         score_habitat_gt = torch.gather(score_habitat.value.cpu().detach(), 1, labels[3].view(-1, 1))
                         # nation_max = torch.max(k.value, dim=1)[0]
                         # nation_selected = torch.gather(k.value, 1, Nation_l.value).view(-1)
-                        #person_max = Model_person(x).value
-                        #object_person = Model_person(z).value
+                        # person_max = Model_person(x).value
+                        # object_person = Model_person(z).value
                         category = torch.max(score_category.value, dim=1)[0]
                         habitat = torch.max(score_habitat.value, dim=1)[0]
 
@@ -768,8 +895,8 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                         object_max_index = torch.argmax(z.value, dim=1)
                         # nation_max = torch.max(k.value, dim=1)[0]
                         # nation_selected = torch.gather(k.value, 1, Nation_l.value).view(-1)
-                        person_max = Model_person.model(subject)[:,1]
-                        object_person = Model_person.model(object)[:,0]
+                        person_max = Model_person.model(subject)[:, 1]
+                        object_person = Model_object.model(object)[:, 1]
                         habitat_index = torch.argmax(score_habitat.value, dim=1)
                         category_index = torch.argmax(score_category.value, dim=1)
                         continent_index = torch.argmax(score_continent.value, dim=1)
@@ -777,24 +904,22 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                         # TEST FOR MODEL KNOWLEDGE
                         # first_axiom= Gordon è un cane
 
-                        first_axiom = torch.min(torch.min(score_subject_gt, action_max), score_object_gt)
-                        second_axiom = torch.min(score_subject_gt, score_category_gt)
+                        first_axiom = torch.min(
+                            torch.min(torch.min(score_subject_gt, person_max.cpu().detach().view(-1, 1)), action_max),
+                            torch.min(score_object_gt, object_person.cpu().detach().view(-1, 1)))
+                        second_axiom = torch.min(torch.min(score_subject_gt, person_max.cpu().detach().view(-1, 1), ),
+                                                 torch.min(score_subject_gt, score_category_gt))
                         third_axiom = (1. - first_axiom) + torch.mul(first_axiom, second_axiom)
 
-                        fourth_axiom = torch.min(score_subject_gt, score_habitat_gt)
+                        fourth_axiom = torch.min(torch.min(score_subject_gt, person_max.cpu().detach().view(-1, 1)),
+                                                 score_habitat_gt)
                         fifth_axiom = (1. - first_axiom) + torch.mul(first_axiom, fourth_axiom)
 
-                        #Test for correct sentences
-
-                        sixty_axiom = torch.min(torch.min(torch.min(score_subject_gt, person_max.cpu().detach().view(-1,1)), action_max),
-                                                     torch.min(score_object_gt,  object_person.cpu().detach().view(-1,1)))
-
-
-
+                        # Test for correct sentences
 
                         print("saving csv")
                         for f in tqdm(range(len(sentences))):
-                            row=[]
+                            row = []
                             row.append(sentences[f])
                             row.append(label_sentence.value[f].item())
 
@@ -803,7 +928,7 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                             row.append(third_axiom[f].item())
                             row.append(fourth_axiom[f].item())
                             row.append(fifth_axiom[f].item())
-                            row.append(sixty_axiom[f].item())
+                            # row.append(sixty_axiom[f].item())
                             row.append(label_sentence.value[f].item())
                             row.append(max(x.value[f]).item())
                             row.append(subject_max_index[f].item())
@@ -822,19 +947,10 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                             row.append(label_category.value[f].item())
                             row.append(max(score_continent.value[f]).item())
                             row.append(continent_index[f].item())
-                            row.append(person_max.cpu().detach().view(-1,1)[f].item())
-                            row.append(object_max.cpu().detach().view(-1,1)[f].item())
+                            row.append(person_max.cpu().detach().view(-1, 1)[f].item())
+                            row.append(object_max.cpu().detach().view(-1, 1)[f].item())
                             row.append(label_continent.value[f].item())
                             writer.writerow(row)
-
-
-
-                            
-
-
-
-
-
 
                         if args.log_neptune:
                             for key, value in axioms.items():
@@ -843,14 +959,22 @@ def train_ltn(dataloader, dataloader_test, args, ndim):
                                 else:
                                     run[f'test/{key}'].append(value.value)
 
+                            for key, value in axioms_test.items():
+                                if torch.is_tensor(value) or isinstance(value, float):
+                                    run[f'test/{key}'].append(value)
+                                else:
+                                    run[f'test/{key}'].append(value.value)
+
             Model.train()
             Model_person.train()
-            #Model_object.train()
+            Model_object.train()
+            Model_category.train()
+            Model_habitat.train()
             attn.train()
 
             torch.save(Model.state_dict(), "Model.pt")
             torch.save(Model_person.state_dict(), "Model_person.pt")
-            #torch.save(Model_object.state_dict(), "Model_object.pt")
+            torch.save(Model_object.state_dict(), "Model_object.pt")
             torch.save(attn.state_dict(), "attn.pt")
 
     if args.log_neptune:
@@ -896,6 +1020,32 @@ def main(args, generation_args):
                                    hs_train.shape[4])
         hs_test = np.random.randn(hs_test.shape[0], hs_test.shape[1], hs_test.shape[2], hs_test.shape[3],
                                   hs_test.shape[4])
+    if args.random_label:
+        print("----- random labels -----")
+        zero = max([f[0] for f in dataset_train['labels']])
+        first = max([f[1] for f in dataset_train['labels']])
+        second = max([f[2] for f in dataset_train['labels']])
+        third = max([f[3] for f in dataset_train['labels']])
+        fourth = max([f[4] for f in dataset_train['labels']])
+        fifth = max([f[5] for f in dataset_train['labels']])
+
+        random_label_training = [[random.randint(0, zero), random.randint(0, first), random.randint(0, second),
+                                  random.randint(0, third), random.randint(0, fourth), random.randint(0, fifth)]
+                                 for f in dataset_train['labels']]
+
+        zero = max([f[0] for f in dataset_test['labels']])
+        first = max([f[1] for f in dataset_test['labels']])
+        second = max([f[2] for f in dataset_test['labels']])
+        third = max([f[3] for f in dataset_test['labels']])
+        fourth = max([f[4] for f in dataset_test['labels']])
+        fifth = max([f[5] for f in dataset_test['labels']])
+
+        random_label_testing = [[random.randint(0, zero), random.randint(0, first), random.randint(0, second),
+                                 random.randint(0, third), random.randint(0, fourth), random.randint(0, fifth)]
+                                for f in dataset_test['labels']]
+
+        dataset_train.remove_columns("labels").add_column("labels", random_label_training)
+        dataset_test.remove_columns("labels").add_column("labels", random_label_testing)
 
     with open('dict_wordnet_24_08_23.pickle', 'rb') as handle:
         my_dict_wordnet = pickle.load(handle)
@@ -943,15 +1093,18 @@ if __name__ == "__main__":
     parser = get_parser()
     generation_args, _ = parser.parse_known_args()
     # We'll also add some additional args for evaluation
-    parser.add_argument("--nr_epochs", type=int, default=2000)
+    parser.add_argument("--nr_epochs", type=int, default=10000)
     parser.add_argument("--lr", type=float, default=1e-5)
     parser.add_argument("--probe_batch_size", type=int, default=128)
     parser.add_argument("--probe_device", type=str, default='cuda')
     parser.add_argument("--log_neptune", action='store_true')
     parser.add_argument("--log_tensorboard", action='store_true')
-    parser.add_argument("--train_data_path", type=str, default='training_dataset_24_08_23.txt')
-    parser.add_argument("--test_data_path", type=str, default='test_dataset_24_08_23.txt')
+    parser.add_argument("--train_data_path", type=str, default='training_dataset_14_09_23.txt')
+    parser.add_argument("--test_data_path", type=str, default='test_dataset_14_09_23.txt')
     parser.add_argument("--random_baseline", action='store_true',
+                        help="Use randomly generated 'hidden states' to test if probe is able to learn with a random "
+                             "set of numbers, indicating that we are not really probing.")
+    parser.add_argument("--random_label", action='store_true',
                         help="Use randomly generated 'hidden states' to test if probe is able to learn with a random "
                              "set of numbers, indicating that we are not really probing.")
     args = parser.parse_args()
