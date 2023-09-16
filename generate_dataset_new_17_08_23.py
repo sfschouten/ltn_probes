@@ -9,7 +9,7 @@ file_animali = open("nomi_di_animali.txt", "r")
 animali = []
 for f in file_animali:
     # print(f)
-    animali.extend([f1.replace(" ", "").strip().lower() for f1 in f.split(",")])
+    animali.extend([f1.replace(" ", "").rstrip().lower() for f1 in f.split(",")])
 animali = sorted(list(set(animali)))
 keys = sorted(list(set(my_dict.keys())))
 
@@ -91,7 +91,7 @@ action = " is a "
 
 tmp_animmals = []
 
-for rip in range(2):
+for rip in range(4):
     for i in my_dict:
         if tmp_animmals == []:
             tmp_animmals = animali.copy()
@@ -388,4 +388,3 @@ dict_wordnet["habitat"] = habitat
 
 with open('dict_wordnet_24_08_23.pickle', 'wb') as handle:
     pickle.dump(dict_wordnet, handle, protocol=pickle.HIGHEST_PROTOCOL)
-print("dfdfd")
