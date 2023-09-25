@@ -2,6 +2,7 @@ import os
 import math
 from itertools import chain
 from collections import namedtuple
+import csv
 
 import numpy as np
 from tqdm import tqdm
@@ -84,7 +85,7 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, frames_imp
     # multi-label supervision
     # for all pairs of (x, l) in our batch, if l==1 then P(x) if l==0 then -P(x)
     closed_formulas = {
-        f'{name}_{v}': ForAll(
+        ('sv', f'{name}_{v}'): ForAll(
             ltn.diag(x_var, l_var), op(p_var(x_var)),
             cond_vars=[l_var], cond_fn=lambda t: t.value == v
         )
@@ -94,7 +95,7 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, frames_imp
 
     # presence of frame element implies presence of frame
     closed_formulas |= {
-        f'{frame_roles[i]}->{frames[j]}': (
+        ('fe-f', f'{frame_roles[i]}->{frames[j]}'): (
             lambda p_frame_role, x_frame_role, _1, p_frame, x_frame, _2: ForAll(
                 ltn.diag(x_frame_role, x_frame),
                 Implies(p_frame_role(x_frame_role), p_frame(x_frame))
@@ -105,7 +106,7 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, frames_imp
 
     # formulas that capture frame relations
     closed_formulas |= {
-        f'{frames[i]}->{frames[j]}': (
+        ('f-f', f'{frames[i]}->{frames[j]}'): (
             lambda p_frame1, x_frame1, _1, p_frame2, x_frame2, _2: ForAll(
                 ltn.diag(x_frame1, x_frame2),
                 Implies(p_frame1(x_frame1), p_frame2(x_frame2))
@@ -119,7 +120,7 @@ def create_axioms(x, labels, frames, frame_roles, frames_roles_count, frames_imp
     return var_pairs, closed_formulas
 
 
-def calc_metrics(var_pairs, to_calc, dummy_baseline=False):
+def calc_metrics(var_pairs, closed_formulas, to_calc, dummy_baseline=False):
     metrics = {}
     for name, (p_var, x_var, l_var) in var_pairs.items():
         if name not in to_calc:
@@ -138,17 +139,23 @@ def calc_metrics(var_pairs, to_calc, dummy_baseline=False):
         tn = torch.sum(correct[~labels]).item()
         fn = torch.sum(~correct[~labels]).item()
 
-        metrics[f'{name}_tp'] = tp / len(labels)
-        metrics[f'{name}_fp'] = fp / len(labels)
-        metrics[f'{name}_tn'] = tn / len(labels)
-        metrics[f'{name}_fn'] = fn / len(labels)
-        metrics[f'{name}_pr'] = tp / (tp + fp) if tp + fp > 0 else -1
-        metrics[f'{name}_re'] = tp / (tp + fn) if tp + fn > 0 else -1
-        metrics[f'{name}_f1'] = 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) > 0 else -1
+        metrics[('var', '', name, 'tp')] = tp / len(labels)
+        metrics[('var', '', name, 'fp')] = fp / len(labels)
+        metrics[('var', '', name, 'tn')] = tn / len(labels)
+        metrics[('var', '', name, 'fn')] = fn / len(labels)
+        metrics[('var', '', name, 'pr')] = tp / (tp + fp) if tp + fp > 0 else -1
+        metrics[('var', '', name, 're')] = tp / (tp + fn) if tp + fn > 0 else -1
+        metrics[('var', '', name, 'f1')] = 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) > 0 else -1
+
+    for cf_key, cf_val in closed_formulas.items():
+        a, b = cf_key
+        metrics[('cf', a, b, 'sat')] = cf_val.value.detach().cpu().numpy()
+
     return metrics
 
 
-def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_roles_count, frames_implications, args, ndim):
+def train_ltn(dataloader_train, dataloader_valid, dataloader_test,
+              frames, frame_roles, frames_roles_count, frames_implications, args, ndim):
     if args.log_neptune:
         import neptune
         run = neptune.init_run(
@@ -213,41 +220,55 @@ def train_ltn(dataloader_train, dataloader_test, frames, frame_roles, frames_rol
             optimizer.step()
 
             if args.log_neptune:
-                # for key, value in closed_formulas.items():
-                #     run[f'train/{key}'].append(value.value)
                 run["train/loss"].append(loss.cpu().detach())
 
-    def test_epoch(prefix="", dummy_baseline=False):
+    FIELDNAMES = ['group', 'prefix', 'epoch', 'type1', 'type2', 'name', 'metric', 'value']
+
+    def eval_epoch(eval_gr, epoch, dataloader, prefix="", dummy_baseline=False):
         for p in predicates.values():
             p.eval()
         attn.eval()
 
         with torch.no_grad():
-            for hs, sentences, labels in dataloader_test:
+            for hs, sentences, labels in dataloader:
                 hs = hs.to(args.probe_device)
-
                 x = forward(hs)
-
                 var_pairs, closed_formulas = create_axioms(
                     x, labels, frames, frame_roles, frames_roles_count, frames_implications, predicates)
 
                 sat_agg = SatAgg(*list(closed_formulas.values()))
                 loss = 1 - sat_agg
-                metrics = calc_metrics(var_pairs, frames, dummy_baseline=dummy_baseline)
-                metrics = {f'{prefix}{key}': v for key, v in metrics.items()}
-                if args.log_neptune:
-                    for key, value in metrics.items():
-                        run[f'test/{key}'].append(value)
-                    run["test/loss"].append(loss)
+                metrics = calc_metrics(var_pairs, closed_formulas, frames, dummy_baseline=dummy_baseline)
+                # metrics = {f'{prefix}{key}': v for key, v in metrics.items()}
+
+        if args.log_neptune:
+            for key, value in metrics.items():
+                run[f'{eval_gr}/' + '_'.join((prefix,) + key)].append(value)
+            run[f"{eval_gr}/loss"].append(loss)
+        if args.write_metrics:
+            with open(args.metrics_file, 'a') as metrics_file:
+                w = csv.DictWriter(metrics_file, fieldnames=FIELDNAMES)
+                for key, value in metrics.items():
+                    typ1, typ2, name, metric = key
+                    w.writerow({'group': eval_gr, 'prefix': prefix, 'epoch': epoch,
+                                'type1': typ1, 'type2': typ2, 'name': name, 'metric': metric, 'value': value})
+
         return sat_agg
 
+    if args.write_metrics:
+        with open(args.metrics_file, 'w') as metrics_file:
+            w = csv.DictWriter(metrics_file, fieldnames=FIELDNAMES)
+            w.writeheader()
+
     # test once to see random performance
-    test_epoch(prefix='init_', dummy_baseline=False)
-    test_epoch(prefix='dummy_', dummy_baseline=True)
+    eval_epoch('test', -1, dataloader_test, dummy_baseline=False, prefix='init')
+    eval_epoch('test', -1, dataloader_test, dummy_baseline=True, prefix='dummy')
     for e in tqdm(range(args.nr_epochs)):
         train_epoch()
-        test_sat = test_epoch()
-        print(f'epoch {e}, test_sat={test_sat}')
+        valid_sat = eval_epoch('valid', e, dataloader_valid)
+        print(f'epoch {e}, valid_sat={valid_sat}')
+    test_sat = eval_epoch('test', -2, dataloader_test)
+    print(f'test_sat={test_sat}')
 
     if args.log_neptune:
         run.stop()
@@ -261,7 +282,11 @@ def main(args, generation_args):
     print()
 
     data, frames, frame_roles, frames_roles_count, frames_implications = get_framenet_dataset(None)
-    dataset = data.train_test_split(test_size=.2, shuffle=False)
+    train_eval = data.train_test_split(test_size=0.3, shuffle=False)
+    valid_test = train_eval['test'].train_test_split(test_size=0.5, shuffle=False)
+    train_data, train_b = train_eval['train'], 0
+    valid_data, valid_b = valid_test['train'], len(train_data)
+    test_data, test_b = valid_test['test'], valid_b + len(valid_data)
 
     def trim_hidden_states(hs):
         mask = np.isfinite(hs)  # (nr_samples, nr_tokens, nr_dims, nr_layers)
@@ -276,9 +301,6 @@ def main(args, generation_args):
 
     nsamples, ntokens, ndim = hs.shape
 
-    train_data = dataset['train']
-    test_data = dataset['test']
-
     if args.random_baseline:
         hs[:len(train_data)] = np.random.randn(len(train_data), ntokens, ndim)
     elif args.shuffled_baseline:
@@ -286,20 +308,22 @@ def main(args, generation_args):
 
     # train LTN probe
     hs_t = torch.Tensor(hs)
-    hs_dataset_train = CustomDataset(hs_t[:len(train_data)], train_data)
-    hs_dataset_test = CustomDataset(hs_t[len(train_data):], test_data)
+    hs_dataset_train = CustomDataset(hs_t[:valid_b], train_data)
+    hs_dataset_valid = CustomDataset(hs_t[valid_b:test_b], valid_data)
+    hs_dataset_test = CustomDataset(hs_t[test_b:], test_data)
     batch_size = args.probe_batch_size if args.probe_batch_size > 0 else len(hs_t)
-    hs_dataloader_train = DataLoader(hs_dataset_train, batch_size=batch_size, shuffle=True)
-    hs_dataloader_test = DataLoader(hs_dataset_test, batch_size=len(test_data), shuffle=True)
+    hs_dl_train = DataLoader(hs_dataset_train, batch_size=batch_size, shuffle=True)
+    hs_dl_valid = DataLoader(hs_dataset_valid, batch_size=len(valid_data), shuffle=True)
+    hs_dl_test = DataLoader(hs_dataset_test, batch_size=len(test_data), shuffle=True)
 
-    train_ltn(hs_dataloader_train, hs_dataloader_test, frames, frame_roles, frames_roles_count, frames_implications,
-              args, ndim)
+    train_ltn(hs_dl_train, hs_dl_valid, hs_dl_test,
+              frames, frame_roles, frames_roles_count, frames_implications, args, ndim)
 
 
 if __name__ == '__main__':
     parser = get_parser()
     _generation_args, _ = parser.parse_known_args()
-    parser.add_argument("--nr_epochs", type=int, default=25)
+    parser.add_argument("--nr_epochs", type=int, default=15)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--probe_batch_size", type=int, default=128)
     parser.add_argument("--probe_weight_decay", type=float, default=0)
@@ -308,6 +332,8 @@ if __name__ == '__main__':
     parser.add_argument("--probe_attn_bias", type=bool, default=True)
     parser.add_argument("--probe_device", type=str, default='cuda')
     parser.add_argument("--log_neptune", action='store_true')
+    parser.add_argument("--write_metrics", action='store_true')
+    parser.add_argument("--metrics_file", type=str, default='metrics.csv')
     parser.add_argument("--random_baseline", action='store_true',
                         help="Use randomly generated 'hidden states' to test if probe is able to learn with a random "
                              "set of numbers, indicating that we are not really probing.")

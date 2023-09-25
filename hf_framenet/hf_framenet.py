@@ -1,16 +1,3 @@
-"""
-Goal: probe for semantic role labeling task
-
-Method:
-  - for each frame:
-    - a set of query vectors, one for each possible argument/role of the frame
-        - used to accumulate features from the sentence relevant to determining if argument/role/frame are present
-    - a predicate for each role/argument to determine if it is present
-    - a predicate for the frame if it in its entirety is present
-
-  - presence of argument of frame implies presence of frame
-  - presence of frame implies presence of mandatory arguments
-"""
 from collections import Counter
 from tqdm import tqdm
 
