@@ -1524,7 +1524,7 @@ class AggregLogSum(AggregationOperator):
 
             return numerator
         else:
-            return  torch.sum(torch.mul(torch.log(xs),torch.tensor(self.weights).cuda()), dim=dim, keepdim=keepdim)
+            return  torch.mean(torch.mul(torch.log(xs),torch.tensor(self.weights).cuda()), dim=dim, keepdim=keepdim)
 
 
 

@@ -1,5 +1,6 @@
 import os
 import argparse
+import shutil
 
 import numpy as np
 from tqdm import tqdm
@@ -33,7 +34,7 @@ def get_parser():
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
     parser.add_argument("--all_layers", action="store_true", help="Whether to use all layers or not")
     # saving the hidden states
-    parser.add_argument("--save_dir", type=str, default="generated_hidden_states",
+    parser.add_argument("--save_dir", type=str, default="D:\\Francesco Manigrasso\\generated_hidden_states",
                         help="Directory to save the hidden states")
 
     return parser
@@ -93,7 +94,7 @@ def get_dataset(tokenizer, data_file):
 
         #labels.append([int(f.split(",")[f1]) for f1 in range(len(f.split(","))) if f1%2==0 and f1>1 or f1==(len(f.split(","))-1)])
         #labels.append([int(f.split(",")[f1]) for f1 in range(len(f.split(","))) if f1!=0 and f1!=1 and f1!=3 and f1!=5 and f1!=7 and f1!=36 and f1 !=46])
-        labels.append([int(f.split(",")[f1]) for f1 in range(len(f.split(","))) if f1 != 0 and f1 != 1 and f1 != 3 and f1 != 5 and f1 != 7  and f1!=9])
+        labels.append([int(f.split(",")[f1]) for f1 in range(len(f.split(","))) if f1 != 0 and f1 != 1 and f1 != 3 and f1 != 5 and f1 != 7 ])
 
     #data_dict = {'sentence': sentences, "labels": labels}
     data_dict = {'sentence': sentences, "labels": labels}
@@ -160,7 +161,12 @@ def load_single_generation(args, generation_type="hidden_states", name=None):
     # use the same filename as in save_generations
     exclude_keys = ["save_dir", "cache_dir", "device"]
     name = name or gen_filename(generation_type, args, exclude_keys)
-    return np.load(os.path.join(args['save_dir'], name))
+    path = os.path.join(args['save_dir'], name)
+    print("loading",path)
+    #os.makedirs("generated_hidden_states_fake",exist_ok=True)
+    #if not os.path.exists("generated_hidden_states_fake/"+name):
+        #shutil.copy(path,"generated_hidden_states_fake/"+name)
+    return np.load(path)
 
 
 ############# Hidden States #############
@@ -194,7 +200,7 @@ def get_individual_hidden_states(model, batch_ids, layer=None, all_layers=True):
     # forward pass
     with torch.no_grad():
         batch_ids = {key: value.to(model.device) for key, value in batch_ids.items()}
-        output = model(**batch_ids, output_hidden_states=True)
+        output = model(**batch_ids,output_hidden_states=True)
 
     # get all the corresponding hidden states (which is a tuple of length num_layers)
     if "decoder_hidden_states" in output.keys():
