@@ -2,3 +2,5 @@
 .neptune/
 
 .env
+
+*.csv
