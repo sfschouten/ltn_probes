@@ -227,7 +227,7 @@ def create_axioms(Model, Model_continent, Model_category, Model_habitat, Model_p
     Forall_person = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=6.0), quantifier="f")
     Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
     Forall_object = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
-    SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=6.0))
+    SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=2.0))
     # agg_op=ltn.fuzzy_ops.AggregLogSum(weights=[10,10,1,1,1,1,1,1,1]
     #
 
@@ -240,8 +240,8 @@ def create_axioms(Model, Model_continent, Model_category, Model_habitat, Model_p
 
     subject_positive = Forall(ltn.diag(label_sentence, x, Subject_l, label_sentence_macro),
                               Model(x, Subject_l),
-                              cond_vars=[label_sentence, label_sentence_macro],
-                              cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
+                              cond_vars=[label_sentence],
+                              cond_fn=lambda t: t.value == 1)
 
     action_positive = Forall(ltn.diag(y, Action_l), Model(y, Action_l))
 
@@ -509,6 +509,7 @@ def train_ltn(dataloader, dataloader_valid, args, ndim):
                   "layer": args.layer, "train_data_path": args.train_data_path,
                   "test_data_path": args.test_data_path,
                   "model_name": args.model_name,
+                  "seed": torch.initial_seed().__str__(),
                   "valid_data_path": args.valid_data_path}
 
         run["parameters"] = params
@@ -1086,9 +1087,9 @@ def train_ltn(dataloader, dataloader_valid, args, ndim):
                     fifth = max([f[5] for f in dataset_test['labels']])
 
                     random_label_test = [[random.randint(0, zero), random.randint(0, first), random.randint(0, second),
-                                           random.randint(0, third), random.randint(0, fourth),
-                                           random.randint(0, fifth)]
-                                          for f in dataset_test['labels']]
+                                          random.randint(0, third), random.randint(0, fourth),
+                                          random.randint(0, fifth)]
+                                         for f in dataset_test['labels']]
 
                     dataset_test.remove_columns("labels").add_column("labels", random_label_test)
 
@@ -1109,7 +1110,7 @@ def main(args, generation_args):
     print(f'Current device: {torch.cuda.current_device()}')
     print(f'Name of first device: {torch.cuda.get_device_name(0)}')
     print(f'Random seed torch device: {torch.random.initial_seed()}')
-    # torch.manual_seed(0)
+    #torch.manual_seed(44985256335000)
 
     dataset_train, _ = get_dataset(None, args.train_data_path)
 
