@@ -155,16 +155,15 @@ def calc_metrics(var_pairs, closed_formulas, to_calc, dummy_baseline=False):
 
 
 def train_ltn(dataloader_train, dataloader_valid, dataloader_test,
-              frames, frame_roles, frames_roles_count, frames_implications, args, ndim):
+              frames, frame_roles, frames_roles_count, frames_implications, args, generation_args, ndim):
     if args.log_neptune:
         import neptune
         run = neptune.init_run(
             project=os.getenv('NEPTUNE_PROJECT'),
             api_token=os.getenv('NEPTUNE_API_KEY'),
         )
-        params = {"learning_rate": args.lr, "optimizer": "Adam", "nr_epochs": args.nr_epochs,
-                  "probe_batch_size": args.probe_batch_size, "probe_device": args.probe_device}
-        run["parameters"] = params
+        run["probing_args"] = vars(args)
+        run["generation_args"] = vars(generation_args)
 
     # attention mechanism
     attn = FrameRoleAttention(
@@ -316,7 +315,7 @@ def main(args, generation_args):
     hs_dl_test = DataLoader(hs_dataset_test, batch_size=len(test_data), shuffle=True)
 
     train_ltn(hs_dl_train, hs_dl_valid, hs_dl_test,
-              frames, frame_roles, frames_roles_count, frames_implications, args, ndim)
+              frames, frame_roles, frames_roles_count, frames_implications, args, generation_args, ndim)
 
 
 if __name__ == '__main__':
