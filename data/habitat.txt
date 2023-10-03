@@ -1,0 +1,753 @@
+Aardwolf:Savannah
+Aberdeen Angus:Farm
+Abrocome:Mountain
+Abyssinian Cat:Domestic
+Addax:Desert
+Affenpinscher:Domestic
+Afghan Hound:Open terrain
+African Elephant:Savannah
+African Hunting Dog:Savannah
+African Wild Ass:Desert
+Africander:Farm
+Agouti:Forest
+Airedale:Open terrain
+Alaska Fur Seal:Ocean
+Alaskan Brown Bear:Mountain
+Alley Cat:Urban
+Alpaca:Farm
+American Badger:Grassland
+American Bison:Grassland
+American Foxhound:Countryside
+American Harvest Mouse:Fields
+American Marten:Forest
+American Mastodon:Prehistoric
+American Mink:Wetland
+American Red Squirrel:Forest
+American Saddle Horse:Farm
+American Shrew Mole:Underground
+American Staffordshire Terrier:Domestic
+American Water Shrew:Wetland
+American Water Spaniel:Waterfront
+Angora Rabbit:Domestic
+Angora Goat:Farm
+Angora Cat:Domestic
+Anoa:Forest
+Ant Bear (Aardvark):Savannah
+Antelope Squirrel:Desert
+Aoudad:Mountains
+Apar (Guenon):Forest
+Aperea (Agouti):Forest
+Appaloosa Horse:Farm
+Appenzeller Dog:Farm
+Arabian Horse:Desert
+Arabian Camel:Desert
+Arctic Ground Squirrel:Tundra
+Argali Sheep:Mountain
+Asiatic Black Bear:Forest
+Asiatic Shrew Mole:Underground
+Atlantic Bottlenose Dolphin:Ocean
+Atlantic Walrus:Arctic
+Attack Dog:Varied
+Aurochs:Grassland
+Australian Sea Lion:Coastal
+Australian Terrier:Domestic
+Ayrshire Cattle:Farm
+Babirusa:Forest
+Bactrian Camel:Desert
+Banded Palm Civet:Forest
+Bandicoot Rat:Grasslands
+Banteng:Grassland
+Baronduki (Guenon):Forest
+Barren Ground Caribou:Arctic
+Basenji Dog:Domestic
+Bassarisk (Civet):Forest
+Basset Hound:Domestic
+Bay Horse:Farm
+Beagle:Domestic
+Bear Cub:Forest
+Bearded Seal:Coastal
+Beaver Rat:Wetland
+Bedlington Terrier:Domestic
+Belgian Hare:Domestic
+Bellwether Sheep:Farm
+Bengal Tiger:Forest
+Bernese Mountain Dog:Mountain
+Bezoar Goat:Mountains
+Big-Eared Bat:Varied
+Big Brown Bat:Varied
+Bighorn Sheep:Mountains
+Billy Goat:Farm
+Binturong (Bearcat):Forest
+Bird Dog:Countryside
+Black-and-Tan Coonhound:Countryside
+Black-Footed Ferret:Grassland
+Black-Tailed Deer:Forest
+Black Fox:Varied
+Black Rat:Urban
+Black Rhinoceros:Grassland
+Black Sheep:Farm
+Black Squirrel:Urban
+Blackbuck:Grassland
+Blacktail Jackrabbit:Desert
+Blacktail Prairie Dog:Grassland
+Blenheim Spaniel:Domestic
+Bloodhound:Domestic
+Blue Fox:Arctic
+Blue Point Siamese Cat:Domestic
+Blue Whale:Ocean
+Bluetick Coonhound:Countryside
+Boar:Forest
+Boarhound:Countryside
+Bobcat:Forest
+Bongo Antelope:Forest
+Border Collie:Domestic
+Border Terrier:Domestic
+Borzoi:Varied
+Boston Bull (Boston Terrier):Domestic
+Bottlenose Whale:Ocean
+Bouvier des Flandres:Domestic
+Bowhead Whale:Ocean
+Boxer Dog:Domestic
+Brabancon Griffon:Domestic
+Brewer's Mole:Underground
+Briard:Domestic
+Brittany Spaniel:Varied
+Broadtail (Lamb):Farm
+Brocket Deer:Forest
+Brocket Deer:Forest
+Brood Bitch:Domestic
+Broodmare:Farm
+Brown Bat:Varied
+Brown Hyena:Grassland
+Brown Lemming:Tundra
+Brown Swiss Cattle:Farm
+Bruin (Brown Bear):Forest
+Brush-Tailed Porcupine:Forest
+Bucking Bronco:Farm
+Buckskin Horse:Farm
+Bull Mastiff:Domestic
+Bullock (Steer):Farm
+Bullock (Steer):Farm
+Bunny (Rabbit):Varied
+Burmese Cat:Domestic
+Burro (Donkey):Farm
+Bushbuck Antelope:Forest
+Cactus Mouse:Desert
+Cairn Terrier:Domestic
+California Sea Lion:Coastal
+Canada Lynx:Forest
+Canada Porcupine:Forest
+Cape Buffalo:Grassland
+Capybara:Wetland
+Carabao (Water Buffalo):Wetland
+Caracal:Varied
+Cardigan Welsh Corgi:Domestic
+Carthorse:Farm
+Cashmere Goat:Farm
+Cattalo:Farm
+Cavalry Horse:Varied
+Cave Myotis (Bat):Caves
+Cayuse Horse:Varied
+Chamois Goat:Mountains
+Charger Horse:Varied
+Charolais Cattle:Farm
+Cheetah:Grassland
+Chesapeake Bay Retriever:Waterfront
+Chestnut Horse:Farm
+Cheviot Sheep:Farm
+Chiacuán Peccary:Forest
+Chickeree (Squirrel):Varied
+Chigetai (Wild Ass):Grassland
+Chihuahua:Domestic
+Chinchilla:Domestic
+Chipmunk:Forest
+Chow Chow:Domestic
+Cinnamon Bear:Forest
+Clumber Spaniel:Domestic
+Clydesdale Horse:Farm
+Clydesdale Terrier:Domestic
+Coach Horse:Farm
+Coati:Forest
+Cob Horse:Varied
+Cocker Spaniel:Domestic
+Collared Peccary:Forest
+Collared Pika:Alpine
+Collie Dog:Varied
+Columbian Mammoth:Prehistoric
+Common Dolphin:Ocean
+Common Eland:Grassland
+Common Lynx:Forest
+Common Raccoon:Forest
+Common Shrew:Varied
+Common Zebra:Grassland
+Coondog:Countryside
+Cotswold Sheep:Farm
+Cotton Mouse:Forest
+Cotton Rat:Wetland
+Cougar (Mountain Lion):Varied
+Courser Horse:Varied
+Cow Pony:Farm
+Coydog:Varied
+Coypu (Nutria):Wetland
+Crab-Eating Dog:Forest
+Crab-Eating Raccoon:Forest
+Crabeater Seal:Ice
+Crowbait (Horse):Varied
+Cryptoprocta (Fossa):Forest
+Curly-Coated Retriever:Domestic
+Cynocephalus Variegatus (Flying Fox):Forest
+Cynopterus Sphinx (Flying Fox):Forest
+Dall Sheep:Mountains
+Dandie Dinmont:Domestic
+Dark Horse:Domestic
+Deer Mouse:Forest
+Desmodus Rotundus (Vampire Bat):Varied
+Devon Cattle:Farm
+Dhole (Wild Dog):Varied
+Dik-Dik:Grassland
+Dingo:Forest
+Dinoceras:Prehistoric
+Doberman:Domestic
+Domestic Llama:Farm
+Dugong:Coastal
+Dun Horse:Varied
+Duplicidentata (Beaver):Wetland
+Durham Cattle:Farm
+Dusky-Footed Woodrat:Forest
+Dusky-Footed Woodrat:Forest
+Dwarf Sperm Whale:Ocean
+Eastern Chipmunk:Forest
+Eastern Cottontail Rabbit:Forest
+Eastern Grey Squirrel:Forest
+Eastern Pipistrel (Bat):Varied
+Eastern Woodrat:Forest
+Egyptian Cat:Domestic
+Elephant Seal:Coastal
+Elk:Grassland
+English Foxhound:Countryside
+English Setter:Domestic
+English Springer Spaniel:Domestic
+Entlebucher:Farm
+Eohippus:Prehistoric
+Eskimo Dog:Varied
+Eurasian Badger:Forest
+Eurasian Hamster:Grassland
+Eurasian Otter:Waterfront
+European Hare:Grassland
+European Lemming:Tundra
+European Rabbit:Varied
+European Water Shrew:Waterfront
+European Wildcat:Forest
+European Wood Mouse:Forest
+Ewe Sheep:Farm
+Exmoor Pony:Forest
+Exmoor Pony:Forest
+Fallow Deer:Forest
+False Saber-Toothed Tiger:Prehistoric
+Fanaloka (Fossa):Forest
+Farm Horse:Farm
+Fawn:Forest
+Feist Dog:Domestic
+Ferret:Domestic
+Ferret Badger:Forest
+Field Spaniel:Domestic
+Finback Whale:Ocean
+Fisher (Fisher Cat):Forest
+Fissiped Mammal:Varied
+Flat-Coated Retriever:Domestic
+Flickertail (Prairie Dog):Grassland
+Flying Fox:Forest
+Forest Goat:Forest
+Fossa:Forest
+Fox Squirrel:Forest
+French Bulldog:Domestic
+Friesian Cattle:Farm
+Frosted Bat:Varied
+Galloway Cattle:Farm
+Gaur (Indian Bison):Forest
+Gayal (Gaur):Forest
+Gazella Subgutturosa (Goitered Gazelle):Grassland
+Gee-Gee (Horse):Varied
+Gelding Horse:Domestic
+Gemsbok (Oryx):Desert
+Genet:Forest
+Gerenuk:Desert
+German Shepherd:Domestic
+German Short-Haired Pointer:Varied
+Giant Armadillo:Grassland
+Giant Eland:Grassland
+Giant Panda:Forest
+Giant Schnauzer:Domestic
+Gib (Monkey):Forest
+Glutton (Wolverine):Forest
+Gnu (Wildebeest):Grassland
+Golden Hamster:Domestic
+Golden Mole:Varied
+Golden Retriever:Domestic
+Gomphothere:Prehistoric
+Goral:Mountains
+Gordon Setter:Domestic
+Grade Horse:Farm
+Grampus (Dolphin):Ocean
+Grasshopper Mouse:Desert
+Great Dane:Domestic
+Great Pyrenees:Domestic
+Greater Kudu:Grassland
+Greater Pichiciego (Burrowing Rodent):Underground
+Greater Swiss Mountain Dog:Domestic
+Grevy's Zebra:Grassland
+Grey Horse:Domestic
+Grey Fox:Forest
+Grey Lemming:Tundra
+Grey Whale:Ocean
+Griffon Vulture:Varied
+Grison:Forest
+Grizzly Bear:Forest
+Groenendael Dog:Domestic
+Ground Sloth:Prehistoric
+Groundhog (Woodchuck):Varied
+Guadalupe Fur Seal:Coastal
+Guanaco:Grassland
+Guano Bat:Caves
+Guernsey Cattle:Farm
+Guinea Pig:Domestic
+Hack:Farm
+Hack:Farm
+Hack:Farm
+Hackney Horse:Farm
+Hairy-Legged Vampire Bat:Varied
+Hampshire Pig:Farm
+Harbor Porpoise:Ocean
+Harbor Seal:Coastal
+Harp Seal:Ice
+Harpy Eagle:Forest
+Harrier Hawk:Varied
+Hart (Stag):Forest
+Hartebeest:Grassland
+Harvest Mouse:Fields
+Hazel Mouse:Forest
+Hearing Dog:Domestic
+Hedgehog:Varied
+Heifer (Young Cow):Farm
+Hereford Cattle:Farm
+Hind (Female Deer):Forest
+Hinny (Donkey Hybrid):Varied
+Hippopotamus:Water
+Hispid Pocket Mouse:Desert
+Hoary Marmot:Alpine
+Hog-Nosed Skunk:Forest
+Hog Badger:Forest
+Hognose Bat:Caves
+Hooded Seal:Ice
+Hooded Skunk:Forest
+Horseshoe Bat:Caves
+Horseshoe Bat:Caves
+House Mouse:Varied
+Housedog:Domestic
+Hudson Bay Collared Lemming:Tundra
+Humpback Whale:Ocean
+Ibex:Mountains
+Ibizan Hound:Varied
+Ice Bear (Polar Bear):Arctic
+Ichneumon:Varied
+Impala:Grassland
+Imperial Mammoth:Prehistoric
+Indian Buffalo:Grassland
+Indian Mongoose:Varied
+Indian Rhinoceros:Grassland
+Irish Setter:Varied
+Irish Terrier:Domestic
+Irish Water Spaniel:Waterfront
+Irish Wolfhound:Varied
+Italian Greyhound:Domestic
+Jack (Donkey):Farm
+Jackal:Varied
+Jackass Bat:Caves
+Jaculus Jaculus (Rodent):Desert
+Jaguar:Forest
+Jaguarundi:Varied
+Japanese Deer:Forest
+Japanese Spaniel:Domestic
+Jennet (Female Donkey):Farm
+Jersey Cattle:Farm
+Jird (Rodent):Desert
+Jungle Cat:Forest
+Kaffir Cat (Leopard):Forest
+Kanchil (Mouse Deer):Forest
+Kangaroo Mouse:Desert
+Kangaroo Mouse:Desert
+Keeshond Dog:Domestic
+Kelpie Dog:Domestic
+Kerry Blue Terrier:Domestic
+Kiang (Wild Ass):Grassland
+Kid (Young Goat):Farm
+Killer Whale (Orca):Ocean
+King Charles Spaniel:Domestic
+Kinkajou:Forest
+Kit Fox:Desert
+Kit Fox:Desert
+Kitty (Kitten):Domestic
+Kob (Antelope):Grassland
+Komondor Dog:Domestic
+Kuvasz Dog:Domestic
+Labrador Retriever:Domestic
+Lakeland Terrier:Domestic
+Lapdog:Domestic
+Lapin (Rabbit):Varied
+Large Civet:Forest
+Large Poodle:Domestic
+Least Shrew:Varied
+Lechwe (Antelope):Wetland
+Leonberg Dog:Domestic
+Leopard Cat:Forest
+Leopardess:Forest
+Lerot (Garden Dormouse):Forest
+Lesser Kudu:Grassland
+Lesser Panda (Red Panda):Forest
+Lesser Rorqual (Minke Whale):Ocean
+Leveret (Young Hare):Grassland
+Lhasa Apso Dog:Domestic
+Liger (Lion x Tiger Hybrid):Varied
+Lincoln Sheep:Farm
+Lion Cub:Grassland
+Lioness:Grassland
+Lionet (Young Lion):Grassland
+Lippizan (Horse):Varied
+Little Brown Bat:Varied
+Little Chief Hare:Grassland
+Liver-Spotted Dalmatian Dog:Domestic
+Liver Chestnut Horse:Varied
+Loir (Dormouse):Forest
+Long-Tailed Porcupine:Forest
+Longhorn Cattle:Farm
+Longtail Weasel:Varied
+Longwool Sheep:Farm
+Macrotus (Bat):Varied
+Malamute Dog:Domestic
+Malayan Tapir:Forest
+Malinois Dog:Domestic
+Maltese (Dog Breed):Domestic
+Maltese Dog:Domestic
+Manatee:Water
+Mantled Ground Squirrel:Forest
+Manul (Wild Cat):Varied
+Manx Cat:Domestic
+Mapinguari:Forest
+Mara (Patagonian Hare):Grassland
+Marco Polo Sheep:Mountains
+Margay (Wild Cat):Forest
+Markhor Goat:Mountains
+Marsh Hare:Wetland
+Masked Shrew:Varied
+Mastiff Bat:Varied
+Meadow Jumping Mouse:Grassland
+Meadow Vole:Grassland
+Mediterranean Water Shrew:Waterfront
+Merino Sheep:Farm
+Mesohippus Horse:Prehistoric
+Mexican Hairless Dog (Xoloitzcuintli):Domestic
+Mexican Pocket Mouse:Desert
+Milking Shorthorn Cattle:Farm
+Miniature Pinscher Dog:Domestic
+Miniature Poodle Dog:Domestic
+Miniature Schnauzer Dog:Domestic
+Moke (Donkey):Farm
+Mole Rat:Underground
+Mole Rat:Underground
+Morgan Horse:Varied
+Mouflon Sheep:Mountains
+Mountain Beaver:Forest
+Mountain Chinchilla:Mountains
+Mountain Goat:Mountains
+Mountain Nyala:Mountains
+Mountain Paca:Forest
+Mountain Zebra:Grassland
+Mouse-Eared Bat:Varied
+Mouser (Mouse Catcher):Varied
+Mudder (Mule):Farm
+Mule:Farm
+Muntjac (Barking Deer):Forest
+Murine Rodent:Varied
+Musk Deer:Forest
+Musk Ox:Arctic
+Muskrat:Wetland
+Mylodon (Prehistoric Sloth):Prehistoric
+Nanny Goat:Farm
+Napu (Deer):Forest
+Narwhal:Ocean
+New World Beaver:Wetland
+New World Least Weasel:Varied
+New World Tapir:Forest
+Newfoundland Dog:Domestic
+Nilgai Antelope:Grassland
+Nonstarter:Varied
+Norfolk Terrier Dog:Domestic
+Northern Bog Lemming:Tundra
+Northern Flying Squirrel:Forest
+Northern Pocket Gopher:Grassland
+Norwegian Elkhound Dog:Domestic
+Norwich Terrier Dog:Domestic
+Nude Mouse:Varied
+Nyala Antelope:Forest
+Ocelot:Forest
+Okapi:Forest
+Old English Sheepdog:Farm
+Old World Beaver:Varied
+Old World Least Weasel:Varied
+Orange Bat:Varied
+Ord Kangaroo Rat:Desert
+Otter Shrew:Waterfront
+Otterhound Dog:Waterfront
+Ox:Farm
+Paca (Rodent):Forest
+Pacer (Horse):Varied
+Pacer (Horse):Varied
+Pacific Bottlenose Dolphin:Ocean
+Pacific Walrus:Arctic
+Packhorse:Varied
+Palfrey (Horse):Varied
+Pallid Bat:Varied
+Palm Cat:Forest
+Palomino Horse:Varied
+Panther (Black Panther):Forest
+Papillon Dog:Domestic
+Pariah Dog:Domestic
+Peba (Agouti):Forest
+Pekinese Dog:Domestic
+Peludo (Vicuña):Grassland
+Pembroke Welsh Corgi Dog:Domestic
+Pentail (African Porcupine):Forest
+Percheron Horse:Farm
+Père David's Deer:Grassland
+Persian Cat:Domestic
+Phenacomys (Deer Mouse):Forest
+Phyllostomus Hastatus (Bat):Varied
+Pichiciago (Tenrec):Varied
+Pilot Whale:Ocean
+Pine Marten:Forest
+Pine Vole:Forest
+Pinto Horse:Varied
+Pipistrelle Bat:Varied
+Plains Pocket Gopher:Grassland
+Plains Pocket Mouse:Grassland
+Plott Hound Dog:Varied
+Plow Horse:Farm
+Pocketed Bat:Varied
+Polar Hare:Arctic
+Pole Horse:Farm
+Pole Horse:Farm
+Police Dog:Varied
+Pollard (Stag):Forest
+Polo Pony:Varied
+Pomeranian Dog:Domestic
+Pony:Grassland
+Pooch (Dog):Domestic
+Porker (Pig):Farm
+Post Horse:Varied
+Prairie Vole:Grassland
+Prancer (Reindeer):Arctic
+Pricket (Young Deer):Forest
+Pronghorn Antelope:Grassland
+Protohippus Horse:Prehistoric
+Przewalski's Horse (Takhi):Grassland
+Pteropus Capestratus (Bat):Varied
+Pteropus Hypomelanus (Bat):Varied
+Pug Dog:Domestic
+Puku Antelope:Grassland
+Puppy (Young Dog):Domestic
+Pygmy Mouse:Forest
+Pygmy Sperm Whale:Ocean
+Quagga (Prehistoric Zebra):Prehistoric
+Quarter Horse:Varied
+Rabbit Ears (Bat):Varied
+Raccoon Dog:Forest
+Ram (Adult Male Sheep):Farm
+Rambouillet Sheep:Farm
+Ratel (Honey Badger):Varied
+Razorback Hog:Forest
+Red-Backed Mouse:Forest
+Red Bat:Varied
+Red Fox:Forest
+Red Poll Cattle:Farm
+Red Squirrel:Forest
+Red Wolf:Forest
+Redbone Hound Dog:Varied
+Remount Horse:Varied
+Reynard (Fox):Varied
+Rhodesian Ridgeback Dog:Domestic
+Rice Rat:Wetland
+Right Whale:Ocean
+River Dolphin:Water
+River Otter:Waterfront
+Roan Cattle:Farm
+Rock Hyrax (Dassie):Varied
+Rock Squirrel:Desert
+Roebuck (Deer):Forest
+Rogue Elephant:Varied
+Rottweiler Dog:Domestic
+Round-Tailed Muskrat:Wetland
+Sable Antelope:Grassland
+Sable (Marten):Forest
+Saiga Antelope:Grassland
+Saint Bernard Dog:Domestic
+Saluki Dog:Varied
+Sambar Deer:Forest
+Samoyed Dog:Domestic
+Sand Cat:Desert
+Sand Rat:Desert
+Sand Rat:Desert
+Santa Gertrudis Cattle:Farm
+sassaby.n.01:Savanna
+sausage_dog.n.01:Domestic
+schipperke.n.01:Domestic
+scotch_terrier.n.01:Domestic
+scottish_deerhound.n.01:Domestic
+sea_otter.n.01:Water
+sealyham_terrier.n.01:Domestic
+seeing_eye_dog.n.01:Domestic
+sei_whale.n.01:Ocean
+seizure-alert_dog.n.01:Domestic
+serotine.n.01:Forest
+serow.n.01:Forest
+serval.n.01:Grassland
+sewer_rat.n.01:Urban
+shetland_pony.n.01:Domestic
+shetland_sheepdog.n.01:Domestic
+shih-tzu.n.01:Domestic
+shire.n.02:Domestic
+short-tailed_shrew.n.01:Forest
+siberian_husky.n.01:Domestic
+silky_anteater.n.01:Forest
+silky_pocket_mouse.n.01:Forest
+silky_terrier.n.01:Domestic
+silver_fox.n.01:Domestic
+slender-tailed_meerkat.n.01:Savanna
+sloth_bear.n.01:Forest
+small_civet.n.01:Forest
+smiledon_californicus.n.01:Prehistoric
+smooth-haired_fox_terrier.n.01:Domestic
+snake_muishond.n.01:Forest
+snow_leopard.n.01:Mountain
+snowshoe_hare.n.01:Forest
+soft-coated_wheaten_terrier.n.01:Domestic
+sorrel.n.05:Domestic
+south_american_sea_lion.n.01:Ocean
+southeastern_pocket_gopher.n.01:Forest
+southern_bog_lemming.n.01:Wetland
+southern_flying_squirrel.n.01:Forest
+sow.n.01:Farm
+spearnose_bat.n.01:Forest
+sperm_whale.n.01:Ocean
+spotted_hyena.n.01:Savanna
+spotted_lynx.n.01:Forest
+spotted_skunk.n.01:Forest
+spouter.n.03:Water
+springbok.n.01:Savanna
+springer.n.02:Domestic
+stablemate.n.01:Domestic
+staffordshire_bullterrier.n.01:Domestic
+staghound.n.01:Domestic
+stalking-horse.n.04:Domestic
+standard_poodle.n.01:Domestic
+standard_schnauzer.n.01:Domestic
+starnose_mole.n.01:Wetland
+steed.n.01:Domestic
+steenbok.n.01:Savanna
+steeplechaser.n.01:Domestic
+steller_s_sea_cow.n.01:Extinct
+steller_sea_lion.n.01:Ocean
+stepper.n.03:Domestic
+stirk.n.01:Domestic
+stoat.n.01:Forest
+stone_marten.n.01:Forest
+striped_hyena.n.01:Desert
+striped_muishond.n.01:Forest
+striped_skunk.n.01:Forest
+stud.n.04:Farm
+suricate.n.01:Desert
+suslik.n.01:Grassland
+sussex_spaniel.n.01:Domestic
+swamp_rabbit.n.02:Wetland
+syrian_bear.n.01:Forest
+tabby.n.01:Domestic
+tabby.n.02:Domestic
+taguan.n.01:Forest
+tailless_tenrec.n.01:Forest
+takin.n.01:Mountain
+tamandua.n.01:Forest
+tamarau.n.01:Grassland
+tamarisk_gerbil.n.01:Desert
+tarpan.n.01:Extinct
+tatouay.n.01:Forest
+tayra.n.01:Forest
+tennessee_walker.n.01:Domestic
+thomson_s_gazelle.n.01:Savanna
+thoroughbred.n.02:Domestic
+three-toed_sloth.n.01:Forest
+three-year-old_horse.n.01:Domestic
+tibetan_mastiff.n.01:Domestic
+tibetan_terrier.n.01:Domestic
+tiger_cat.n.01:Domestic
+tiger_cat.n.02:Domestic
+tiger_cub.n.01:Forest
+tiglon.n.01:Grasslands
+tigress.n.01:Grasslands
+timber_wolf.n.01:Forest
+tortoiseshell.n.03:Domestic
+toy_manchester.n.01:Domestic
+toy_poodle.n.01:Domestic
+toy_terrier.n.01:Domestic
+two-toed_sloth.n.01:Forest
+two-toed_sloth.n.02:Forest
+two-year-old_horse.n.01:Domestic
+typical_jerboa.n.01:Desert
+urial.n.01:Mountain
+valley_pocket_gopher.n.01:Grassland
+vaquita.n.01:Ocean
+vicuna.n.03:Mountain
+virginia_deer.n.01:Forest
+viscacha.n.01:Desert
+vixen.n.02:Forest
+vizsla.n.01:Domestic
+walker_hound.n.01:Domestic
+wapiti.n.01:Forest
+warrigal.n.01:Urban
+warthog.n.01:Savanna
+water_chevrotain.n.01:Wetland
+water_dog.n.02:Water
+water_vole.n.01:Wetland
+water_vole.n.02:Wetland
+weimaraner.n.01:Domestic
+welsh.n.03:Domestic
+welsh_pony.n.01:Domestic
+welsh_springer_spaniel.n.01:Domestic
+west_highland_white_terrier.n.01:Domestic
+western_big-eared_bat.n.01:Forest
+western_grey_squirrel.n.01:Forest
+western_pipistrel.n.01:Forest
+wharf_rat.n.02:Urban
+wheel_horse.n.01:Domestic
+whippet.n.01:Domestic
+white-footed_mouse.n.01:Forest
+white-lipped_peccary.n.01:Forest
+white-tailed_jackrabbit.n.01:Grassland
+white_elephant.n.02:Extinct
+white_rhinoceros.n.01:Grassland
+white_whale.n.01:Ocean
+white_wolf.n.01:Arctic
+whitetail_prairie_dog.n.01:Grassland
+wild_boar.n.01:Forest
+wire-haired_fox_terrier.n.01:Domestic
+wisent.n.01:Extinct
+wolf_pup.n.01:Forest
+wolverine.n.03:Forest
+woodland_caribou.n.01:Forest
+woolly_mammoth.n.01:Prehistoric
+woolly_rhinoceros.n.01:Prehistoric
+yak.n.02:Mountain
+yearling.n.02:Domestic
+yellow-throated_marten.n.01:Forest
+yellowbelly_marmot.n.01:Grassland
+yorkshire_terrier.n.01:Domestic
+zebu.n.01:Domestic
+zoril.n.01:Forest

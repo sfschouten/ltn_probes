@@ -1,0 +1,753 @@
+Aardwolf: Africa
+Aberdeen Angus: Europe
+Abrocome: America
+Abyssinian: Africa
+Addax: Africa
+Affenpinscher: Europe
+Afghan Hound: Asia
+African Elephant: Africa
+African Hunting Dog: Africa
+African Wild Ass: Africa
+Afric,er: Africa
+Agouti: America
+Airedale: Europe
+Alaska Fur Seal: America
+Alaskan Brown Bear: America
+Alley Cat: Various Continents
+Alpacas: America
+American Badger: America
+American Bison: America
+American Foxhounds: America
+American Harvest Mouse: America
+American Marten: America
+American Mastodon: America
+American Mink: America
+American Red Squirrel: America
+American Saddle Horse: America
+American Shrew Mole: America
+American Staffordshire Terriers: America
+American Water Shrew: America
+American Water Spaniel: America
+Angora: Europe
+Angora: Europe
+Angora: Europe
+Anoa: Asia
+Ant Bear: Various Continents
+Antelope Squirrel: America
+Aoudad: Africa
+Apar: America
+Area: America
+Appaloosas: America
+Appenzell: Europe
+Arabian: Various Continents
+Arabian Camel: Asia , Africa
+Arctic Ground Squirrel: America
+Argali: Asia
+Asiatic Black Bear: Asia
+Asian Shrew Mole: Asia
+Atlantic Bottlenose Dolphin: Various Continents
+Atlantic Walrus: America
+Attack Dog: Various Continents
+Aurochs:Asia , Europe
+Australian Sea Lion: Australia
+Australian Terriers: Australia
+Ayrshire: Europe
+Babirusa: Asia
+Bactrian Camel: Asia
+B,ed Palm Civet: Asia
+B,icoot Rats: Australia
+Banteng: Asia
+Baronduki: Asia
+Barren Ground Caribou: America
+Basenjis: Africa
+Bassarisk: America
+Basset: Various Continents
+Bay: Various Continents
+Beagle: Various Continents
+Bear Cub: Various Continents
+Bearded Seal: Arctic
+Beaver Rat: Australia
+Bedlington Terriers: Europe
+Belgian Hare: Europe
+Bellwether: Various Continents
+Bengal Tiger: Asia
+Bernese Mountain Dog: Europe
+Bezoar Goat:Asia , Europe
+Big-Eared Bat: Various Continents
+Big Brown Bat: Various Continents
+Bighorn: America
+Billy: Europe
+Binturong: Asia
+Bird Dog: Various Continents
+Black-,-Tan Coonhound: America
+Black-Footed Ferret: America
+Black-Tailed Deer: America
+Black Fox: Europe
+Black Rat: Various Continents
+Black Rhinoceros: Africa
+Black Sheep: Europe
+Black Squirrel: America
+Blackbuck: Asia
+Blacktail Jackrabbit: America
+Blacktail Prairie Dog: America
+Blenheim Spaniels: Europe
+Bloodhound: Various Continents
+Blue Fox: America
+Blue Point Siamese: Various Continents
+Blue Whale: Various Continents
+Bluetick: America
+Boar: Various Continents
+Boarhound: Various Continents
+Bobcat: America
+Bongos: Africa
+Border Collie: Various Continents
+Border Terriers: Europe
+Borzoi: Various Continents
+Boston Bull: Various Continents
+Bottle-Nosed Whale: Various Continents
+Bouvier des Fl,res: Europe
+Bowhead: Arctic
+Boxer: Various Continents
+Brabancon Griffon: Europe
+Brewer's Mole: Various Continents
+Briard: Europe
+Brittany Spaniel: Europe
+Broadtail: Various Continents
+Bucket: America
+Bucket: America
+Brood Bitch: Various Continents
+Broodmare: Various Continents
+Brown Bat: Various Continents
+Brown Hyena: Africa
+Brown Lemming: Arctic
+Brown Swiss: Europe
+Bruin: Europe
+Brush-Tailed Porcupine: Australia
+Bucking Bronco: Various Continents
+Buckskin: Various Continents
+Bull Mastiff: Various Continents
+Bullock: Europe
+Bullock: Europe
+Bunny: Various Continents
+Burmese Cat: Asia
+Butter: Various Continents
+Bushbuck: Africa
+Cactus Mouse: America
+Cairns: Europe
+California Sea Lion: America
+Canada Lynx: America
+Canada Porcupine: America
+Cape Buffalo: Africa
+Capybara: America
+Carabao: Asia
+Caracal: Africa
+Cardigans: Europe
+Carthorse: Various Continents
+Cashmere Goat: Asia
+Cattalo: America
+Cavalry Horse: Various Continents
+Cave Myotis: Various Continents
+Cayuse: Various Continents
+Chamois: Europe
+Charger: Europe
+Charolais: Europe
+Cheetah: Africa
+Chesapeake Bay Retrievers: America
+Chestnut: Various Continents
+Cheviot: Europe
+Chiacoan Peccary: America
+Chickeree: Various Continents
+Chigetai: Asia
+Chihuahua: Various Continents
+Chinchilla: America
+Chipmunk: Various Continents
+Chow: Various Continents
+Cinnamon Bear: America
+Clumber: Europe
+Clydesdale: Europe
+Clydesdale Terriers: Europe
+Coach Horse: Various Continents
+Coati: America
+Cob: Europe
+Cocker Spaniel: Various Continents
+Collared Peccary: America
+Collared Pika: America
+Collie: Various Continents
+Columbian Mammoth: America
+Common Dolphin: Various Continents
+Common El,: Africa
+Common Lynx: Europe
+Common Raccoon: America
+Common Shrew: Various Continents
+Common Zebra: Africa
+Coondog: America
+Cotswolds: Europe
+Cotton Mouse: Various Continents
+Cotton Rat: Various Continents
+Cougars: America
+Courser: Africa
+Cow Pony: Various Continents
+Coydog: Various Continents
+Coypu: America
+Crab-Eating Dog: America
+Crab-Eating Raccoon: America
+Crabeater Seal: Antarctica
+Crowbait: Various Continents
+Cryptoprocta: Africa
+Curly-Coated Retriever: Various Continents
+Cynocephalus Variegatus: Africa
+Cynopterus Sphinx: Asia
+Dall Sheep: America
+D,ie Dinmont: Europe
+Dark Horse: Various Continents
+Deer Mouse: America
+Desmodus Rotundus: America
+Devon: Europe
+Dhole: Asia
+Dik-Dik: Africa
+Dingoes: Australia
+Dinoceras: America
+Doberman: Various Continents
+Domestic Llama: America
+Dugong: Oceania
+Dun: Various Continents
+Duplicidentata: Various Continents
+Durham: Various Continents
+Dusky-Footed Wood Rat: America
+Dusky-Footed Woodrat: America
+Dwarf Sperm Whale: Various Continents
+Eastern Chipmunk: America
+Eastern Cottontail: America
+Eastern Gray Squirrel: America
+Eastern Pipistrel: Various Continents
+Eastern Woodrat: America
+Egyptian Cat: Africa
+Elephant Seal: Various Continents
+Elk: America
+English Foxhounds: Europe
+English Setter: Europe
+English Springer: Europe
+Entlebucher: Europe
+Eohippus: America
+Eskimo Dog: America
+Eurasian Badger:Asia , Europe
+Eurasian Hamster:Asia , Europe
+Eurasian Otter:Asia , Europe
+European Hare: Europe
+European Lemmings: Europe
+European Rabbit: Europe
+European Water Shrew: Europe
+European Wildcat: Europe
+European Wood Mouse: Europe
+Ewe: Various Continents
+Exmoor: Europe
+Exmoor: Europe
+Fallow Deer: Europe
+False Saber-Toothed Tiger: Various Continents
+Fanaloka: Africa
+Farm Horse: Various Continents
+Fawn: Various Continents
+Feist: Various Continents
+Ferret: Various Continents
+Ferret Badger: Asia
+Field Spaniel: Various Continents
+Finback: Various Continents
+Fisher: America
+Fissiped Mammal: Various Continents
+Flat-Coated Retriever: Various Continents
+Flickertail: America
+Flying Fox: Various Continents
+Forest Goat: Various Continents
+Pit: Africa
+Fox Squirrel: America
+French Bulldog: Various Continents
+Friesian: Europe
+Frosted Bat: Various Continents
+Galloway: Various Continents
+Gaur: Asia
+Gayal: Asia
+Gazella Subgutturosa: Asia , Africa
+Gee-Gee: Various Continents
+Gelding: Various Continents
+Gemsbok: Africa
+Genet: Africa
+Gerenuk: Africa
+German Shepherd: Various Continents
+German Short-Haired Pointer: Europe
+Giant Armadillo: America
+Giant El,: Africa
+Giant P,a: Asia
+Giant Schnauzer: Europe
+Gib: Europe
+Glutton:Asia , Europe
+Wildebeest: Africa
+Golden Hamster:Asia , Europe
+Golden Mole: Africa
+Golden Retriever: Various Continents
+Gomphothere: America
+Goral: Asia
+Gordon Setter: Europe
+Grade: Various Continents
+Grampus: Various Continents
+Grasshopper Mouse: America
+Great Dane: Europe
+Great Pyrenees: Europe
+Greater Kudu: Africa
+Greater Pichiciego: America
+Greater Swiss Mountain Dog: Europe
+Grevy's Zebra: Africa
+Grey: Various Continents
+Gray Fox: America
+Gray Lemming: America
+Gray Whale: Various Continents
+Griffon: Various Continents
+Grison: Various Continents
+Grizzlies: America
+Groenendael: Europe
+Ground Sloth: America
+Groundhogs: America
+Guadalupe Fur Seal: America
+Guanacos: America
+Guano Bat: America
+Guernsey: Europe
+Guinea Pig: America
+Hack: Various Continents
+Hack: Various Continents
+Hack: Various Continents
+Hackney: Europe
+Hairy-Legged Vampire Bat: America
+Hampshire: Europe
+Harbor Porpoise: Various Continents
+Harbor Seal: Various Continents
+Harp Seal: Various Continents
+Harpy: America
+Harrier: Various Continents
+Hart: Europe
+Hartebeest: Africa
+Harvest Mouse: Europe
+Hazel Mouse:Asia , Europe
+Hearing Dog: Various Continents
+Hedgehog: Asia , Africa, Europe
+Heifer: Various Continents
+Hereford: Various Continents
+Hind: Asia
+Hinny: Various Continents
+Hippopotamus: Africa
+Hispid Pocket Mouse: America
+Hoary Marmot: America
+Hog-Nosed Skunk: America
+Hog Badger: Asia
+Hognose Bat: America
+Hooded Seal: Various Continents
+Hooded Skunk: America
+Horseshoe Bat: Various Continents
+Horseshoe Bat: Various Continents
+House Mouse: Various Continents
+Housedog: Various Continents
+Hudson Bay Collared Lemming: America
+Humpback: Various Continents
+Ibex: Asia , Africa, Europe
+Ibizan Hounds: Europe
+Ice Bear: Various Continents
+Ichneumon: Asia , Africa
+Impalas: Africa
+Imperial Mammoth: America
+Indian Buffaloes: Asia
+Indian Mongoose: Asia
+Indian Rhinoceros: Asia
+Irish Setters: Europe
+Irish Terriers: Europe
+Irish Water Spaniel: Europe
+Irish Wolfhounds: Europe
+Italian Greyhound: Europe
+Jack: Various Continents
+Jackals: Asia , Africa
+Jackass Bat: America
+Jaculus Jaculus: Asia , Africa
+Jaguar: America
+Jaguarundi: America
+Japanese Deer: Asia
+Japanese Spaniel: Asia
+Jennet: Various Continents
+Jersey: Europe
+Jird: Asia , Africa
+Jungle Cat: Asia , Africa
+Kaffir Cat: Africa
+Kanchil: Asia
+Kangaroo Mouse: America
+Kangaroo Mouse: America
+Keeshond: Europe
+Kelpies: Oceania
+Kerry Blue Terriers: Europe
+Kiang: Asia
+Kid: Various Continents
+Killer Whale: Various Continents
+King Charles Spaniel: Various Continents
+Kinkajou: America
+Kit Fox: America
+Kit Fox: America
+Kitty: Various Continents
+Kob: Africa
+Komondor: Europe
+Kuvasz: Europe
+Labrador Retriever: Various Continents
+Lakel, Terriers: Europe
+Lapdog: Various Continents
+Rabbit: Europe
+Large Civet: Asia , Africa
+Large Poodle: Europe
+Least Shrew: America
+Lechwe: Africa
+Leonberg: Europe
+Leopard Cat: Asia
+Leopardess: Africa
+Lerot: Europe
+Lesser Kudu: Africa
+Lesser P,a: Asia
+Lesser Rorqual: Various Continents
+Leveret: Various Continents
+Lhasa: Asia
+Liger: Various Continents
+Lincoln: Europe
+Lion Cub: Africa
+Lioness: Africa
+Lionet: Africa
+Lippizan: Europe
+Little Brown Bat: Various Continents
+Little Chief Hare: Africa
+Liver-Spotted Dalmatian: Various Continents
+Liver Chestnut: Various Continents
+Loire: Europe
+Long-Tailed Porcupine: Asia , Africa
+Longhorns: America
+Longtail Weasel: Various Continents
+Longwool: Various Continents
+Macrotus: America
+Malamutes: America
+Malayan Tapir: Asia
+Malinois: Europe
+Maltese: Europe
+Maltese Dog: Europe
+Manatee: Various Continents
+Mantled Ground Squirrel: America
+Manul: Asia
+Manx: Europe
+Mapinguari: America
+Mara: America
+Marco Polo Sheep: Asia
+Margay: America
+Markhor: Asia
+Marsh Hare: Various Continents
+Masked Shrew: Various Continents
+Mastiff Bat: Various Continents
+Meadow Jumping Mouse: America
+Meadow Vole: Various Continents
+Mediterranean Water Shrew:Asia , Europe
+Merino: Europe
+Mesohippus: America
+Mexican Hairless: America
+Mexican Pocket Mouse: America
+Milking Shorthorn: Various Continents
+Miniature Pinscher: Various Continents
+Miniature Poodle: Various Continents
+Miniature Schnauzers: Europe
+Moke: Various Continents
+Mole Rats: Asia , Africa
+Mole Rats: Asia , Africa
+Morgan: Various Continents
+Mouflon: Asia , Africa, Europe
+Mountain Beaver: America
+Mountain Chinchilla: America
+Mountain Goat: America
+Mountain Nyala: Africa
+Mountain Paca: America
+Mountain Zebra: Africa
+Mouse-Eared Bat: Various Continents
+Mouser: Various Continents
+Mudder: Various Continents
+Mule: Various Continents
+Muntjac: Asia
+Murine: Various Continents
+Musk Deer: Asia
+Musk Ox: America
+Muskrat: America
+Mylodon: America
+Nanny: Various Continents
+Napu: Asia
+Narwhal: Various Continents
+New World Beaver: Various Continents
+New World Least Weasel: Various Continents
+New World Tapir: America
+Newfoundl,: Various Continents
+Nilgai: Asia
+Nonstarter: Various Continents
+Norfolk Terriers: Europe
+Northern Bog Lemming: America
+Northern Flying Squirrel: America
+Northern Pocket Gophers: America
+Norwegian Elkhound: Europe
+Norwich Terriers: Europe
+Nude Mouse: Various Continents
+Nyala: Africa
+Ocelots: America
+Okapi: Africa
+Old English Sheepdog: Europe
+Old World Beaver: Europe
+Old World Least Weasel: Asia , Africa, Europe
+Orange Bat: America
+Ord Kangaroo Rat: America
+Otter Shrew: Africa
+Otterhounds: Europe
+Ox: Various Continents
+Paca: America
+Pacer: Various Continents
+Pacer: Various Continents
+Pacific Bottlenose Dolphin: Various Continents
+Pacific Walrus: Various Continents
+Packhorse: Various Continents
+Palfrey: Various Continents
+Pallid Bat: America
+Palm Cat: Asia
+Palomino: Various Continents
+Panther: Various Continents
+Papillon: Various Continents
+Pariah Dog: Various Continents
+Peba: America
+Pekinese: Asia
+Peludo: America
+Pembroke: Europe
+Pentails: America
+Percheron: Europe
+David's Deer Pears: Asia
+Persian Cat: Various Continents
+Phenacomys: America
+Phyllostomus Hastatus: America
+Pichiciago: America
+Pilot Whale: Various Continents
+Pine Marten:Asia , Europe
+Pine Vole: Various Continents
+Pinto: Various Continents
+Bats: Various Continents
+Plains Pocket Gopher: America
+Plains Pocket Mouse: America
+Plott Hound: America
+Plow Horse: Various Continents
+Pocketed Bat: Various Continents
+Polar Hare: Various Continents
+Pole Horse: Various Continents
+Pole Horse: Various Continents
+Police Dog: Various Continents
+Pollard: Various Continents
+Polo Pony: Various Continents
+Pomeranian: Various Continents
+Pony: Various Continents
+Pooch: Various Continents
+Porker: Various Continents
+Post Horse: Various Continents
+Prairie Vole: America
+Prancer: Various Continents
+Pricket: Various Continents
+Pronghorn: America
+Protohippus: America
+Przewalski's Horse: Asia
+Pteropus Capestratus: Asia
+Pteropus Hypomelanus: Asia
+Pug: Various Continents
+Puku: Africa
+Puppy: Various Continents
+Pygmy Mouse: America
+Pygmy Sperm Whale: Various Continents
+Quagga: Africa
+Quarter Horse: Various Continents
+Rabbit Ears: America
+Raccoon Dog: Asia
+Ram: Various Continents
+Rambouillet: Various Continents
+Ratel: Africa
+Razorback: Various Continents
+Red-Backed Mouse: America
+Red Bat: Various Continents
+Red Fox: Various Continents
+Red Poll: Various Continents
+Red Squirrel: Various Continents
+Red Wolf: America
+Redbone: Various Continents
+Remount: Various Continents
+Reynard: Various Continents
+Rhodesian Ridgebacks: Africa
+Rice Rat: Various Continents
+Right Whale: Various Continents
+River Dolphin: Various Continents
+River Otter: Various Continents
+Roan: Various Continents
+Rock Hyrax: Africa
+Rock Squirrel: America
+Roebuck: Various Continents
+Rogue Elephant: Asia
+Rottweilers: Europe
+Round-Tailed Muskrat: America
+Sable: Various Continents
+Sable Antelope: Africa
+Saiga: Asia
+Saint Bernard: Europe
+Saluki: Various Continents
+Sambar: Asia
+Samoyed: Asia
+S, Cat: Asia , Africa
+S, Rat: Africa
+S, Rat: Africa
+Santa Gertrudis: America
+Sassaby: Africa
+Sausage Dog: Various Continents
+Schipperke: Europe
+Scotch Terriers: Europe
+Scottish Deerhounds: Europe
+Sea Otter: Various Continents
+Sealyham Terriers: Europe
+Seeing Eye Dog: Various Continents
+Six Whale: Various Continents
+Seizure-Alert Dog: Various Continents
+Serotine: Various Continents
+Serow: Asia
+Serval: Africa
+Sewer Rat: Various Continents
+Shetl, Ponies: Europe
+Shetl, Sheepdog: Europe
+Shih Tzu: Asia
+Shire: Europe
+Short-Tailed Shrew: Various Continents
+Siberian Husky: Various Continents
+Silky Anteater: America
+Silky Pocket Mouse: America
+Silky Terrier: Various Continents
+Silver Fox: Various Continents
+Slender Tailed Meerkat: Africa
+Sloth Bear: Asia
+Small Civet: Asia
+Smilodon Californicus: America
+Smooth-Haired Fox Terrier: Various Continents
+Snake Muishond: America
+Snow Leopard: Asia
+Snowshoe Hare: America
+Soft-Coated Wheaten Terrier: Europe
+Sorrel: Various Continents
+American Sea Lion: America
+Southeastern Pocket Gopher: America
+Southern Bog Lemming: America
+Southern Flying Squirrel: America
+Sow: Various Continents
+Spearnose Bat: Various Continents
+Sperm Whale: Various Continents
+Spotted Hyenas: Africa
+Spotted Lynx: Various Continents
+Spotted Skunk: Various Continents
+Spouter: Various Continents
+Springbook: Africa
+Springer: Various Continents
+Stablemate: Various Continents
+Staffordshire Bullterrier: Europe
+Staghound: Various Continents
+Stalking-Horse: Various Continents
+St,ard Poodle: Various Continents
+St,ard Schnauzer: Europe
+Starnose Mole: America
+Steed: Various Continents
+Steenbok: Africa
+Steeplechaser: Various Continents
+Steller's Sea Cow: America
+Steller Sea Lion: Various Continents
+Stepper: Various Continents
+Stirk: Various Continents
+Stoat: Various Continents
+Stone Marten:Asia , Europe
+Striped Hyena: Africa
+Striped Muishond: Africa
+Striped Skunk: Various Continents
+Stud: Various Continents
+Suricate: Africa
+Suslik: Various Continents
+Sussex Spaniel: Europe
+Swamp Rabbit: America
+Syrian Bear: Various Continents
+Tabby: Various Continents
+Tabby: Various Continents
+Taguan: America
+Tailless Tenrec: Africa
+Taken: Asia
+Tam,ua: America
+Tamarau: Asia
+Tamarisk Gerbil: Asia
+Tarpan:Asia , Europe
+Tatouay: America
+Tayra: America
+Tennessee Walker: America
+Thomson's Gazelle: Africa
+Thoroughbred: Various Continents
+Three-Toed Sloth: America
+Three-Year-Old Horse: Various Continents
+Tibetan Mastiff: Asia
+Tibetan Terriers: Asia
+Tiger Cat: Various Continents
+Tiger Cat: Various Continents
+Tiger Cub: Various Continents
+Tiglon: Asia
+Tigress: Various Continents
+Timber Wolf: Various Continents
+Tortoiseshell: Various Continents
+Toy Manchester: Various Continents
+Toy Poodle: Various Continents
+Toy Terrier: Various Continents
+Two-Toed Sloth: America
+Two-Toed Sloth: America
+Two-Year-Old Horse: Various Continents
+Typical Jerboa: Asia , Africa
+Ural: Asia
+Valley Pocket Gopher: America
+Vaquita: America
+Vicuna: America
+Virginia Deer: America
+Viscacha: America
+Vixen: Various Continents
+Vizsla: Europe
+Walker Hounds: America
+Wapiti: America
+Warrigal: Australia
+Warthog: Africa
+Water Chevrotain: Asia , Africa
+Water Dog: Various Continents
+Water Vole: Various Continents
+Water Vole: Various Continents
+Weimaraner: Europe
+Welsh: Europe
+Welsh Pony: Europe
+Welsh Springer Spaniel: Europe
+West Highl, White Terrier: Europe
+Western Big-Eared Bat: America
+Western Gray Squirrel: America
+Western Pipistrel: Various Continents
+Wharf Rat: Various Continents
+Wheel Horse: Various Continents
+Whippet: Various Continents
+White-Footed Mouse: America
+White-Lipped Peccary: America
+White-Tailed Jackrabbit: America
+White Elephant: Asia
+White Rhinoceros: Africa
+White Whale: Various Continents
+White Wolf: Various Continents
+Whitetail Prairie Dog: America
+Wild Boar: Various Continents
+Wire-Haired Fox Terrier: Various Continents
+Wisent: Europe
+Wolf Pup: Various Continents
+Wolverine: Various Continents
+Woodl, Caribou: America
+Woolly Mammoth: Various Continents
+Woolly Rhinoceros: Various Continents
+Yaks: Asia
+Yearling: Various Continents
+Yellow Throated Marten: Asia
+Yellowbelly Marmot: America
+Yorkshire Terriers: Various Continents
+Zebu: Asia , Africa
+Zoril: Africa

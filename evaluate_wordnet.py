@@ -3,9 +3,9 @@ import math
 import os
 import pickle
 import random
+from datetime import datetime
 
 import neptune
-from torch import optim
 from tqdm import tqdm
 
 import numpy as np
@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader
 
 import ltn
 
-from utils import get_parser, load_single_generation, get_dataset
+from utils import get_parser, load_single_generation, get_synthetic_dataset
 from customdataloader import CustomDataset, CustomDatasetTest
 
 from dotenv import load_dotenv
@@ -35,28 +35,15 @@ def trim_hidden_states(hs):
 
 
 class SPOAttention(nn.Module):
+
     def __init__(self, n_embd, bias=True):
         super().__init__()
-        # key, query, value projections for all heads, but in a batch
         self.v_proj = nn.Linear(n_embd, n_embd, bias=bias)
         self.k_proj = nn.Linear(n_embd, n_embd, bias=bias)
-
         self.n_embd = n_embd
-
-        s = torch.randn(1, 1, n_embd)
-        p = torch.randn(1, 1, n_embd)
-        o = torch.randn(1, 1, n_embd)
-        self.q = nn.Parameter(torch.cat((s, p, o), dim=1))
-
+        self.q = nn.Parameter(torch.randn(1, 3, n_embd))  # s, p, o
         self.dropout = nn.Dropout(0.5)
-
         self.flash = hasattr(torch.nn.functional, 'scaled_dot_product_attention')
-        # self.MatrixVector = nn.Parameter(2e-4 * torch.rand([4096, 1013 + 2]), requires_grad=True)
-        # self.MatrixVectorFirst = nn.Parameter(2e-4 * torch.rand([4096, 12]), requires_grad=True)
-        # self.MatrixVectorSecond = nn.Parameter(2e-4 * torch.rand([4096, 43]), requires_grad=True)
-        # self.MatrixVectorThird = nn.Parameter(2e-4 * torch.rand([4096, 156]), requires_grad=True)
-        # self.MatrixContinent = nn.Parameter(2e-4 * torch.rand([4096, 9]), requires_grad=False)
-        # self.MatrixHabitat = nn.Parameter(2e-4 * torch.rand([4096, 28]), requires_grad=True)
 
     def forward(self, x, return_attn_values=True):
         # calculate key, values
@@ -64,7 +51,6 @@ class SPOAttention(nn.Module):
         x = torch.where(mask, x, 0)
 
         k = self.k_proj(x)
-
         v = self.v_proj(x)
 
         mask = mask.all(dim=-1).unsqueeze(1).expand(-1, 1, -1)
@@ -79,60 +65,6 @@ class SPOAttention(nn.Module):
             att = torch.nn.functional.softmax(att, dim=-1)
             y = att @ v  # (B, T, T) x (B, T, hs) -> (B, T, hs)
             return y.squeeze(), att
-
-
-# Funzione di attenzione basata sul prodotto scalato
-
-def scaled_dot_product_attention(query, key, value, mask=None, dropout=None):
-    d_k = query.size(-1)
-    scores = torch.matmul(query, key.transpose(-2, -1)) / torch.sqrt(torch.tensor(d_k, dtype=torch.float32))
-
-    if mask is not None:
-        scores = scores.masked_fill(mask == 0, -1e9)  # Applichiamo la maschera per evitare l'attenzione a padding
-
-    attention_weights = torch.nn.functional.softmax(scores, dim=-1)
-
-    if dropout is not None:
-        attention_weights = dropout(attention_weights)
-
-    output = torch.matmul(attention_weights, value)
-    return output, attention_weights
-
-
-# Modello con funzione di attenzione basata sul prodotto scalato
-class ScaledDotProductAttentionModel(nn.Module):
-    def __init__(self, embedding_dim, num_heads):
-        super(ScaledDotProductAttentionModel, self).__init__()
-        self.embedding_dim = embedding_dim
-        self.num_heads = num_heads
-        assert embedding_dim % num_heads == 0, "La dimensione dell'embedding deve essere divisibile per il numero di teste."
-        self.head_dim = embedding_dim // num_heads
-        self.fc_q = nn.Linear(embedding_dim, embedding_dim)
-        self.fc_k = nn.Linear(embedding_dim, embedding_dim)
-        self.fc_v = nn.Linear(embedding_dim, embedding_dim)
-        self.fc = nn.Linear(embedding_dim, embedding_dim)
-
-    def forward(self, src):
-        q = self.fc_q(src)
-        k = self.fc_k(src)
-        v = self.fc_v(src)
-
-        # Reshape degli embedding in testa (chunks)
-        q = q.view(-1, self.num_heads, self.head_dim)
-        k = k.view(-1, self.num_heads, self.head_dim)
-        v = v.view(-1, self.num_heads, self.head_dim)
-
-        # Calcoliamo l'attenzione per tutte le teste simultaneamente
-        output, attention_weights = scaled_dot_product_attention(q, k, v)
-
-        # Concateniamo lungo la dimensione delle teste e proiettiamo l'output attraverso un layer lineare
-        output = output.view(-1, self.embedding_dim)
-        output = self.fc(output)
-
-        # Reshape dell'output per ottenere la forma 3x4096
-        output = output.view(-1, self.num_heads, self.head_dim)
-
-        return output
 
 
 class MLP(torch.nn.Module):
@@ -227,7 +159,7 @@ def create_axioms(Model, Model_continent, Model_category, Model_habitat, Model_p
     Forall_person = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=6.0), quantifier="f")
     Forall = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
     Forall_object = ltn.Quantifier(ltn.fuzzy_ops.AggregPMeanError(p=2.0), quantifier="f")
-    SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=6.0))
+    SatAgg = ltn.fuzzy_ops.SatAgg(agg_op=ltn.fuzzy_ops.AggregPMeanError(p=2.0))
     # agg_op=ltn.fuzzy_ops.AggregLogSum(weights=[10,10,1,1,1,1,1,1,1]
     #
 
@@ -240,8 +172,8 @@ def create_axioms(Model, Model_continent, Model_category, Model_habitat, Model_p
 
     subject_positive = Forall(ltn.diag(label_sentence, x, Subject_l, label_sentence_macro),
                               Model(x, Subject_l),
-                              cond_vars=[label_sentence, label_sentence_macro],
-                              cond_fn=lambda t, t1: torch.logical_and(t.value == 1, t1.value == 0))
+                              cond_vars=[label_sentence],
+                              cond_fn=lambda t: t.value == 1)
 
     action_positive = Forall(ltn.diag(y, Action_l), Model(y, Action_l))
 
@@ -509,6 +441,7 @@ def train_ltn(dataloader, dataloader_valid, args, ndim):
                   "layer": args.layer, "train_data_path": args.train_data_path,
                   "test_data_path": args.test_data_path,
                   "model_name": args.model_name,
+                  "seed": torch.initial_seed().__str__(),
                   "valid_data_path": args.valid_data_path}
 
         run["parameters"] = params
@@ -691,8 +624,8 @@ def train_ltn(dataloader, dataloader_valid, args, ndim):
                     writer.add_histogram(name + '/grad', param.grad, global_step=step)
                 for name, param in Model.named_parameters():
                     writer.add_histogram(name + '/grad', param.grad, global_step=step)
-                for name, param in Model_sentence.named_parameters():
-                    writer.add_histogram(name + '/grad', param.grad, global_step=step)
+                # for name, param in Model_sentence.named_parameters():
+                #     writer.add_histogram(name + '/grad', param.grad, global_step=step)
 
             if args.log_neptune:
                 for key, value in axioms.items():
@@ -1050,12 +983,17 @@ def train_ltn(dataloader, dataloader_valid, args, ndim):
             Model_habitat.train()
             attn.train()
 
-            os.makedirs(run._sys_id, exist_ok=True)
-            torch.save(Model.state_dict(), run._sys_id + "/Model.pt")
-            torch.save(Model_category.state_dict(), run._sys_id + "/Model_category.pt")
-            torch.save(Model_person.state_dict(), run._sys_id + "/Model_person.pt")
-            torch.save(Model_object.state_dict(), run._sys_id + "/Model_object.pt")
-            torch.save(attn.state_dict(), run._sys_id + "/attn.pt")
+            if args.log_neptune:
+                id = run._sys_id
+            else:
+                id = f'no_neptune_{datetime.now()}'
+
+            os.makedirs(id, exist_ok=True)
+            torch.save(Model.state_dict(), id + "/Model.pt")
+            torch.save(Model_category.state_dict(), id + "/Model_category.pt")
+            torch.save(Model_person.state_dict(), id + "/Model_person.pt")
+            torch.save(Model_object.state_dict(), id + "/Model_object.pt")
+            torch.save(attn.state_dict(), id + "/attn.pt")
 
             # test
             # test
@@ -1064,7 +1002,7 @@ def train_ltn(dataloader, dataloader_valid, args, ndim):
                 del dataloader_valid
                 del dataloader
 
-                dataset_test, _ = get_dataset(None, args.test_data_path)
+                dataset_test, _ = get_synthetic_dataset(None, args.test_data_path)
 
                 if not args.random_baseline:
                     generation_args.data_path = args.test_data_path
@@ -1086,9 +1024,9 @@ def train_ltn(dataloader, dataloader_valid, args, ndim):
                     fifth = max([f[5] for f in dataset_test['labels']])
 
                     random_label_test = [[random.randint(0, zero), random.randint(0, first), random.randint(0, second),
-                                           random.randint(0, third), random.randint(0, fourth),
-                                           random.randint(0, fifth)]
-                                          for f in dataset_test['labels']]
+                                          random.randint(0, third), random.randint(0, fourth),
+                                          random.randint(0, fifth)]
+                                         for f in dataset_test['labels']]
 
                     dataset_test.remove_columns("labels").add_column("labels", random_label_test)
 
@@ -1109,59 +1047,25 @@ def main(args, generation_args):
     print(f'Current device: {torch.cuda.current_device()}')
     print(f'Name of first device: {torch.cuda.get_device_name(0)}')
     print(f'Random seed torch device: {torch.random.initial_seed()}')
-    # torch.manual_seed(0)
+    #torch.manual_seed(44985256335000)
 
-    dataset_train, _ = get_dataset(None, args.train_data_path)
+    dataset_train, _ = get_synthetic_dataset(None, args.train_data_path)
+    dataset_valid, _ = get_synthetic_dataset(None, args.valid_data_path)
 
-    dataset_valid, _ = get_dataset(None, args.valid_data_path)
+    generation_args.data_path = args.train_data_path
+    hs_train = trim_hidden_states(load_single_generation(vars(generation_args)))
+    generation_args.data_path = args.valid_data_path
+    hs_valid = trim_hidden_states(load_single_generation(vars(generation_args)))
 
-    # load dataset and hidden states
-    # generation_args.data_path = args.train_data_path
-    # hs_train = trim_hidden_states(load_single_generation(vars(generation_args)))
-    # generation_args.data_path = args.test_data_path
-    # hs_test = trim_hidden_states(load_single_generation(vars(generation_args)))
+    if args.random_baseline:
+        hs_train = np.random.randn(*hs_train.shape)
+        hs_valid = np.random.randn(*hs_valid.shape)
 
-    if not args.random_baseline:
-        generation_args.data_path = args.train_data_path
-        hs_train = trim_hidden_states(load_single_generation(vars(generation_args)))
-
-        generation_args.data_path = args.valid_data_path
-        hs_valid = trim_hidden_states(load_single_generation(vars(generation_args)))
-    else:
-        generation_args.data_path = args.train_data_path
-        hs_train = trim_hidden_states(load_single_generation(vars(generation_args)))
-        generation_args.data_path = args.valid_data_path
-        hs_valid = trim_hidden_states(load_single_generation(vars(generation_args)))
-        hs_train = np.random.randn(hs_train.shape[0], hs_train.shape[1], hs_train.shape[2], hs_train.shape[3],
-                                   hs_train.shape[4])
-        hs_valid = np.random.randn(hs_valid.shape[0], hs_valid.shape[1], hs_valid.shape[2], hs_valid.shape[3],
-                                   hs_valid.shape[4])
     if args.random_label:
         print("----- random labels -----")
-        zero = max([f[0] for f in dataset_train['labels']])
-        first = max([f[1] for f in dataset_train['labels']])
-        second = max([f[2] for f in dataset_train['labels']])
-        third = max([f[3] for f in dataset_train['labels']])
-        fourth = max([f[4] for f in dataset_train['labels']])
-        fifth = max([f[5] for f in dataset_train['labels']])
-
-        random_label_training = [[random.randint(0, zero), random.randint(0, first), random.randint(0, second),
-                                  random.randint(0, third), random.randint(0, fourth), random.randint(0, fifth)]
-                                 for f in dataset_train['labels']]
-
-        zero = max([f[0] for f in dataset_valid['labels']])
-        first = max([f[1] for f in dataset_valid['labels']])
-        second = max([f[2] for f in dataset_valid['labels']])
-        third = max([f[3] for f in dataset_valid['labels']])
-        fourth = max([f[4] for f in dataset_valid['labels']])
-        fifth = max([f[5] for f in dataset_valid['labels']])
-
-        random_label_valid = [[random.randint(0, zero), random.randint(0, first), random.randint(0, second),
-                               random.randint(0, third), random.randint(0, fourth), random.randint(0, fifth)]
-                              for f in dataset_valid['labels']]
-
-        dataset_train.remove_columns("labels").add_column("labels", random_label_training)
-        dataset_valid.remove_columns("labels").add_column("labels", random_label_valid)
+        # By shuffling the hidden states the dataloader will associate each row with an arbitrary set of labels
+        #  while still guaranteeing that the label distribution is the same.
+        np.random.shuffle(hs_train)
 
     with open('dict_wordnet_16_09_23.pickle', 'rb') as handle:
         my_dict_wordnet = pickle.load(handle)
@@ -1215,14 +1119,12 @@ if __name__ == "__main__":
     parser.add_argument("--probe_device", type=str, default='cuda')
     parser.add_argument("--log_neptune", action='store_true')
     parser.add_argument("--log_tensorboard", action='store_true')
-    parser.add_argument("--train_data_path", type=str, default='test_dataset_16_09_23.txt')
-    parser.add_argument("--test_data_path", type=str, default='test_dataset_16_09_23.txt')
-    parser.add_argument("--valid_data_path", type=str, default='test_dataset_16_09_23.txt')
+    parser.add_argument("--train_data_path", type=str, default='data/training_dataset_16_09_23.txt')
+    parser.add_argument("--test_data_path", type=str, default='data/test_dataset_16_09_23.txt')
+    parser.add_argument("--valid_data_path", type=str, default='data/valid_dataset_16_09_23.txt')
     parser.add_argument("--random_baseline", action='store_true',
                         help="Use randomly generated 'hidden states' to test if probe is able to learn with a random "
                              "set of numbers, indicating that we are not really probing.")
-    parser.add_argument("--random_label", action='store_true',
-                        help="Use randomly generated 'hidden states' to test if probe is able to learn with a random "
-                             "set of numbers, indicating that we are not really probing.")
+    parser.add_argument("--random_label", action='store_true', help="")
     args = parser.parse_args()
     main(args, generation_args)
