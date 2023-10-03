@@ -298,13 +298,12 @@ def main(args, generation_args):
 
     # load dataset and hidden states
     hs = trim_hidden_states(load_single_generation(vars(generation_args))).squeeze()
-
-    nsamples, ntokens, ndim = hs.shape
+    _, ntokens, ndim = hs.shape
 
     if args.random_baseline:
         hs[:len(train_data)] = np.random.randn(len(train_data), ntokens, ndim)
     elif args.shuffled_baseline:
-        np.random.shuffle(hs)
+        np.random.shuffle(hs[:len(train_data)])
 
     # train LTN probe
     hs_t = torch.Tensor(hs)

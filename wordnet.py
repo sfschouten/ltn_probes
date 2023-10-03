@@ -43,7 +43,7 @@ for f in first_level:
                                                                  f5._name,f6._name,f7._name])
 
 print(my_dict)
-with open('knowledge.pickle', 'wb') as handle:
+with open('data/knowledge.pickle', 'wb') as handle:
     pickle.dump(my_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 """
 for synset in (wn.synsets('tiger')):

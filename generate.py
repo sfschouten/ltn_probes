@@ -9,7 +9,7 @@ def main(args):
     if not os.path.exists(os.path.join(args.save_dir, filename)):
         # Set up the model and data
         print("Loading model")
-        model, tokenizer, _ = load_model(args.model_name, args.cache_dir, args.parallelize, args.device)
+        model, tokenizer, _ = load_model(args.model_name, cache_dir=args.cache_dir, device=args.device)
         print("Loading dataloader")
         if args.dataset == 'synthetic':
             _, dataset = get_synthetic_dataset(tokenizer, args.data_path)
@@ -17,7 +17,7 @@ def main(args):
         elif args.dataset == 'framenet':
             dataset, _, _, _, _ = get_framenet_dataset(tokenizer)
             dataset = dataset.remove_columns(['frames', 'labels'])
-        dataloader = get_dataloader(dataset, tokenizer, batch_size=args.batch_size, device=args.device)
+        dataloader = get_dataloader(dataset, tokenizer, batch_size=args.batch_size)
 
         # Get the hidden states and labels
         print("Generating hidden states")

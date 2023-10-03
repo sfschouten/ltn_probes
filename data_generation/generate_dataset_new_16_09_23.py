@@ -1,13 +1,11 @@
 import pickle as pickle
 import random
-import re
 
-from tqdm import tqdm
 
-with open('knowledge.pickle', 'rb') as handle:
+with open('data/knowledge.pickle', 'rb') as handle:
     my_dict = pickle.load(handle)
 
-file_animali = open("nomi_di_animali.txt", "r")
+file_animali = open("data/nomi_di_animali.txt", "r")
 animali = []
 for f in file_animali:
     # print(f)
@@ -40,13 +38,13 @@ nove_level = []
 dieci_level = []
 nodes = sorted(list(set([f for f in my_dict])))
 
-file_abitats = open("habitat.txt", "r")
+file_abitats = open("data/habitat.txt", "r")
 habitat = []
 for f in file_abitats:
     # print(f)
     habitat.append(f.rstrip().split(":")[1])
 
-file_continenti = open("continenti.txt", "r")
+file_continenti = open("data/continenti.txt", "r")
 continenti = []
 for f in file_continenti:
     # print(f)
@@ -414,18 +412,18 @@ for i in first_level:
 
 
 
-f = open("training_dataset_16_09_23.txt", "w")
+f = open("data/training_dataset_16_09_23.txt", "w")
 for i in sentences:
     f.write(i + "\n")
 f.close()
 
-f = open("test_dataset_16_09_23.txt", "w")
+f = open("data/test_dataset_16_09_23.txt", "w")
 for i in sentences_test:
     f.write(i + "\n")
 f.close()
 
 
-f = open("valid_dataset_16_09_23.txt", "w")
+f = open("data/valid_dataset_16_09_23.txt", "w")
 for i in sentences_valid:
     f.write(i + "\n")
 f.close()

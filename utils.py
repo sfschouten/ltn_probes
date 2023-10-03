@@ -29,13 +29,13 @@ def get_parser():
     parser.add_argument("--device", type=str, default="cuda", help="Device to use for the model")
     # setting up data
     parser.add_argument("--dataset", type=str, default="synthetic", choices=['synthetic', 'framenet'])
-    parser.add_argument("--data_path", type=str, default='data/training_set_26_07_23.txt')
+    parser.add_argument("--data_path", type=str, default='data/training_dataset_16_09_23.txt')
     parser.add_argument("--batch_size", type=int, default=1, help="Batch size to use")
     # which hidden states we extract
     parser.add_argument("--layer", type=int, default=-1, help="Which layer to use (if not all layers)")
     parser.add_argument("--all_layers", action="store_true", help="Whether to use all layers or not")
     # saving the hidden states
-    parser.add_argument("--save_dir", type=str, default="D:\\Francesco Manigrasso\\generated_hidden_states",
+    parser.add_argument("--save_dir", type=str, default="generated_hidden_states",
                         help="Directory to save the hidden states")
 
     return parser
