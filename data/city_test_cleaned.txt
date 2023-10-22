@@ -1,0 +1,4 @@
+Peter lives in Amsterdam,1,1,1,1
+Elena lives in Rome,0,1,0,0
+Peter lives in Turin,1,1,0,0
+Amsterdam lives in Peter,0,1,0,0

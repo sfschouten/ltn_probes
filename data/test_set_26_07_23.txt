@@ -1,0 +1,4 @@
+Zaragoza lives in Jago,429,778,1195,0,0,0,1
+Peter lives in Amsterdam,1651,778,277,1,1,0,0
+Amsterdam lives in Peter,277,778,1651,0,0,0,1
+Sean lives in Anshan,206,778,525,1,1,0,0

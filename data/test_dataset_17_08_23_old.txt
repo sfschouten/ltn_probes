@@ -1,0 +1,8 @@
+cira is a blue whale,cira,120,blue_whale.n.01,127,aquatic_mammal.n.01,0,cetacean.n.01,7,whale.n.02,150,blue_whale.n.01,127,1
+misty is a bowhead,misty,409,bowhead.n.01,75,aquatic_mammal.n.01,0,cetacean.n.01,7,whale.n.02,150,bowhead.n.01,75,1
+dante is a grey whale,dante,976,grey_whale.n.01,912,aquatic_mammal.n.01,0,cetacean.n.01,7,whale.n.02,150,grey_whale.n.01,912,1
+asia is a humpback,asia,266,humpback.n.03,191,aquatic_mammal.n.01,0,cetacean.n.01,7,whale.n.02,150,humpback.n.03,191,1
+white rhinoceros is a raley,white_rhinoceros.n.01,71,raley,588,ungulate.n.01,11,odd-toed_ungulate.n.01,28,rhinoceros.n.01,116,white_rhinoceros.n.01,71,0
+woolly rhinoceros is a aragorn,woolly_rhinoceros.n.01,883,aragorn,339,ungulate.n.01,11,odd-toed_ungulate.n.01,28,rhinoceros.n.01,116,woolly_rhinoceros.n.01,883,0
+malayan tapir is a ginny,malayan_tapir.n.01,529,ginny,779,ungulate.n.01,11,odd-toed_ungulate.n.01,28,tapir.n.01,135,malayan_tapir.n.01,529,0
+new world tapir is a eureka,new_world_tapir.n.01,831,eureka,428,ungulate.n.01,11,odd-toed_ungulate.n.01,28,tapir.n.01,135,new_world_tapir.n.01,831,0

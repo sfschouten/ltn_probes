@@ -1,9 +1,16 @@
+channels:
+  - defaults
+  - conda-forge
 dependencies:
+  - main::nltk
+  - conda-forge::cudatoolkit
+  - conda-forge::cudatoolkit-dev
   - conda-forge::transformers
   - conda-forge::tokenizers>=0.13.3
   - conda-forge::sentencepiece
-  - conda-forge::protobuf 
-  - xformers::xformers
+  - conda-forge::protobuf
+  - conda-forge::python-dotenv
   - pip
   - pip:
     - auto-gptq[triton]
+    - LTNtorch
